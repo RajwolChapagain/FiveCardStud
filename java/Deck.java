@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Deck
 {
-	private final int NUMCARDS = 52;
+	private final int NUM_CARDS = 52;
 	private List<Card> cardList = new ArrayList<Card>();
 	
 	public Deck()
@@ -14,7 +14,7 @@ public class Deck
 
 	private void initializeDeck()
 	{
-		for (int i = 0; i < NUMCARDS; i++)
+		for (int i = 0; i < NUM_CARDS; i++)
 			cardList.add(new Card(i % 13, i / 13));
 	}
 
@@ -41,5 +41,14 @@ public class Deck
 			cardList.set(i, cardList.get(swapIndex));
 			cardList.set(swapIndex, temp);
 		}
+	}
+
+	public Hand dealHand()
+	{
+		Hand hand = new Hand();
+		for (int i = 0; i < Hand.NUM_CARDS_IN_HAND; i++)
+			hand.addCard(cardList.remove(0));
+
+		return hand;
 	}
 }
