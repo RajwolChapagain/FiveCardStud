@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Deck
 {
 	private Card[] cardArray = new Card[52];
@@ -23,5 +25,18 @@ public class Deck
 		}	 
 
 		System.out.println();
+	}
+
+	public void shuffle()
+	{
+		Random random = new Random();
+
+		for (int i = 0; i < cardArray.length; i++)
+		{
+			Card temp = cardArray[i];
+			int swapIndex = random.nextInt(52);
+			cardArray[i] = cardArray[swapIndex];
+			cardArray[swapIndex] = temp;
+		}
 	}
 }
