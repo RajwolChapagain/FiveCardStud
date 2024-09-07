@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Deck
 {
-	private Card[] cardArray = new Card[52];
+	private final int NUMCARDS = 52;
+	private List<Card> cardList = new ArrayList<Card>();
 	
 	public Deck()
 	{
@@ -11,14 +14,14 @@ public class Deck
 
 	private void initializeDeck()
 	{
-		for (int i = 0; i < cardArray.length; i++)
-			cardArray[i] = new Card(i % 13, i / 13);
+		for (int i = 0; i < NUMCARDS; i++)
+			cardList.add(new Card(i % 13, i / 13));
 	}
 
 
 	public void printDeck()
 	{
-		for (Card card: cardArray)
+		for (Card card: cardList)
 		{
 			card.printCard();
 			System.out.print("  ");
@@ -31,12 +34,12 @@ public class Deck
 	{
 		Random random = new Random();
 
-		for (int i = 0; i < cardArray.length; i++)
+		for (int i = 0; i < cardList.size(); i++)
 		{
-			Card temp = cardArray[i];
+			Card temp = cardList.get(i);
 			int swapIndex = random.nextInt(52);
-			cardArray[i] = cardArray[swapIndex];
-			cardArray[swapIndex] = temp;
+			cardList.set(i, cardList.get(swapIndex));
+			cardList.set(swapIndex, temp);
 		}
 	}
 }
