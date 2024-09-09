@@ -32,8 +32,10 @@ public class Hand
 		System.out.println();
 	}
 
-	public void sortHand()
+	public List<Card> giveSortedCardList()
 	{
-		Collections.sort(cardList);
+		List<Card> newCardArray = new ArrayList<>(cardList);
+		Collections.sort(newCardArray);
+		return newCardArray;
 	}
 }
