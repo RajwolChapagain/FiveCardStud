@@ -21,10 +21,14 @@ public class Deck
 
 	public void printDeck()
 	{
+		int i = 1;
 		for (Card card: cardList)
 		{
 			card.printCard();
 			System.out.print("  ");
+			if (i != 0 && i % 13 == 0)
+				System.out.println();
+			i++;
 		}	 
 
 		System.out.println();
