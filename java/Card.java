@@ -27,8 +27,8 @@ public class Card implements Comparable<Card>
 		System.out.print(valueMap[value] + suitMap[suit]);
 	}
 
-	@Override
 	// This function returns -1 if this card is smaller, 0 if the cards are equal, and 1 if this card is larger
+	@Override
 	public int compareTo(Card other)
 	{
 		return Integer.compare(this.value, other.value);
