@@ -33,4 +33,20 @@ public class Card implements Comparable<Card>
 	{
 		return Integer.compare(this.value, other.value);
 	}
+
+	public static int getIndexOfValue(String value)
+	{
+		for (int i = 0; i < valueMap.length; i++)
+			if (valueMap[i].equals(value))
+				return i;
+		return -1;
+	}
+
+	public static int getIndexOfSuit(String suit)
+	{
+		for (int i = 0; i < suitMap.length; i++)
+			if (suitMap[i].equals(suit))
+				return i;
+		return -1;
+	}
 }
