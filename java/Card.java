@@ -12,6 +12,12 @@ public class Card implements Comparable<Card>
 		this.suit = suit;	
 	}
 
+	public Card(String valueString, String suitString)
+	{
+		this.value = getIndexOfValue(valueString);
+		this.suit = getIndexOfSuit(suitString);
+	}
+
 	public int getValue()
 	{
 		return value;
