@@ -1,5 +1,8 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class Main
 {
@@ -8,13 +11,35 @@ public class Main
 		int NUM_HANDS = 6;
 		boolean isTesting = args.length != 0;
 		Hand[] handArray = new Hand[NUM_HANDS];
-		Deck remainingDeck = new Deck();
+		Deck remainingDeck;
 
 		System.out.println("*** POKER HAND ANALYZER ***\n");
 
 		if (isTesting)
 		{
-
+			remainingDeck = new Deck();
+			System.out.println("*** USING TEST DECK ***\n");
+			
+			String relativeFilePath = args[0];
+			System.out.println("*** File: " + relativeFilePath);
+			try
+			{
+				Scanner scanner = new Scanner(new File(relativeFilePath));
+				int handNumber = 0;
+				while (scanner.hasNextLine())
+				{
+					String line = scanner.nextLine();
+					System.out.println(line);
+					handArray[handNumber] = convertStringToHand(line);
+					handNumber += 1;
+				}
+				System.out.println();
+			}
+			catch (FileNotFoundException e)
+			{
+				System.out.println("Error: File " + relativeFilePath + " not found");
+				return;
+			}
 		}
 		else
 		{
@@ -39,12 +64,33 @@ public class Main
 
 		System.out.println();
 
-
 		if (!isTesting)
 		{
 			System.out.println("*** Here is what remains in the deck...");
 			remainingDeck.printDeck();
 		}
+	}
+
+	public static Hand convertStringToHand(String cards)
+	{
+		String[] cardStrings = cards.split(",");
+
+		Hand hand = new Hand();
+
+		// cardStrings look something like this: ["10H", " AS", " 3C", " 7D", " KC"]
+		for (int i = 0; i < cardStrings.length; i++)
+		{
+			String cardString = cardStrings[i].trim();
+
+			String suitString = Character.toString(cardString.charAt(cardString.length() -1));
+
+			String valueString = cardString.substring(0, cardString.length() - 1);
+
+			Card card = new Card(valueString, suitString);
+			hand.addCard(card);
+		}
+
+		return hand;
 	}
 
 }
