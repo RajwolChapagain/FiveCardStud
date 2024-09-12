@@ -8,14 +8,15 @@ public class Card implements Comparable<Card>
 
 	public Card(int value, int suit)
 	{
+		if (value < 0 || value >= valueMap.length || suit < 0 || suit >= suitMap.length)
+			throw new InvalidCardException("A card can't have a value index of " + value + " and/or a suit index of " + suit);
 		this.value = value;
 		this.suit = suit;	
 	}
 
 	public Card(String valueString, String suitString)
 	{
-		this.value = getIndexOfValue(valueString);
-		this.suit = getIndexOfSuit(suitString);
+		this(getIndexOfValue(valueString), getIndexOfSuit(suitString));
 	}
 
 	public int getValue()
@@ -54,5 +55,13 @@ public class Card implements Comparable<Card>
 			if (suitMap[i].equals(suit))
 				return i;
 		return -1;
+	}
+}
+
+class InvalidCardException extends RuntimeException {
+
+	public InvalidCardException(String message)
+	{
+		super(message);
 	}
 }
