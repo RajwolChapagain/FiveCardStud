@@ -82,9 +82,7 @@ public class HandAnalyzer
 				}
 				
 				if (threeOfAKindDetected & sameCounter == 2)
-				{
 					pairDetected = true;
-				}
 			}
 			else
 			{
@@ -122,7 +120,7 @@ public class HandAnalyzer
 		return true;	
 	}
 
-	//isThreeOfAKind will also return true if the card is Four of a Kind;
+	//hasThreeOfAKind will also return true if the card is Four of a Kind;
 	//it just stops counting at 3
 	public static boolean hasThreeOfAKind(Hand hand)
 	{
@@ -147,6 +145,25 @@ public class HandAnalyzer
 				sameCounter = 1;
 				prevValue = currentValue;
 			}
+		}
+		
+		return false;
+	}
+
+	//hasPair will also return true if the card is Three or Four of a Kind;
+	//it just stops looking when it finds a pair
+	public static boolean hasPair(Hand hand)
+	{
+		List<Card> sortedCardList = hand.giveSortedCardList();
+		int prevValue = sortedCardList.get(0).getValue();
+
+		for (int i = 1; i < sortedCardList.size(); i++)
+		{
+			int currentValue = sortedCardList.get(i).getValue();
+			if (currentValue == prevValue)
+				return true;
+			else
+				prevValue = currentValue;
 		}
 		
 		return false;
