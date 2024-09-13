@@ -56,6 +56,31 @@ public class Main
 
 			remainingDeck = myDeck;
 		}
+
+		//Check for duplicates in test deck
+		if (isTesting)
+		{
+			List<Integer> cardHashes = new ArrayList<Integer>();
+
+			for (Hand hand: handArray)
+				for (Card card: hand.giveSortedCardList())
+				{
+					int cardHash = card.getValue() * 10 + card.getSuit();
+
+					if (cardHashes.contains(cardHash))
+					{
+						System.out.println("*** ERROR - DUPLICATED CARD FOUND IN DECK ***\n");
+
+						System.out.print("*** Duplicate: ");
+						card.printCard();
+						System.out.println(" ***");
+						return;
+					}
+					else
+						cardHashes.add(cardHash);
+				}
+
+		}
 			
 		System.out.println("*** Here are the six hands...");
 
