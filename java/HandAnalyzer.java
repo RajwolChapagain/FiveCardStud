@@ -359,4 +359,24 @@ public class HandAnalyzer
 
 		return -1;
 	}
+
+	//Returns either 1 if secondHand is stronger
+	//or -1 if firstHand is stronger
+	public static int compareFullHouseTie(Hand firstHand, Hand secondHand)
+	{	
+		int firstHandMatchingCardValue = getMatchingCardValueInThreeOfAKind(firstHand);
+		int secondHandMatchingCardValue = getMatchingCardValueInThreeOfAKind(secondHand);
+
+		//This is to treat the ace as high
+		if (firstHandMatchingCardValue == 0)
+			firstHandMatchingCardValue = 13;
+
+		if (secondHandMatchingCardValue == 0)
+			secondHandMatchingCardValue = 13;
+			
+		if (firstHandMatchingCardValue > secondHandMatchingCardValue)
+			return -1;
+
+		return 1;
+	}
 }
