@@ -44,6 +44,7 @@ public class HandAnalyzer
 	{
 		Hand[] rankedHands = Arrays.copyOf(hands, hands.length);
 
+		//Rank by hand type
 		for (Hand hand: rankedHands)
 			hand.setRelativeStrength(detectHandType(hand));
 
@@ -267,5 +268,46 @@ public class HandAnalyzer
 		}
 
 		return true;
+	}
+
+
+	//Returns either 1 if secondHand is stronger
+	//or -1 if firstHand is stronger
+	public static int compareFourOfAKindTie(Hand firstHand, Hand secondHand)
+	{	
+		int firstHandMatchingCardValue = getMatchingCardValueInFourOfAKind(firstHand);
+		int secondHandMatchingCardValue = getMatchingCardValueInFourOfAKind(secondHand);
+
+		//This is to treat the ace as high
+		if (firstHandMatchingCardValue == 0)
+			firstHandMatchingCardValue = 13;
+
+		if (secondHandMatchingCardValue == 0)
+			secondHandMatchingCardValue = 13;
+			
+		if (firstHandMatchingCardValue > secondHandMatchingCardValue)
+			return -1;
+
+		return 1;
+	}
+	
+	//For a Four of a Kind hand, returns the card value of the repeated card
+	public static int getMatchingCardValueInFourOfAKind(Hand hand)
+	{
+		List<Card> sortedCardList = hand.giveSortedCardList();
+
+		int prevValue = sortedCardList.get(0).getValue();
+
+		for (int i = 1; i < sortedCardList.size(); i++)
+		{
+			int currentValue = sortedCardList.get(i).getValue();
+			
+			if (currentValue == prevValue)
+				return currentValue;
+			else
+				prevValue = currentValue;
+		}
+
+		return -1;
 	}
 }
