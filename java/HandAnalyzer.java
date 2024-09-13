@@ -9,7 +9,7 @@ public class HandAnalyzer
 
 	public static boolean isRoyalStraightFlush(Hand hand)
 	{	
-		if (isRoyalStraight(hand) & isFlush(hand))
+		if (hasRoyalStraight(hand) & hasFlush(hand))
 			return true;
 	
 		return false;
@@ -18,8 +18,8 @@ public class HandAnalyzer
 	public static boolean isStraightFlush(Hand hand)
 	{
 		// This will also return true for Royal Straight Flush because
-		// isStraight returns true even if the hand is a Royal Straight
-		if (isStraight(hand) & isFlush(hand))
+		// hasStraight returns true even if the hand is a Royal Straight
+		if (hasStraight(hand) & hasFlush(hand))
 			return true;
 
 		return false;
@@ -53,9 +53,58 @@ public class HandAnalyzer
 		return false;
 	}
 
-	public static boolean isStraight(Hand hand)
+	//Also triggers for a Four of A Kind.
+	//Hence, always check this after checking for Four of a Kind
+	public static boolean isFullHouse(Hand hand)
 	{
-		if (isRoyalStraight(hand))
+		if (!hasThreeOfAKind(hand))
+			return false;
+
+		boolean threeOfAKindDetected = false;
+		boolean pairDetected = false;
+
+		int sameCounter = 1;
+
+		List<Card> sortedCardList = hand.giveSortedCardList();
+		int prevValue = sortedCardList.get(0).getValue();
+
+		for (int i = 1; i < sortedCardList.size(); i++)
+		{
+			int currentValue = sortedCardList.get(i).getValue();
+			if (currentValue == prevValue)
+			{
+				sameCounter += 1;
+
+				if (sameCounter == 3)
+				{
+					threeOfAKindDetected = true;
+					sameCounter = 1;
+				}
+				
+				if (threeOfAKindDetected & sameCounter == 2)
+				{
+					pairDetected = true;
+				}
+			}
+			else
+			{
+				if (sameCounter == 2)
+					pairDetected = true;
+
+				sameCounter = 1;
+				prevValue = currentValue;
+			}
+		}
+		
+		if (threeOfAKindDetected & pairDetected)
+			return true;
+
+		return false;
+	}
+
+	public static boolean hasStraight(Hand hand)
+	{
+		if (hasRoyalStraight(hand))
 			return true;
 
 		List<Card> sortedCardList = hand.giveSortedCardList();
@@ -75,7 +124,7 @@ public class HandAnalyzer
 
 	//isThreeOfAKind will also return true if the card is Four of a Kind;
 	//it just stops counting at 3
-	public static boolean isThreeOfAKind(Hand hand)
+	public static boolean hasThreeOfAKind(Hand hand)
 	{
 		//Counts the number of same cards 
 		int sameCounter = 1;
@@ -103,7 +152,7 @@ public class HandAnalyzer
 		return false;
 	}
 
-	public static boolean isRoyalStraight(Hand hand)
+	public static boolean hasRoyalStraight(Hand hand)
 	{
 		List<Card> sortedCardList = hand.giveSortedCardList();
 
@@ -115,7 +164,7 @@ public class HandAnalyzer
 		return false;
 	}
 
-	public static boolean isFlush(Hand hand)
+	public static boolean hasFlush(Hand hand)
 	{
 		int prevSuit = hand.giveSortedCardList().get(0).getSuit();
 
