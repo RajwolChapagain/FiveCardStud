@@ -32,6 +32,15 @@ public class Hand
 		System.out.println();
 	}
 
+	public void printHandWithoutLine()
+	{
+		for (Card card: cardList)
+		{
+			card.printCard();
+			System.out.print("  ");
+		}
+	}
+
 	public List<Card> giveSortedCardList()
 	{
 		List<Card> newCardArray = new ArrayList<>(cardList);
