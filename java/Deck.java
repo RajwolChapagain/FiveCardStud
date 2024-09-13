@@ -47,12 +47,17 @@ public class Deck
 		}
 	}
 
-	public Hand dealHand()
+	public Hand[] dealHand(int numHands)
 	{
-		Hand hand = new Hand();
-		for (int i = 0; i < Hand.NUM_CARDS_IN_HAND; i++)
-			hand.addCard(cardList.remove(0));
+		Hand[] handArray = new Hand[numHands];
 
-		return hand;
+		for (int i = 0; i < numHands; i++)
+			handArray[i] = new Hand();
+
+		for (int i = 0; i < Hand.NUM_CARDS_IN_HAND; i++)
+			for (int j = 0; j < numHands; j++)
+				handArray[j].addCard(cardList.remove(0));
+
+		return handArray;
 	}
 }
