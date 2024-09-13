@@ -15,6 +15,16 @@ public class HandAnalyzer
 		return false;
 	}
 
+	public static boolean isStraightFlush(Hand hand)
+	{
+		// This will also return true for Royal Straight Flush because
+		// isStraight returns true even if the hand is a Royal Straight
+		if (isStraight(hand) & isFlush(hand))
+			return true;
+
+		return false;
+	}
+
 	public static boolean isStraight(Hand hand)
 	{
 		if (isRoyalStraight(hand))
