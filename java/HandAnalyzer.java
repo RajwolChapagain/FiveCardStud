@@ -3,9 +3,41 @@ import java.util.ArrayList;
 
 public class HandAnalyzer
 {
-	private static final String[] handMap = { "High Card", "Pair", "Two Pair", "Three of a Kind", "Stright", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Straight Flush" };
+	public static final String[] handMap = { "High Card", "Pair", "Two Pair", "Three of a Kind", "Stright", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Straight Flush" };
 
 	private static enum handType { HIGH_CARD, PAIR, TWO_PAIR, THREE_OF_A_KIND, STRAIGHT, FLUSH, FULL_HOUSE, FOUR_OF_A_KIND, STRAIGHT_FLUSH, ROYAL_STRAIGHT_FLUSH };
+
+	public static int detectHandType (Hand hand)
+	{
+		if (isRoyalStraightFlush(hand))
+			return handType.ROYAL_STRAIGHT_FLUSH.ordinal(); 
+
+		if (isStraightFlush(hand))
+			return handType.STRAIGHT_FLUSH.ordinal();
+
+		if (isFourOfAKind(hand))
+			return handType.FOUR_OF_A_KIND.ordinal();
+
+		if (isFullHouse(hand))
+			return handType.FULL_HOUSE.ordinal();
+
+		if (hasFlush(hand))
+			return handType.FLUSH.ordinal();
+
+		if (hasStraight(hand))
+			return handType.STRAIGHT.ordinal();
+
+		if (hasThreeOfAKind(hand))
+			return handType.THREE_OF_A_KIND.ordinal();
+
+		if (hasTwoPair(hand))
+			return handType.TWO_PAIR.ordinal();
+
+		if (hasPair(hand))
+			return handType.PAIR.ordinal();
+
+		return handType.HIGH_CARD.ordinal();
+	}
 
 	public static boolean isRoyalStraightFlush(Hand hand)
 	{	
