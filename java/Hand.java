@@ -59,10 +59,11 @@ public class Hand implements Comparable<Hand>
 		relativeStrength = value;
 	}
 
+	//Returns 1 if other hand is stronger than this hand in contrast to regular compareTo methods
 	@Override
 	public int compareTo(Hand other)
 	{
-		return Integer.compare(relativeStrength, other.relativeStrength);
+		return Integer.compare(other.relativeStrength, relativeStrength);
 	}
 }
 
