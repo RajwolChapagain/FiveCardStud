@@ -69,6 +69,15 @@ public class Main
 			System.out.println("*** Here is what remains in the deck...");
 			remainingDeck.printDeck();
 		}
+		System.out.println();
+
+
+		System.out.println("---  WINNING HAND ORDER ---");
+		for (Hand hand: HandAnalyzer.getRankedHands(handArray))
+		{
+			hand.printHandWithoutLine();
+			System.out.println(" - " + HandAnalyzer.handMap[HandAnalyzer.detectHandType(hand)]);
+		}
 	}
 
 	public static Hand convertStringToHand(String cards)
