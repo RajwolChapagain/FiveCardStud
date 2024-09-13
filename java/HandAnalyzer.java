@@ -7,6 +7,14 @@ public class HandAnalyzer
 
 	private static enum handType { HIGH_CARD, PAIR, TWO_PAIR, THREE_OF_A_KIND, STRAIGHT, FLUSH, FULL_HOUSE, FOUR_OF_A_KIND, STRAIGHT_FLUSH, ROYAL_STRAIGHT_FLUSH };
 
+	public static boolean isRoyalStraightFlush(Hand hand)
+	{	
+		if (isRoyalStraight(hand) & isFlush(hand))
+			return true;
+	
+		return false;
+	}
+
 	public static boolean isStraight(Hand hand)
 	{
 		if (isRoyalStraight(hand))
