@@ -6,6 +6,7 @@ public class Hand
 {
 	public static final int NUM_CARDS_IN_HAND = 5;
 	private List<Card> cardList = new ArrayList<Card>();
+	private int relativeStrength = -1;
 
 	public Hand()
 	{
@@ -46,5 +47,15 @@ public class Hand
 		List<Card> newCardArray = new ArrayList<>(cardList);
 		Collections.sort(newCardArray);
 		return newCardArray;
+	}
+
+	public int getRelativeStrength()
+	{
+		return relativeStrength;
+	}
+
+	public void setRelativeStrength(int value)
+	{
+		relativeStrength = value;
 	}
 }
