@@ -20,7 +20,19 @@ public class HandAnalyzer
 		if (isRoyalStraight(hand))
 			return true;
 
-		return false;	
+		List<Card> sortedCardList = hand.giveSortedCardList();
+
+		int prevValue = sortedCardList.get(0).getValue();
+
+		for (int i = 1; i < sortedCardList.size(); i++)
+		{
+			int currentValue = sortedCardList.get(i).getValue();
+			if (prevValue + 1 != currentValue)
+				return false;
+			prevValue = currentValue;
+		}
+
+		return true;	
 	}
 
 	public static boolean isRoyalStraight(Hand hand)
