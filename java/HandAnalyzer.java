@@ -73,6 +73,36 @@ public class HandAnalyzer
 		return true;	
 	}
 
+	//isThreeOfAKind will also return true if the card is Four of a Kind;
+	//it just stops counting at 3
+	public static boolean isThreeOfAKind(Hand hand)
+	{
+		//Counts the number of same cards 
+		int sameCounter = 1;
+
+		List<Card> sortedCardList = hand.giveSortedCardList();
+		int prevValue = sortedCardList.get(0).getValue();
+
+		for (int i = 1; i < sortedCardList.size(); i++)
+		{
+			int currentValue = sortedCardList.get(i).getValue();
+			if (currentValue == prevValue)
+			{
+				sameCounter += 1;
+
+				if (sameCounter == 3)
+					return true;
+			}
+			else
+			{
+				sameCounter = 1;
+				prevValue = currentValue;
+			}
+		}
+		
+		return false;
+	}
+
 	public static boolean isRoyalStraight(Hand hand)
 	{
 		List<Card> sortedCardList = hand.giveSortedCardList();
