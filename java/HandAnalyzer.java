@@ -25,6 +25,34 @@ public class HandAnalyzer
 		return false;
 	}
 
+	public static boolean isFourOfAKind(Hand hand)
+	{
+		//Counts the number of same cards 
+		int sameCounter = 1;
+
+		List<Card> sortedCardList = hand.giveSortedCardList();
+		int prevValue = sortedCardList.get(0).getValue();
+
+		for (int i = 1; i < sortedCardList.size(); i++)
+		{
+			int currentValue = sortedCardList.get(i).getValue();
+			if (currentValue == prevValue)
+			{
+				sameCounter += 1;
+
+				if (sameCounter == 4)
+					return true;
+			}
+			else
+			{
+				sameCounter = 1;
+				prevValue = currentValue;
+			}
+		}
+		
+		return false;
+	}
+
 	public static boolean isStraight(Hand hand)
 	{
 		if (isRoyalStraight(hand))
