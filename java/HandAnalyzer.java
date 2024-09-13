@@ -310,4 +310,53 @@ public class HandAnalyzer
 
 		return -1;
 	}
+
+	//Returns either 1 if secondHand is stronger
+	//or -1 if firstHand is stronger
+	public static int compareThreeOfAKindTie(Hand firstHand, Hand secondHand)
+	{	
+		int firstHandMatchingCardValue = getMatchingCardValueInThreeOfAKind(firstHand);
+		int secondHandMatchingCardValue = getMatchingCardValueInThreeOfAKind(secondHand);
+
+		//This is to treat the ace as high
+		if (firstHandMatchingCardValue == 0)
+			firstHandMatchingCardValue = 13;
+
+		if (secondHandMatchingCardValue == 0)
+			secondHandMatchingCardValue = 13;
+			
+		if (firstHandMatchingCardValue > secondHandMatchingCardValue)
+			return -1;
+
+		return 1;
+	}
+	
+	//For a Three of a Kind hand, returns the card value of the repeated card
+	public static int getMatchingCardValueInThreeOfAKind(Hand hand)
+	{
+		List<Card> sortedCardList = hand.giveSortedCardList();
+
+		int prevValue = sortedCardList.get(0).getValue();
+		int sameCounter = 1;
+
+		for (int i = 1; i < sortedCardList.size(); i++)
+		{
+			int currentValue = sortedCardList.get(i).getValue();
+			
+			if (currentValue == prevValue)
+			{
+				sameCounter += 1;
+				
+				if (sameCounter == 3)
+					return currentValue;
+			}
+			else
+			{
+				sameCounter = 1;
+				prevValue = currentValue;
+			}
+		}
+
+		return -1;
+	}
 }
