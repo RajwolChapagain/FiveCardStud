@@ -379,4 +379,17 @@ public class HandAnalyzer
 
 		return 1;
 	}
+
+	//Returns 1 if secondHand is stronger
+	//Returns -1 if firstHand is stronger
+	public static int compareRoyalFlushTie(Hand firstHand, Hand secondHand)
+	{
+		int firstSuit = firstHand.giveSortedCardList().get(0).getSuit();
+		int secondSuit = secondHand.giveSortedCardList().get(0).getSuit();
+
+		if (firstSuit > secondSuit)
+			return -1;
+
+		return 1;
+	}
 }
