@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Hand
+public class Hand implements Comparable<Hand>
 {
 	public static final int NUM_CARDS_IN_HAND = 5;
 	private List<Card> cardList = new ArrayList<Card>();
@@ -58,4 +58,11 @@ public class Hand
 	{
 		relativeStrength = value;
 	}
+
+	@Override
+	public int compareTo(Hand other)
+	{
+		return Integer.compare(relativeStrength, other.relativeStrength);
+	}
 }
+
