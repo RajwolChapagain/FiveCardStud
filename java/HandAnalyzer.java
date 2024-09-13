@@ -150,7 +150,36 @@ public class HandAnalyzer
 		return false;
 	}
 
-	//hasPair will also return true if the card is Three or Four of a Kind;
+	//This will easily also trigger at a Three of A Kind,
+	//Four of a Kind, as well as a Full House. Make sure to 
+	//check those first!
+	public static boolean hasTwoPair(Hand hand)
+	{
+		if (!hasPair(hand))
+			return false;
+
+		boolean firstPairDetected = false;
+		List<Card> sortedCardList = hand.giveSortedCardList();
+		int prevValue = sortedCardList.get(0).getValue();
+
+		for (int i = 1; i < sortedCardList.size(); i++)
+		{
+			int currentValue = sortedCardList.get(i).getValue();
+			if (currentValue == prevValue)
+			{
+				if (!firstPairDetected)
+					firstPairDetected = true;
+				else
+					return true;
+			}
+			else
+				prevValue = currentValue;
+		}
+
+		return false;
+	}
+
+	//hasPair will also return true if the card has Two Pairs, is Three or Four of a Kind;
 	//it just stops looking when it finds a pair
 	public static boolean hasPair(Hand hand)
 	{
