@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class HandAnalyzer
 {
-	public static final String[] handMap = { "High Card", "Pair", "Two Pair", "Three of a Kind", "Stright", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Straight Flush" };
+	public static final String[] handMap = { "High Card", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Straight Flush" };
 
 	private static enum handType { HIGH_CARD, PAIR, TWO_PAIR, THREE_OF_A_KIND, STRAIGHT, FLUSH, FULL_HOUSE, FOUR_OF_A_KIND, STRAIGHT_FLUSH, ROYAL_STRAIGHT_FLUSH };
 
@@ -37,6 +37,46 @@ public class HandAnalyzer
 			return handType.PAIR.ordinal();
 
 		return handType.HIGH_CARD.ordinal();
+	}
+
+	public static Hand[] getRankedHands(Hand[] hands)
+	{
+		Hand[] rankedHands = new Hand[hands.length];
+
+		int[] scoreArray = new int[hands.length];
+
+		for (int i = 0; i < hands.length; i++)
+			scoreArray[i] = detectHandType(hands[i]);
+
+
+		rankedHands = sortByScore(scoreArray, hands);
+
+		return rankedHands;
+	}
+
+	private static Hand[] sortByScore(int[] scores, Hand[] hands)
+	{
+		Hand[] sortedHands = new Hand[hands.length];
+
+		for (int j = 0; j < hands.length; j++)
+		{
+			int max = -1;
+			int maxIndex = -1;
+
+			for (int i = 0; i < scores.length; i++)
+			{
+				if (scores[i] > max)
+				{
+					max = scores[i];
+					maxIndex = i;
+				}
+			}
+
+			sortedHands[j] = hands[maxIndex];
+			scores[maxIndex] = -1;
+		}
+
+		return sortedHands;
 	}
 
 	public static boolean isRoyalStraightFlush(Hand hand)
