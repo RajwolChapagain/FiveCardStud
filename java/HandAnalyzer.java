@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Arrays;
 import java.util.ArrayList;
 
 public class HandAnalyzer
@@ -7,7 +8,7 @@ public class HandAnalyzer
 
 	private static enum handType { HIGH_CARD, PAIR, TWO_PAIR, THREE_OF_A_KIND, STRAIGHT, FLUSH, FULL_HOUSE, FOUR_OF_A_KIND, STRAIGHT_FLUSH, ROYAL_STRAIGHT_FLUSH };
 
-	public static int detectHandType (Hand hand)
+	public static int detectHandType(Hand hand)
 	{
 		if (isRoyalStraightFlush(hand))
 			return handType.ROYAL_STRAIGHT_FLUSH.ordinal(); 
@@ -41,42 +42,14 @@ public class HandAnalyzer
 
 	public static Hand[] getRankedHands(Hand[] hands)
 	{
-		Hand[] rankedHands = new Hand[hands.length];
+		Hand[] rankedHands = Arrays.copyOf(hands, hands.length);
 
-		int[] scoreArray = new int[hands.length];
+		for (Hand hand: rankedHands)
+			hand.setRelativeStrength(detectHandType(hand));
 
-		for (int i = 0; i < hands.length; i++)
-			scoreArray[i] = detectHandType(hands[i]);
-
-
-		rankedHands = sortByScore(scoreArray, hands);
+		Arrays.sort(rankedHands);
 
 		return rankedHands;
-	}
-
-	private static Hand[] sortByScore(int[] scores, Hand[] hands)
-	{
-		Hand[] sortedHands = new Hand[hands.length];
-
-		for (int j = 0; j < hands.length; j++)
-		{
-			int max = -1;
-			int maxIndex = -1;
-
-			for (int i = 0; i < scores.length; i++)
-			{
-				if (scores[i] > max)
-				{
-					max = scores[i];
-					maxIndex = i;
-				}
-			}
-
-			sortedHands[j] = hands[maxIndex];
-			scores[maxIndex] = -1;
-		}
-
-		return sortedHands;
 	}
 
 	public static boolean isRoyalStraightFlush(Hand hand)
