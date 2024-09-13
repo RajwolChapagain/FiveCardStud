@@ -10,7 +10,7 @@ public class Main
 	{
 		int NUM_HANDS = 6;
 		boolean isTesting = args.length != 0;
-		Hand[] handArray = new Hand[NUM_HANDS];
+		Hand[] handArray;
 		Deck remainingDeck;
 
 		System.out.println("*** POKER HAND ANALYZER ***\n");
@@ -18,6 +18,7 @@ public class Main
 		if (isTesting)
 		{
 			remainingDeck = new Deck();
+			handArray = new Hand[NUM_HANDS];
 			System.out.println("*** USING TEST DECK ***\n");
 			
 			String relativeFilePath = args[0];
@@ -51,8 +52,7 @@ public class Main
 			myDeck.printDeck();
 			System.out.println();
 
-			for (int i = 0; i < NUM_HANDS; i++)
-				handArray[i] = myDeck.dealHand();
+			handArray = myDeck.dealHand(NUM_HANDS);
 
 			remainingDeck = myDeck;
 		}
