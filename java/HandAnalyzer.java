@@ -394,6 +394,66 @@ public class HandAnalyzer
 		return 1;
 	}
 
+	public static int compareStraightFlushTie(Hand firstHand, Hand secondHand)
+	{
+		int highestCardComparison = compareHighestCard(firstHand, secondHand);
+
+		if (highestCardComparison != 0)
+			return highestCardComparison;
+
+		//Enforce suit-tie breaking
+		return compareSuitOfHighestCard(firstHand, secondHand);
+	}
+
+	public static int compareSuitOfHighestCard(Hand firstHand, Hand secondHand)
+	{
+		List<Card> cardList1 = firstHand.giveSortedCardList();
+		List<Card> cardList2 = secondHand.giveSortedCardList();
+
+		List<Integer> valueList1 = new ArrayList<Integer>();
+		List<Integer> valueList2 = new ArrayList<Integer>();
+
+		for (int i = 0; i < cardList1.size(); i++)
+		{
+			if (cardList1.get(i).getValue() == 0)
+			{
+				//Account for when Aces are low in a straight or straight flush
+				if (detectHandType(firstHand) != handType.STRAIGHT_FLUSH.ordinal() && 
+						detectHandType(firstHand) != handType.STRAIGHT.ordinal())
+					valueList1.add(13);
+				else
+					valueList1.add(0);
+			}
+			else
+				valueList1.add(cardList1.get(i).getValue());
+
+			if (cardList2.get(i).getValue() == 0)
+			{
+				if (detectHandType(secondHand) != handType.STRAIGHT_FLUSH.ordinal() && 
+						detectHandType(secondHand) != handType.STRAIGHT.ordinal())
+					valueList2.add(13);
+				else
+					valueList2.add(0);
+			}
+			else
+				valueList2.add(cardList2.get(i).getValue());
+		}
+
+		int maxValue1 = Collections.max(valueList1);
+		int maxValue1Index = valueList1.indexOf(maxValue1);
+
+		int maxValue2 = Collections.max(valueList2);
+		int maxValue2Index = valueList2.indexOf(maxValue2);
+
+		int suitOfHighestCard1 = cardList1.get(maxValue1Index).getSuit();
+		int suitOfHighestCard2 = cardList2.get(maxValue2Index).getSuit();
+		
+		if (suitOfHighestCard1 > suitOfHighestCard2)
+			return -1;
+	
+		return 1;
+	}
+
 	//Used to compare: Straight Flushes, Flushes, Straights, and High Card
 	//Returns:
 	//1 if secondHand is stronger
