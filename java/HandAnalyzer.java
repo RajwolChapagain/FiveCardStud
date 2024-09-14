@@ -1,6 +1,7 @@
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HandAnalyzer
 {
@@ -391,5 +392,58 @@ public class HandAnalyzer
 			return -1;
 
 		return 1;
+	}
+
+	//Used to compare: Straight Flushes, Flushes, Straights, and High Card
+	//Returns:
+	//1 if secondHand is stronger
+	//0 if both are tied
+	//-1 if firstHand is stronger
+	public static int compareHighestCard(Hand firstHand, Hand secondHand)
+	{
+		List<Card> cardList1 = firstHand.giveSortedCardList();
+		List<Card> cardList2 = secondHand.giveSortedCardList();
+
+		List<Integer> valueList1 = new ArrayList<Integer>();
+		List<Integer> valueList2 = new ArrayList<Integer>();
+
+		for (int i = 0; i < cardList1.size(); i++)
+		{
+			if (cardList1.get(i).getValue() == 0)
+			{
+				//Account for when Aces are low in a straight or straight flush
+				if (detectHandType(firstHand) != handType.STRAIGHT_FLUSH.ordinal() && 
+						detectHandType(firstHand) != handType.STRAIGHT.ordinal())
+					valueList1.add(13);
+				else
+					valueList1.add(0);
+			}
+			else
+				valueList1.add(cardList1.get(i).getValue());
+
+			if (cardList2.get(i).getValue() == 0)
+			{
+				if (detectHandType(secondHand) != handType.STRAIGHT_FLUSH.ordinal() && 
+						detectHandType(secondHand) != handType.STRAIGHT.ordinal())
+					valueList2.add(13);
+				else
+					valueList2.add(0);
+			}
+			else
+				valueList2.add(cardList2.get(i).getValue());
+		}
+
+		Collections.sort(valueList1, Collections.reverseOrder());
+		Collections.sort(valueList2, Collections.reverseOrder());
+		
+		for (int i = 0; i < valueList1.size(); i++)
+		{
+			if (valueList1.get(i) > valueList2.get(i))
+				return -1;
+			else if (valueList1.get(i) < valueList2.get(i))
+				return 1;
+		}
+
+		return 0;
 	}
 }
