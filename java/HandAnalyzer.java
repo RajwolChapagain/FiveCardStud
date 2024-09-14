@@ -2,6 +2,7 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.*;
 
 public class HandAnalyzer
 {
@@ -50,8 +51,106 @@ public class HandAnalyzer
 			hand.setRelativeStrength(detectHandType(hand));
 
 		Arrays.sort(rankedHands);
+		
+		List<Integer> handStrengths = new ArrayList<Integer>();
+		
+		for (Hand hand: rankedHands)
+			handStrengths.add(hand.getRelativeStrength());
 
+		List<Integer> unrankedSubArrays = new ArrayList<>();
+		
+		boolean countingStarted = false;
+		int countingValue = -1;
+		
+		for (int i = 0; i < handStrengths.size(); i++)
+		{
+			if (Collections.frequency(handStrengths, handStrengths.get(i)) > 1)
+			{
+				if (!countingStarted)
+				{
+					countingStarted = true;
+					unrankedSubArrays.add(i);
+					countingValue = handStrengths.get(i);
+				}
+				else
+				{
+					if (handStrengths.get(i) != countingValue)
+					{
+						unrankedSubArrays.add(i-1);	
+						unrankedSubArrays.add(i);
+						countingValue = handStrengths.get(i);
+					}
+					else
+					{
+						if  (i == handStrengths.size() - 1)
+							unrankedSubArrays.add(i);
+					}
+				}
+			}
+			else
+			{
+				if (countingStarted)
+				{
+					unrankedSubArrays.add(i-1);
+					countingStarted = false;
+				}
+			}
+
+		}
+
+		boolean skip = false;
+
+		for (int i = 0; i < unrankedSubArrays.size(); i++)
+		{
+			if (!skip)
+				sortSubArray(rankedHands, unrankedSubArrays.get(i), unrankedSubArrays.get(i+1));
+
+			skip = !skip;
+		}
 		return rankedHands;
+	}
+
+	public static void sortSubArray(Hand[] rankedHands, int startIndex, int endIndex)
+	{
+		Comparator<Hand> comparator = new Comparator<Hand>()
+		{
+			@Override
+			public int compare(Hand firstHand, Hand secondHand) 
+			{
+				if (detectHandType(rankedHands[startIndex]) == handType.ROYAL_STRAIGHT_FLUSH.ordinal())
+					return compareRoyalFlushTie(firstHand, secondHand);
+				if (detectHandType(rankedHands[startIndex]) == handType.STRAIGHT_FLUSH.ordinal())
+					return compareStraightFlushTie(firstHand, secondHand);
+				if (detectHandType(rankedHands[startIndex]) == handType.FOUR_OF_A_KIND.ordinal())
+					return compareFourOfAKindTie(firstHand, secondHand);
+				if (detectHandType(rankedHands[startIndex]) == handType.FULL_HOUSE.ordinal())
+					return compareFullHouseTie(firstHand, secondHand);
+				if (detectHandType(rankedHands[startIndex]) == handType.FLUSH.ordinal())
+					return compareFlushTie(firstHand, secondHand);
+				if (detectHandType(rankedHands[startIndex]) == handType.STRAIGHT.ordinal())
+					return compareStraightTie(firstHand, secondHand);
+				if (detectHandType(rankedHands[startIndex]) == handType.THREE_OF_A_KIND.ordinal())
+					return compareThreeOfAKindTie(firstHand, secondHand);
+				if (detectHandType(rankedHands[startIndex]) == handType.TWO_PAIR.ordinal())
+					return compareTwoPairTie(firstHand, secondHand);
+				if (detectHandType(rankedHands[startIndex]) == handType.PAIR.ordinal())
+					return compareTwoPairTie(firstHand, secondHand);//Fix
+				if (detectHandType(rankedHands[startIndex]) == handType.HIGH_CARD.ordinal())
+					return compareHighCardTie(firstHand, secondHand);
+				return compareHighCardTie(firstHand, secondHand);
+			}
+
+		};
+
+		List<Hand> subArray = new ArrayList<Hand>();
+
+		for (int i = startIndex; i < endIndex + 1; i++)
+			subArray.add(rankedHands[i]);
+
+		Collections.sort(subArray, comparator);
+
+		for (int i = 0; i < subArray.size(); i++)
+			rankedHands[startIndex + i] = subArray.get(i);
 	}
 
 	public static boolean isRoyalStraightFlush(Hand hand)
