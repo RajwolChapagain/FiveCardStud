@@ -405,6 +405,39 @@ public class HandAnalyzer
 		return compareSuitOfHighestCard(firstHand, secondHand);
 	}
 
+	public static int compareFlushTie(Hand firstHand, Hand secondHand)
+	{
+		int highestCardComparison = compareHighestCard(firstHand, secondHand);
+
+		if (highestCardComparison != 0)
+			return highestCardComparison;
+
+		//Enforce suit-tie breaking
+		return compareSuitOfHighestCard(firstHand, secondHand);
+	}
+
+	public static int compareStraightTie(Hand firstHand, Hand secondHand)
+	{
+		int highestCardComparison = compareHighestCard(firstHand, secondHand);
+
+		if (highestCardComparison != 0)
+			return highestCardComparison;
+
+		//Enforce suit-tie breaking
+		return compareSuitOfHighestCard(firstHand, secondHand);
+	}
+
+	public static int compareHighCardTie(Hand firstHand, Hand secondHand)
+	{
+		int highestCardComparison = compareHighestCard(firstHand, secondHand);
+
+		if (highestCardComparison != 0)
+			return highestCardComparison;
+
+		//Enforce suit-tie breaking
+		return compareSuitOfHighestCard(firstHand, secondHand);
+	}
+
 	public static int compareSuitOfHighestCard(Hand firstHand, Hand secondHand)
 	{
 		List<Card> cardList1 = firstHand.giveSortedCardList();
