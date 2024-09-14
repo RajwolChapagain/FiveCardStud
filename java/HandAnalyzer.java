@@ -402,6 +402,8 @@ public class HandAnalyzer
 			return highestCardComparison;
 
 		//Enforce suit-tie breaking
+		//OPTIMIZATION: Don't need to find the suit of highest card,
+		//just any card will do if it's a flush
 		return compareSuitOfHighestCard(firstHand, secondHand);
 	}
 
@@ -413,6 +415,8 @@ public class HandAnalyzer
 			return highestCardComparison;
 
 		//Enforce suit-tie breaking
+		//OPTIMIZATION: Don't need to find the suit of highest card,
+		//just any card will do for flush
 		return compareSuitOfHighestCard(firstHand, secondHand);
 	}
 
@@ -425,6 +429,126 @@ public class HandAnalyzer
 
 		//Enforce suit-tie breaking
 		return compareSuitOfHighestCard(firstHand, secondHand);
+	}
+
+	public static int compareTwoPairTie(Hand firstHand, Hand secondHand)
+	{
+		List<Card> cardList1 = firstHand.giveSortedCardList();
+		List<Card> cardList2 = secondHand.giveSortedCardList();
+
+		List<Integer> valueList1 = new ArrayList<Integer>();
+		List<Integer> valueList2 = new ArrayList<Integer>();
+
+		for (int i = 0; i < cardList1.size(); i++)
+		{
+			if (cardList1.get(i).getValue() == 0)
+				valueList1.add(13);
+			else
+				valueList1.add(cardList1.get(i).getValue());
+
+			if (cardList2.get(i).getValue() == 0)
+				valueList2.add(13);
+			else
+				valueList2.add(cardList2.get(i).getValue());
+		}
+
+		Collections.sort(valueList1, Collections.reverseOrder());
+		Collections.sort(valueList2, Collections.reverseOrder());
+
+		List<Integer> pairCardList1 = new ArrayList<Integer>();
+		List<Integer> pairCardList2 = new ArrayList<Integer>();
+		
+
+		int prevValue = valueList1.get(0);
+
+		for (int i = 1; i < valueList1.size(); i++)
+		{
+			int currentValue = valueList1.get(i);
+
+			if (currentValue == prevValue)
+				pairCardList1.add(currentValue);
+			else
+				prevValue = currentValue;
+		}
+
+		prevValue = valueList2.get(0);
+
+		for (int i = 1; i < valueList2.size(); i++)
+		{
+			int currentValue = valueList2.get(i);
+
+			if (currentValue == prevValue)
+				pairCardList2.add(currentValue);
+			else
+				prevValue = currentValue;
+		}
+
+		//Compare highest pair
+		if (Collections.max(pairCardList1) > Collections.max(pairCardList2))
+			return -1;
+		else if (Collections.max(pairCardList1) < Collections.max(pairCardList2))
+			return 1;
+		
+		// If the highest pair is tied, compare lowest pair
+		if (Collections.min(pairCardList1) > Collections.min(pairCardList2))
+			return -1;
+		else if (Collections.min(pairCardList1) < Collections.min(pairCardList2))
+			return 1;
+
+		//If both highest and lowest pair are tied, compare kicker value
+		int kickerValue1 = -1;
+		int kickerValue2 = -1;
+
+		for (int value: valueList1)
+		{
+			if (Collections.frequency(valueList1, value) == 1)
+			{
+				kickerValue1 = value;
+				break;
+			}
+		}
+
+		for (int value: valueList2)
+		{
+			if (Collections.frequency(valueList2, value) == 1)
+			{
+				kickerValue2 = value;
+				break;
+			}
+		}
+
+		if (kickerValue1 > kickerValue2)
+			return -1;
+		else if (kickerValue1 < kickerValue2)
+			return 1;
+
+		//If both kicker values are equal, compare kicker suit
+		
+		int kickerSuit1 = -1;
+		int kickerSuit2 = -1;
+
+		for (int i = 0; i < cardList1.size(); i++)
+		{
+			if (cardList1.get(i).getValue() == kickerValue1)
+			{
+				kickerSuit1 = cardList1.get(i).getSuit();
+				break;
+			}
+		}
+
+		for (int i = 0; i < cardList2.size(); i++)
+		{
+			if (cardList2.get(i).getValue() == kickerValue2)
+			{
+				kickerSuit2 = cardList2.get(i).getSuit();
+				break;
+			}
+		}
+
+		if (kickerSuit1 > kickerSuit2)
+			return -1;
+
+		return 1;
 	}
 
 	public static int compareHighCardTie(Hand firstHand, Hand secondHand)
