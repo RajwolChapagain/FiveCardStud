@@ -5,7 +5,7 @@ import java.util.Collections;
 public class Hand implements Comparable<Hand>
 {
 	public static final int NUM_CARDS_IN_HAND = 5;
-	private List<Card> cardList = new ArrayList<Card>();
+	public List<Card> cardList = new ArrayList<Card>();
 	private int relativeStrength = -1;
 
 	public Hand()
