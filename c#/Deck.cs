@@ -39,6 +39,19 @@ public class Deck
 		Console.WriteLine();
 	}
 
+	public void printDeckInOneLine()
+	{
+		int i = 1;
+		foreach (Card card in cardList)
+		{
+			card.printCard();
+			Console.Write("  ");
+			i++;
+		}	 
+
+		Console.WriteLine();
+	}
+
 	public void shuffle()
 	{
 		Random random = new Random();

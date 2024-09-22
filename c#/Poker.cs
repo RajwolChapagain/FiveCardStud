@@ -102,7 +102,7 @@ public class Poker
 		if (!isTesting)
 		{
 			Console.WriteLine("*** Here is what remains in the deck...");
-			remainingDeck.printDeck();
+			remainingDeck.printDeckInOneLine();
 		}
 		Console.WriteLine();
 
