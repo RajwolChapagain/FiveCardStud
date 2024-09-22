@@ -92,7 +92,7 @@ public class Main
 		if (!isTesting)
 		{
 			System.out.println("*** Here is what remains in the deck...");
-			remainingDeck.printDeck();
+			remainingDeck.printDeckInOneLine();
 		}
 		System.out.println();
 

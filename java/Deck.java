@@ -34,6 +34,19 @@ public class Deck
 		System.out.println();
 	}
 
+	public void printDeckInOneLine()
+	{
+		int i = 1;
+		for (Card card: cardList)
+		{
+			card.printCard();
+			System.out.print("  ");
+			i++;
+		}	 
+
+		System.out.println();
+	}
+
 	public void shuffle()
 	{
 		Random random = new Random();
