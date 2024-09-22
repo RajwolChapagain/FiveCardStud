@@ -20,8 +20,8 @@ public class Hand : IComparable<Hand>
 
 	public void AddCard(Card card)
 	{	
-		if (cardList.size() < NUM_CARDS_IN_HAND)
-			cardList.add(card);
+		if (cardList.Count < NUM_CARDS_IN_HAND)
+			cardList.Add(card);
 		else
 			Console.WriteLine("Error: Hand is full");
 	}
@@ -48,8 +48,8 @@ public class Hand : IComparable<Hand>
 
 	public List<Card> giveSortedCardList()
 	{
-		List<Card> newCardArray = new List<>(cardList);
-		Collections.sort(newCardArray);
+		List<Card> newCardArray = new List<Card>(cardList);
+		newCardArray.Sort();
 		return newCardArray;
 	}
 
@@ -64,9 +64,9 @@ public class Hand : IComparable<Hand>
 	}
 
 	//Returns 1 if other hand is stronger than this hand in contrast to regular compareTo methods
-	public int compareTo(Hand other)
+	public int CompareTo(Hand other)
 	{
-		return Integer.compare(other.relativeStrength, relativeStrength);
+		return other.relativeStrength.CompareTo(relativeStrength);
 	}
 }
 }
