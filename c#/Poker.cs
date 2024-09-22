@@ -21,7 +21,7 @@ public class Poker
 		Hand[] handArray;
 		Deck remainingDeck;
 
-		Console.WriteLine("*** POKER HAND ANALYZER ***\n");
+		Console.WriteLine("*** POKER HAND ANALYZER ***\n\n");
 
 		if (isTesting)
 		{
