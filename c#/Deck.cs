@@ -10,7 +10,7 @@ namespace FiveCardStud
 public class Deck
 {
 	private const int NUM_CARDS = 52;
-	private List<Card> cardList = new ArrayList<Card>();
+	private List<Card> cardList = new List<Card>();
 	
 	public Deck()
 	{
@@ -20,7 +20,7 @@ public class Deck
 	private void initializeDeck()
 	{
 		for (int i = 0; i < NUM_CARDS; i++)
-			cardList.add(new Card(i % 13, i / 13));
+			cardList.Add(new Card(i % 13, i / 13));
 	}
 
 
@@ -43,12 +43,12 @@ public class Deck
 	{
 		Random random = new Random();
 
-		for (int i = 0; i < cardList.size(); i++)
+		for (int i = 0; i < cardList.Count; i++)
 		{
-			Card temp = cardList.get(i);
-			int swapIndex = random.nextInt(52);
-			cardList.set(i, cardList.get(swapIndex));
-			cardList.set(swapIndex, temp);
+			Card temp = cardList[i];
+			int swapIndex = random.Next(52);
+			cardList[i] = cardList[swapIndex];
+			cardList[swapIndex] = temp;
 		}
 	}
 
@@ -61,8 +61,10 @@ public class Deck
 
 		for (int i = 0; i < Hand.NUM_CARDS_IN_HAND; i++)
 			for (int j = 0; j < numHands; j++)
-				handArray[j].addCard(cardList.remove(0));
-
+			{
+				handArray[j].AddCard(cardList[0]);
+				cardList.RemoveAt(0);
+			}
 		return handArray;
 	}
 }
