@@ -13,7 +13,7 @@ public class Main
 		Hand[] handArray;
 		Deck remainingDeck;
 
-		System.out.println("*** POKER HAND ANALYZER ***\n");
+		System.out.println("*** POKER HAND ANALYZER ***\n\n");
 
 		if (isTesting)
 		{
