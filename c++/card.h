@@ -2,17 +2,23 @@
 #define CARD_H
 
 #include <iostream>
+#include <vector>
 #include <string>
+
+using namespace std;
 
 class Card {
     private:
         int value;
         int suit;
-        static const std::string valueMap[];
-        static const std::string suitMap[];
+        static const vector<string> valueMap;
+        static const vector<string> suitMap;
+        static int getValueIndex(string s);
+        static int getSuitIndex(string s);
 
     public:
         Card(int value, int suit);
+        Card(string valueString, string suitString);
         friend std::ostream& operator<<(std::ostream& os, const Card& c);
 };
 
