@@ -17,6 +17,8 @@ class Deck {
         Deck();
         
         friend ostream& operator<<(ostream& os, const Deck& d);
+
+        void printInOneLine() const;
 };
 
 #endif

@@ -25,3 +25,10 @@ ostream& operator<<(ostream& os, const Deck& d) {
     return os;
 }
 
+void Deck::printInOneLine() const {
+    for (int i = 0; i < cards.size(); i++)
+        cout << cards[i];
+
+    cout << endl;
+}
+
