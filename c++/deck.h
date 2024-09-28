@@ -13,6 +13,8 @@ class Deck {
 
         static int NUM_CARDS;
 
+        void shuffle();
+
     public:
         Deck();
         
