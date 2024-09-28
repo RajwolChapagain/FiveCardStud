@@ -11,15 +11,24 @@ class Card {
     private:
         int value;
         int suit;
+
+        //Static fields
         static const vector<string> valueMap;
         static const vector<string> suitMap;
+
+        //Methods
         static int getValueIndex(string s);
         static int getSuitIndex(string s);
 
     public:
+        //Constructors
         Card(int value, int suit);
         Card(string valueString, string suitString);
+
         friend std::ostream& operator<<(std::ostream& os, const Card& c);
+
+        int getValue() const;
+        int getSuit() const;       
 };
 
 #endif

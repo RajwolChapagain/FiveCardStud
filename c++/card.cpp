@@ -34,3 +34,12 @@ int Card::getSuitIndex(string s) {
 
     return -1;
 }
+
+//=============== Public Methods ===============
+int Card::getValue() const {
+    return value;
+}
+
+int Card::getSuit() const {
+    return suit;
+}
