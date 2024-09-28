@@ -9,6 +9,7 @@ using namespace std;
 
 class Card {
     private:
+        //Fields
         int value;
         int suit;
 
@@ -27,6 +28,7 @@ class Card {
 
         friend std::ostream& operator<<(std::ostream& os, const Card& c);
 
+        //Methods
         int getValue() const;
         int getSuit() const;       
 };
