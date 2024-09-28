@@ -14,10 +14,10 @@ class Card {
         int suit;
 
         //Static fields
-        static const vector<string> valueMap;
-        static const vector<string> suitMap;
+        static const vector<string> VALUE_MAP;
+        static const vector<string> SUIT_MAP;
 
-        //Methods
+        //Static Methods
         static int getValueIndex(string s);
         static int getSuitIndex(string s);
 
