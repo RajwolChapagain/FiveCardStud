@@ -8,7 +8,7 @@ const string Card::suitMap[] = {"D", "C", "H", "S"};
 
 Card::Card(int value, int suit): value(value), suit(suit) {}
 
-/*friend ostream& operator<<(ostream& os, const Card& c) {
-    os << Card.valueMap[c.value] << Card.suitMap[c.suit];
+std::ostream& operator<<(std::ostream& os, const Card& c) {
+    os << Card::valueMap[c.value] << Card::suitMap[c.suit];
     return os;
-}*/
+}

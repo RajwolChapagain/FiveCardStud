@@ -1,3 +1,7 @@
+#ifndef CARD_H
+#define CARD_H
+
+#include <iostream>
 #include <string>
 
 class Card {
@@ -11,3 +15,5 @@ class Card {
         Card(int value, int suit);
         friend std::ostream& operator<<(std::ostream& os, const Card& c);
 };
+
+#endif
