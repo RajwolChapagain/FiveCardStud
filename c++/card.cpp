@@ -24,7 +24,7 @@ Card::Card(int value, int suit): value(value), suit(suit) {
 Card::Card(string valueString, string suitString) : Card(getValueIndex(valueString), getSuitIndex(suitString)) {}
 
 ostream& operator<<(ostream& os, const Card& c) {
-    int printWidth = 3;
+    int printWidth = 4;
     string printString = Card::VALUE_MAP[c.value] + Card::SUIT_MAP[c.suit];
     os << left << setw(printWidth) << printString;
     return os;
