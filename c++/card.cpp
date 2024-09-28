@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "card.h"
 
 using namespace std;
@@ -9,6 +10,8 @@ const string Card::suitMap[] = {"D", "C", "H", "S"};
 Card::Card(int value, int suit): value(value), suit(suit) {}
 
 std::ostream& operator<<(std::ostream& os, const Card& c) {
-    os << Card::valueMap[c.value] << Card::suitMap[c.suit];
+    int printWidth = 3;
+    string printString = Card::valueMap[c.value] + Card::suitMap[c.suit];
+    os << std::left << std::setw(printWidth) << printString;
     return os;
 }
