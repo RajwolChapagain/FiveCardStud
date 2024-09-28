@@ -1,9 +1,13 @@
 #include <iostream>
 #include "card.h"
+#include "deck.h"
 
 using namespace std;
 
 int main() {
-    Card card(1, 2);
+    Deck myDeck;
+
+    cout << myDeck << endl;
+
     return 0;
 }
