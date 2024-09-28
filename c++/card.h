@@ -26,7 +26,7 @@ class Card {
         Card(int value, int suit);
         Card(string valueString, string suitString);
 
-        friend std::ostream& operator<<(std::ostream& os, const Card& c);
+        friend ostream& operator<<(ostream& os, const Card& c);
 
         //Methods
         int getValue() const;
