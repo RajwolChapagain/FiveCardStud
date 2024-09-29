@@ -1,9 +1,13 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
+#include <string>
 #include "deck.h"
 #include "hand.h"
 
 using namespace std;
+
+void printFile(ifstream& f, const string& filePath);
 
 void printDeck(const Deck& d);
 void dealFromDeck(vector<Hand>& hands, Deck& d);
@@ -20,7 +24,10 @@ int main(int argc, char *argv[]) {
     cout << "*** P O K E R   H A N D   A N A L Y Z E R ***" << endl << endl;
 
     if (isTesting) {
-        // printTestFile(argv[1]);
+        string filePath = argv[1];
+        ifstream file(filePath);
+
+        printFile(file, filePath);
         // dealFromFile(hands, file);
         //printHands(hands);
         //printRankedHands();
@@ -37,6 +44,15 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
+void printFile(ifstream& f, const string& filePath) {
+    cout << "*** USING TEST DECK ***" << endl << endl;
+    
+    cout << "*** File: " << filePath << endl;
+
+    string line;
+    while (getline(f,line))
+        cout << line << endl;
+}
 
 void printDeck(const Deck& d) {
     cout << "*** USING RANDOMIZED DECK OF CARDS ***" << endl << endl;
