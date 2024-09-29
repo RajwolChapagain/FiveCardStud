@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     const int NUM_HANDS = 6;
     vector<Hand> hands(NUM_HANDS);
 
-    cout << "*** P O K E R   H A N D   A N A L Y Z E R ***" << endl << endl;
+    cout << "*** P O K E R   H A N D   A N A L Y Z E R ***" << endl << endl << endl;
 
     if (isTesting) {
         string filePath = argv[1];
