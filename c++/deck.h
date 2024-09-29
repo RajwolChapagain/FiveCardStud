@@ -21,6 +21,7 @@ class Deck {
         friend ostream& operator<<(ostream& os, const Deck& d);
 
         void printInOneLine() const;
+        Card dealCard();
 };
 
 #endif

@@ -56,3 +56,9 @@ void Deck::printInOneLine() const {
     cout << endl;
 }
 
+Card Deck::dealCard() {
+    Card topCard = cards[0];
+    cards.erase(cards.begin());
+    return topCard;
+}
+
