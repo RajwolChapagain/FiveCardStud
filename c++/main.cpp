@@ -7,7 +7,9 @@
 
 using namespace std;
 
-void printFile(ifstream& f, const string& filePath);
+void printFile(const string& filePath);
+void dealFromFile(vector<Hand>& hands, const string& filePath, int tokenSize);
+void convertStringToHand(const string& s, Hand& h, int tokenSize);
 
 void printDeck(const Deck& d);
 void dealFromDeck(vector<Hand>& hands, Deck& d);
@@ -25,11 +27,12 @@ int main(int argc, char *argv[]) {
 
     if (isTesting) {
         string filePath = argv[1];
-        ifstream file(filePath);
+        printFile(filePath);
 
-        printFile(file, filePath);
-        // dealFromFile(hands, file);
-        //printHands(hands);
+        const int TOKEN_SIZE = 3; //Size of each comma-separated token in file
+
+        dealFromFile(hands, filePath, TOKEN_SIZE);
+        printHands(hands);
         //printRankedHands();
     }
     else {
@@ -44,14 +47,51 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-void printFile(ifstream& f, const string& filePath) {
+void printFile(const string& filePath) {
     cout << "*** USING TEST DECK ***" << endl << endl;
     
     cout << "*** File: " << filePath << endl;
 
+    ifstream f(filePath);
     string line;
     while (getline(f,line))
         cout << line << endl;
+    cout << endl;
+
+    f.close();
+}
+
+void dealFromFile(vector<Hand>& hands, const string& filePath, int tokenSize) {
+    ifstream f(filePath);
+
+    string line;
+    for (int i = 0; i < hands.size(); i++) {
+        getline(f, line);
+        convertStringToHand(line, hands[i], tokenSize);
+    }
+    
+    f.close();
+}
+
+void convertStringToHand(const string& s, Hand& h, int tokenSize) {
+    int startIndex = 0;
+
+    while (startIndex + tokenSize <= s.size()) {
+        string valueString, suitString;  //valueString: "A", suitString: "D"
+        
+        string token = s.substr(startIndex, tokenSize); //token: " AD"
+
+        suitString = token.substr(token.size() - 1, 1);
+        valueString = token.substr(0, 2);
+
+        int spaceIndex = valueString.find_first_of(' ');
+
+        if (spaceIndex != string::npos) //If the valueString has a preceding space
+            valueString.erase(valueString.begin());
+
+        h.addCard(Card(valueString, suitString));
+        startIndex += tokenSize + 1;
+    }
 }
 
 void printDeck(const Deck& d) {
