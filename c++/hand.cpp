@@ -19,3 +19,11 @@ ostream& operator<<(ostream& os, const Hand& h) {
 void Hand::addCard(Card c) {
     cards.push_back(c);
 }
+
+Hand::HAND_TYPE Hand::getType() const {
+    return type;
+}
+
+void Hand::setType(Hand::HAND_TYPE t) {
+    type = t;
+}
