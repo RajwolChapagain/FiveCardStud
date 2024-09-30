@@ -108,3 +108,15 @@ bool HandIdentifier::isFlush(const vector<Card>& sortedCardList) {
 
     return true;
 }
+
+
+int HandIdentifier::getCardFrequency(const Card& card, const vector<Card>& sortedCardList) {
+    int frequency = 0;
+
+    for (const Card& c : sortedCardList) {
+        if (c.getValue() == card.getValue())
+            frequency += 1;
+    }
+
+    return frequency;
+}
