@@ -63,23 +63,10 @@ bool HandIdentifier::isStraight(const vector<Card>& sortedCardList) {
 }
 
 bool HandIdentifier::isThreeOfAKind(const vector<Card>& sortedCardList) {
-    int sameCounter = 1;
+    vector<int> frequencySet = getFrequencySet(sortedCardList);
 
-    int prevValue = sortedCardList[0].getValue();
-
-    for (int i = 1; i < sortedCardList.size(); i++) {
-        int currentValue = sortedCardList[i].getValue();
-        if (currentValue == prevValue) {
-            sameCounter += 1;
-
-            if (sameCounter == 3)
-                return true;
-        }
-        else {
-            sameCounter = 1;
-            prevValue = currentValue;
-        }
-    }
+    if (find(frequencySet.begin(), frequencySet.end(), 3) != frequencySet.end())
+        return true;
 
     return false;
 }
