@@ -12,6 +12,13 @@ void HandIdentifier::assignType(Hand& h) {
     h.setType(Hand::HIGH_CARD);
 }
 
+bool HandIdentifier::isRoyalStraightFlush(const vector<Card>& sortedCardList) {
+    if (isRoyalStraight(sortedCardList) && isFlush(sortedCardList))
+        return true;
+
+    return false;
+}
+
 bool HandIdentifier::isFlush(const vector<Card>& sortedCardList) {
     int prevSuit = sortedCardList[0].getSuit();
 
