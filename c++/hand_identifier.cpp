@@ -35,6 +35,28 @@ bool HandIdentifier::isStraightFlush(const vector<Card>& sortedCardList) {
     return false;
 }
 
+bool HandIdentifier::isFourOfAKind(const vector<Card>& sortedCardList) {
+    int sameCounter = 1;
+
+    int prevValue = sortedCardList[0].getValue();
+
+    for (int i = 1; i < sortedCardList.size(); i++) {
+        int currentValue = sortedCardList[i].getValue();
+        if (currentValue == prevValue) {
+            sameCounter += 1;
+
+            if (sameCounter == 4)
+                return true;
+        }
+        else {
+            sameCounter = 1;
+            prevValue = currentValue;
+        }
+    }
+
+    return false;
+}
+
 bool HandIdentifier::isStraight(const vector<Card>& sortedCardList) {
     if (isRoyalStraight(sortedCardList))
         return true;

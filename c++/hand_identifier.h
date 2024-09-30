@@ -10,6 +10,7 @@ class HandIdentifier {
         static bool isRoyalStraightFlush(const vector<Card>& sortedCardList);
         static bool isRoyalStraight(const vector<Card>& sortedCardList);
         static bool isStraightFlush(const vector<Card>& sortedCardList);
+        static bool isFourOfAKind(const vector<Card>& sortedCardList);
         static bool isStraight(const vector<Card>& sortedCardList);
         static bool isFlush(const vector<Card>& sortedCardList);
 };
