@@ -55,6 +55,19 @@ bool HandIdentifier::isFullHouse(const vector<Card>& sortedCardList) {
     return false;
 }
 
+bool HandIdentifier::isFlush(const vector<Card>& sortedCardList) {
+    int prevSuit = sortedCardList[0].getSuit();
+
+    for (const Card& c: sortedCardList) {
+        if (c.getSuit() != prevSuit)
+            return false;
+        
+        prevSuit = c.getSuit();
+    }
+
+    return true;
+}
+
 bool HandIdentifier::isStraight(const vector<Card>& sortedCardList) {
     if (isRoyalStraight(sortedCardList))
         return true;
@@ -81,17 +94,22 @@ bool HandIdentifier::isThreeOfAKind(const vector<Card>& sortedCardList) {
     return false;
 }
 
-bool HandIdentifier::isFlush(const vector<Card>& sortedCardList) {
-    int prevSuit = sortedCardList[0].getSuit();
+bool HandIdentifier::isTwoPair(const vector<Card>& sortedCardList) {
+    vector<int> frequencySet = getFrequencySet(sortedCardList);
 
-    for (const Card& c: sortedCardList) {
-        if (c.getSuit() != prevSuit)
-            return false;
-        
-        prevSuit = c.getSuit();
-    }
+    if (count(frequencySet.begin(), frequencySet.end(), 2) == 2)
+        return true;
 
-    return true;
+    return false;
+}
+
+bool HandIdentifier::isPair(const vector<Card>& sortedCardList) {
+    vector<int> frequencySet = getFrequencySet(sortedCardList);
+
+    if (find(frequencySet.begin(), frequencySet.end(), 2) != frequencySet.end())
+        return true;
+
+    return false;
 }
 
 //Returns a vector of integers containing the frequency of each unique card
