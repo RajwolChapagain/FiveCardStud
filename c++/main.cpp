@@ -4,6 +4,7 @@
 #include <string>
 #include "deck.h"
 #include "hand.h"
+#include "hand_identifier.h"
 
 using namespace std;
 
@@ -15,6 +16,7 @@ void printDeck(const Deck& d);
 void dealFromDeck(vector<Hand>& hands, Deck& d);
 void printHands(const vector<Hand>& hands);
 void printRemainingDeck(const Deck& d);
+void assignTypes(vector<Hand>& hands);
 
 // void printTestFile(char *fileName);
 
@@ -33,6 +35,7 @@ int main(int argc, char *argv[]) {
 
         dealFromFile(hands, filePath, TOKEN_SIZE);
         printHands(hands);
+        assignTypes(hands);
         //printRankedHands();
     }
     else {
@@ -41,6 +44,7 @@ int main(int argc, char *argv[]) {
         dealFromDeck(hands, deck);
         printHands(hands);
         printRemainingDeck(deck);
+        assignTypes(hands);
         // printRankedHands();
     }
 
@@ -117,5 +121,10 @@ void printRemainingDeck(const Deck& d) {
     cout << "*** Here is what remains in the deck..." << endl;
     d.printInOneLine();
     cout << endl;
+}
+
+void assignTypes(vector<Hand>& hands) {
+    for (int i = 0; i < hands.size(); i++)
+        HandIdentifier::assignType(hands[i]);
 }
 
