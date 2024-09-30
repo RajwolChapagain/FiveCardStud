@@ -6,6 +6,7 @@
 class HandIdentifier {
     public:
         static void assignType(Hand& h);
+        static bool isFlush(const Hand& h);
 };
 
 #endif
