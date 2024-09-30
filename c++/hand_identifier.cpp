@@ -1,4 +1,5 @@
 #include <vector>
+#include <algorithm>
 #include "card.h"
 #include "hand.h"
 #include "hand_identifier.h"
@@ -123,6 +124,8 @@ vector<int> HandIdentifier::getFrequencySet(const vector<Card>& sortedCardList) 
         frequencySet.push_back(getCardFrequency(c, sortedCardList));
         prevValue = c.getValue();
     }
+
+    sort(frequencySet.begin(), frequencySet.end());
 
     return frequencySet;
 }
