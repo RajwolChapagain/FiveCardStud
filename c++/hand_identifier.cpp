@@ -109,6 +109,23 @@ bool HandIdentifier::isFlush(const vector<Card>& sortedCardList) {
     return true;
 }
 
+//Returns a vector of integers containing the frequency of each unique card
+//Ex: Hand: JD, JH, 3S, 3C, AH
+//    returns: {2, 2, 1}
+vector<int> HandIdentifier::getFrequencySet(const vector<Card>& sortedCardList) {
+    vector<int> frequencySet;
+    
+    int prevValue = -1;
+    for (const Card& c : sortedCardList) {
+        if (c.getValue() == prevValue) //If a card of this value has been counted, move on
+            continue;
+
+        frequencySet.push_back(getCardFrequency(c, sortedCardList));
+        prevValue = c.getValue();
+    }
+
+    return frequencySet;
+}
 
 int HandIdentifier::getCardFrequency(const Card& card, const vector<Card>& sortedCardList) {
     int frequency = 0;

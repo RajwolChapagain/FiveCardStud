@@ -14,6 +14,7 @@ class HandIdentifier {
         static bool isStraight(const vector<Card>& sortedCardList);
         static bool isThreeOfAKind(const vector<Card>& sortedCardList);
         static bool isFlush(const vector<Card>& sortedCardList);
+        static vector<int> getFrequencySet(const vector<Card>& sortedCardList);
         static int getCardFrequency(const Card& card, const vector<Card>& sortedCardList);
 };
 
