@@ -28,6 +28,13 @@ bool HandIdentifier::isRoyalStraight(const vector<Card>& sortedCardList) {
     return false;
 }
 
+bool HandIdentifier::isStraightFlush(const vector<Card>& sortedCardList) {
+    if (isStraight(sortedCardList) && isFlush(sortedCardList))
+        return true;
+
+    return false;
+}
+
 bool HandIdentifier::isStraight(const vector<Card>& sortedCardList) {
     if (isRoyalStraight(sortedCardList))
         return true;
