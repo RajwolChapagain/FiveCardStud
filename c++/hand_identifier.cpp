@@ -37,23 +37,10 @@ bool HandIdentifier::isStraightFlush(const vector<Card>& sortedCardList) {
 }
 
 bool HandIdentifier::isFourOfAKind(const vector<Card>& sortedCardList) {
-    int sameCounter = 1;
+    vector<int> frequencySet = getFrequencySet(sortedCardList);
 
-    int prevValue = sortedCardList[0].getValue();
-
-    for (int i = 1; i < sortedCardList.size(); i++) {
-        int currentValue = sortedCardList[i].getValue();
-        if (currentValue == prevValue) {
-            sameCounter += 1;
-
-            if (sameCounter == 4)
-                return true;
-        }
-        else {
-            sameCounter = 1;
-            prevValue = currentValue;
-        }
-    }
+    if (find(frequencySet.begin(), frequencySet.end(), 4) != frequencySet.end())
+        return true;
 
     return false;
 }
