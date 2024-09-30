@@ -30,6 +30,10 @@ ostream& operator<<(ostream& os, const Card& c) {
     return os;
 }
 
+bool operator<(const Card& card1, const Card& card2) {
+    return card1.getValue() < card2.getValue();
+}
+
 //=============== Private Methods ===============
 int Card::getValueIndex(string s) {
     for (int i = 0; i < Card::VALUE_MAP.size(); i++)

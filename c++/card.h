@@ -27,6 +27,7 @@ class Card {
         Card(string valueString, string suitString);
 
         friend ostream& operator<<(ostream& os, const Card& c);
+        friend bool operator<(const Card& card1, const Card& card2);
 
         //Methods
         int getValue() const;
