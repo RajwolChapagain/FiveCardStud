@@ -45,6 +45,16 @@ bool HandIdentifier::isFourOfAKind(const vector<Card>& sortedCardList) {
     return false;
 }
 
+bool HandIdentifier::isFullHouse(const vector<Card>& sortedCardList) {
+    vector<int> frequencySet = getFrequencySet(sortedCardList);
+
+    if (find(frequencySet.begin(), frequencySet.end(), 3) != frequencySet.end() &&
+         find(frequencySet.begin(), frequencySet.end(), 2) != frequencySet.end())
+        return true;
+
+    return false;
+}
+
 bool HandIdentifier::isStraight(const vector<Card>& sortedCardList) {
     if (isRoyalStraight(sortedCardList))
         return true;
