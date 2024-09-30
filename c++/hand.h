@@ -25,6 +25,7 @@ class Hand {
         void addCard(Card c);
         Hand::HAND_TYPE getType() const;
         void setType(Hand::HAND_TYPE t);
+        vector<Card> getSortedCards() const;
 
     private:
         Hand::HAND_TYPE type; //Had to declare after declaring HAND_TYPE enum

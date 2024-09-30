@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "hand.h"
 #include "card.h"
 
@@ -26,4 +27,11 @@ Hand::HAND_TYPE Hand::getType() const {
 
 void Hand::setType(Hand::HAND_TYPE t) {
     type = t;
+}
+
+vector<Card> Hand::getSortedCards() const {
+    vector<Card> sortedCards(cards);
+    sort(sortedCards.begin(), sortedCards.end());
+
+    return sortedCards;
 }
