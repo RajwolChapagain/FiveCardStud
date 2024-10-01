@@ -17,8 +17,7 @@ void dealFromDeck(vector<Hand>& hands, Deck& d);
 void printHands(const vector<Hand>& hands);
 void printRemainingDeck(const Deck& d);
 void assignTypes(vector<Hand>& hands);
-
-// void printTestFile(char *fileName);
+void printRankedHands(const vector<Hand>& hands);
 
 int main(int argc, char *argv[]) {
     bool isTesting = (argc == 2);
@@ -36,7 +35,7 @@ int main(int argc, char *argv[]) {
         dealFromFile(hands, filePath, TOKEN_SIZE);
         printHands(hands);
         assignTypes(hands);
-        //printRankedHands();
+        printRankedHands(hands);
     }
     else {
         Deck deck;
@@ -45,7 +44,7 @@ int main(int argc, char *argv[]) {
         printHands(hands);
         printRemainingDeck(deck);
         assignTypes(hands);
-        // printRankedHands();
+        printRankedHands(hands);
     }
 
     return 0;
@@ -114,7 +113,7 @@ void dealFromDeck(vector<Hand>& hands, Deck& d) {
 void printHands(const vector<Hand>& hands) {
     cout << "*** Here are the six hands..." << endl;
     for (Hand h: hands)
-        cout << h;
+        cout << h << endl;
     cout << endl;
 }
 
@@ -129,3 +128,9 @@ void assignTypes(vector<Hand>& hands) {
         HandIdentifier::assignType(hands[i]);
 }
 
+void printRankedHands(const vector<Hand>& hands) {
+    cout << "--- WINNING HAND ORDER ---" << endl;
+    for (const Hand& hand : hands)
+        cout << hand << " - " << Hand::HAND_MAP[hand.getType()] << endl;
+    cout << endl;
+}
