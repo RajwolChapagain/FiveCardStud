@@ -16,6 +16,7 @@ class Hand {
         Hand();
 
         friend ostream& operator<<(ostream& os, const Hand& h);
+        friend bool operator>(const Hand& hand1, const Hand& hand2);
         
         static const int HAND_SIZE = 5;
         enum HAND_TYPE {

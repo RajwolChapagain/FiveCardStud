@@ -19,6 +19,10 @@ ostream& operator<<(ostream& os, const Hand& h) {
     return os;
 }
 
+bool operator>(const Hand& hand1, const Hand& hand2) {
+    return hand1.getType() > hand2.getType();
+}
+
 //=============== Public Methods ===============
 void Hand::addCard(Card c) {
     cards.push_back(c);
