@@ -1,10 +1,14 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
 #include "hand.h"
 #include "card.h"
 
 using namespace std;
+
+const vector<string> Hand::HAND_MAP = { "High Card", "Pair", "Two Pair", "Three of a Kind", "Straight",
+                "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Straight Flush" };
 
 Hand::Hand() {}
 

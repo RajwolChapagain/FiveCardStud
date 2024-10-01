@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include "card.h"
 
 using namespace std;
@@ -21,6 +22,7 @@ class Hand {
             HIGH_CARD, PAIR, TWO_PAIR, THREE_OF_A_KIND, STRAIGHT,
             FLUSH, FULL_HOUSE, FOUR_OF_A_KIND, STRAIGHT_FLUSH, ROYAL_STRAIGHT_FLUSH 
         };
+        static const vector<string> HAND_MAP;
 
         void addCard(Card c);
         Hand::HAND_TYPE getType() const;
