@@ -106,8 +106,8 @@ void printDeck(const Deck& d) {
 }
 
 void dealFromDeck(vector<Hand>& hands, Deck& d) {
-    for (int i = 0; i < hands.size(); i++)
-        for (int j = 0; j < Hand::HAND_SIZE; j++)
+    for (int i = 0; i < Hand::HAND_SIZE; i++)
+        for (int j = 0; j < hands.size(); j++)
             hands[j].addCard(d.dealCard());
 }
 
@@ -115,6 +115,7 @@ void printHands(const vector<Hand>& hands) {
     cout << "*** Here are the six hands..." << endl;
     for (Hand h: hands)
         cout << h;
+    cout << endl;
 }
 
 void printRemainingDeck(const Deck& d) {
