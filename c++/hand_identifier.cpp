@@ -7,10 +7,16 @@
 void HandIdentifier::assignType(Hand& h) {
     vector<Card> sortedCardList = h.getSortedCards();
 
-    if (isFlush(sortedCardList))
-        h.setType(Hand::FLUSH);
-
-    h.setType(Hand::HIGH_CARD);
+    if (isRoyalStraightFlush(sortedCardList)) h.setType(Hand::ROYAL_STRAIGHT_FLUSH);
+    else if (isStraightFlush(sortedCardList)) h.setType(Hand::STRAIGHT_FLUSH);
+    else if (isFourOfAKind(sortedCardList)) h.setType(Hand::FOUR_OF_A_KIND);
+    else if (isFullHouse(sortedCardList)) h.setType(Hand::FULL_HOUSE);
+    else if (isFlush(sortedCardList)) h.setType(Hand::FLUSH);
+    else if (isStraight(sortedCardList)) h.setType(Hand::STRAIGHT);
+    else if (isThreeOfAKind(sortedCardList)) h.setType(Hand::THREE_OF_A_KIND);
+    else if (isTwoPair(sortedCardList)) h.setType(Hand::TWO_PAIR);
+    else if (isPair(sortedCardList)) h.setType(Hand::PAIR);
+    else h.setType(Hand::HIGH_CARD);
 }
 
 bool HandIdentifier::isRoyalStraightFlush(const vector<Card>& sortedCardList) {
