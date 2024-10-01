@@ -5,6 +5,7 @@
 #include "deck.h"
 #include "hand.h"
 #include "hand_identifier.h"
+#include "hand_sorter.h"
 
 using namespace std;
 
@@ -35,6 +36,7 @@ int main(int argc, char *argv[]) {
         dealFromFile(hands, filePath, TOKEN_SIZE);
         printHands(hands);
         assignTypes(hands);
+        HandSorter::sortHands(hands);
         printRankedHands(hands);
     }
     else {
@@ -44,6 +46,7 @@ int main(int argc, char *argv[]) {
         printHands(hands);
         printRemainingDeck(deck);
         assignTypes(hands);
+        HandSorter::sortHands(hands);
         printRankedHands(hands);
     }
 
