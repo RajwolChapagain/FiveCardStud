@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 #include <string>
 #include "deck.h"
 #include "hand.h"
@@ -12,6 +13,7 @@ using namespace std;
 void printFile(const string& filePath);
 void dealFromFile(vector<Hand>& hands, const string& filePath, int tokenSize);
 void convertStringToHand(const string& s, Hand& h, int tokenSize);
+bool hasDuplicate(const vector<Hand>& hands);
 
 void printDeck(const Deck& d);
 void dealFromDeck(vector<Hand>& hands, Deck& d);
@@ -34,6 +36,10 @@ int main(int argc, char *argv[]) {
         const int TOKEN_SIZE = 3; //Size of each comma-separated token in file
 
         dealFromFile(hands, filePath, TOKEN_SIZE);
+
+        if (hasDuplicate(hands))
+            return 1;
+
         printHands(hands);
         assignTypes(hands);
         HandSorter::sortHands(hands);
@@ -98,6 +104,27 @@ void convertStringToHand(const string& s, Hand& h, int tokenSize) {
         h.addCard(Card(valueString, suitString));
         startIndex += tokenSize + 1;
     }
+}
+
+bool hasDuplicate(const vector<Hand>& hands) {
+    vector<int> cardHashes;
+
+    for (const Hand& hand: hands) {
+        for (const Card& card: hand.getSortedCards()) {
+            int cardHash = card.getValue() * 10 + card.getSuit();
+
+            if (find(cardHashes.begin(), cardHashes.end(), cardHash) != cardHashes.end()) { 
+                cout << "*** ERROR - DUPLICATED CARD FOUND IN DECK ***" << endl << endl;
+
+                cout << "*** Duplicate: " << card << " ***" << endl;
+                return true;
+            }
+            else
+                cardHashes.push_back(cardHash);
+        }
+    }
+
+    return false;
 }
 
 void printDeck(const Deck& d) {
