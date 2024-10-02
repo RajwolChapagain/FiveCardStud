@@ -9,7 +9,7 @@ using namespace std;
 
 class HandSorter {
     private:
-	static vector<function<bool(const Hand&, const Hand&)>> comparators;
+        static vector<function<bool(const Hand&, const Hand&)>> comparators;
 
     public:
         static void sortHands(vector<Hand>& hands);
