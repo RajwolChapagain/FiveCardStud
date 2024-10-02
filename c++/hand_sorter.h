@@ -15,7 +15,7 @@ class HandSorter {
         static void sortHands(vector<Hand>& hands);
         static void sortHandsByType(vector<Hand>& hands);
         static void sortTies(vector<Hand>& hands);
-	static bool compareRoyalFlush(const Hand& h1, const Hand& h2);
+        static bool compareRoyalFlush(const Hand& h1, const Hand& h2);
 };
 
 #endif

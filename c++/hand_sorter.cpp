@@ -27,19 +27,19 @@ void HandSorter::sortTies(vector<Hand>& hands) {
     function<bool(const Hand&, const Hand&)> comparator;
 
     for (int i = 0; i < hands.size(); i++) {
-	if (hands[i].getType() != lastHandType) {
-	    comparator = comparators[hands[startIndex].getType()];
+        if (hands[i].getType() != lastHandType) {
+            comparator = comparators[hands[startIndex].getType()];
 
-	    sort(hands.begin() + startIndex, hands.begin() + i, comparator);
+            sort(hands.begin() + startIndex, hands.begin() + i, comparator);
 
-	    startIndex = i;
-	    lastHandType = hands[i].getType();
-	}
-	else if (i == hands.size() - 1) {
-	    comparator = comparators[hands[startIndex].getType()];
+            startIndex = i;
+            lastHandType = hands[i].getType();
+        }
+        else if (i == hands.size() - 1) {
+            comparator = comparators[hands[startIndex].getType()];
 
-	    sort(hands.begin() + startIndex, hands.end(), comparator);
-	}
+            sort(hands.begin() + startIndex, hands.end(), comparator);
+        }
     }
 }
 
