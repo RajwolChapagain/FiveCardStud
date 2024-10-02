@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <functional>
 #include "hand.h"
+#include "hand_identifier.h"
 #include "hand_sorter.h"
 
 using namespace std;
@@ -43,9 +44,55 @@ void HandSorter::sortTies(vector<Hand>& hands) {
     }
 }
 
+//=============== Tie-Breaking Comparators ===============
+
 bool HandSorter::compareRoyalFlush(const Hand& h1, const Hand& h2) {
     vector<Card> cardList1 = h1.getSortedCards();
     vector<Card> cardList2 = h2.getSortedCards();
 
     return cardList1[0].getSuit() > cardList2[0].getSuit();
+}
+
+//=============== Helpers ===============
+
+//Returns:
+// 1: If second list has higher card
+//-1: If first list has higher card
+// 0: If both lists have the same cards
+int HandSorter::compareHighestCard(const vector<Card>& cardList1, const vector<Card>& cardList2) {
+    vector<int> valueList1, valueList2;
+
+    for (int i = 0; i < cardList1.size(); i++) {
+        //Push value for first list
+        if (cardList1[i].getValue() == 0) {
+            if (HandIdentifier::isStraight(cardList1))
+                valueList1.push_back(0);
+            else
+                valueList1.push_back(13);
+        }
+        else
+            valueList1.push_back(cardList1[i].getValue());
+
+        //Push value for second list
+        if (cardList2[i].getValue() == 0) {
+            if (HandIdentifier::isStraight(cardList2))
+                valueList2.push_back(0);
+            else
+                valueList2.push_back(13);
+        }
+        else
+            valueList2.push_back(cardList2[i].getValue());
+    }
+
+    sort(valueList1.begin(), valueList1.end(), greater<>());
+    sort(valueList2.begin(), valueList2.end(), greater<>());
+
+    for (int i = 0; i < valueList1.size(); i++) {
+        if (valueList1[i] < valueList2[i])
+            return 1;
+        else if (valueList1[i] > valueList2[i])
+            return -1;
+    }
+
+    return 0;
 }
