@@ -27,17 +27,25 @@ void HandSorter::sortTies(vector<Hand>& hands) {
     function<bool(const Hand&, const Hand&)> comparator;
 
     for (int i = 0; i < hands.size(); i++) {
-	if (hands[i].getType() != lastHandType || i == hands.size() - 1) {
-	    comparator = comparators[hands[i].getType()];
+	if (hands[i].getType() != lastHandType) {
+	    comparator = comparators[hands[startIndex].getType()];
 
-	    sort(hands.begin() + startIndex, hands.begin() + i - 1, comparator);
+	    sort(hands.begin() + startIndex, hands.begin() + i, comparator);
 
 	    startIndex = i;
 	    lastHandType = hands[i].getType();
+	}
+	else if (i == hands.size() - 1) {
+	    comparator = comparators[hands[startIndex].getType()];
+
+	    sort(hands.begin() + startIndex, hands.end(), comparator);
 	}
     }
 }
 
 bool HandSorter::compareRoyalFlush(const Hand& h1, const Hand& h2) {
-    return false;
+    vector<Card> cardList1 = h1.getSortedCards();
+    vector<Card> cardList2 = h2.getSortedCards();
+
+    return cardList1[0].getSuit() > cardList2[0].getSuit();
 }
