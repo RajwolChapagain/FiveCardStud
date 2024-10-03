@@ -18,6 +18,7 @@ class HandSorter {
         static bool compareRoyalFlush(const Hand& h1, const Hand& h2);
         static bool compareStraightFlush(const Hand& h1, const Hand& h2);
         static bool compareFourOfAKind(const Hand& h1, const Hand& h2);
+        static bool compareFullHouse(const Hand& h1, const Hand& h2);
         static bool compareFlush(const Hand& h1, const Hand& h2);
         static bool compareThreeOfAKind(const Hand& h1, const Hand& h2);
 
