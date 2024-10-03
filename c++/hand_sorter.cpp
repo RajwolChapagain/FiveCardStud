@@ -8,7 +8,7 @@
 using namespace std;
 
 vector<function<bool(const Hand&, const Hand&)>> HandSorter::comparators = {
-    compareRoyalFlush, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush,
+    compareRoyalFlush, compareStraightFlush, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush,
     compareRoyalFlush, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush
 };
 
@@ -45,12 +45,27 @@ void HandSorter::sortTies(vector<Hand>& hands) {
 }
 
 //=============== Tie-Breaking Comparators ===============
+//All return true is first hand is stronger
+//and false if second hand is stronger
 
 bool HandSorter::compareRoyalFlush(const Hand& h1, const Hand& h2) {
     vector<Card> cardList1 = h1.getSortedCards();
     vector<Card> cardList2 = h2.getSortedCards();
 
     return cardList1[0].getSuit() > cardList2[0].getSuit();
+}
+
+bool HandSorter::compareStraightFlush(const Hand& h1, const Hand& h2) {
+    vector<Card> cardList1 = h1.getSortedCards();
+    vector<Card> cardList2 = h2.getSortedCards();
+
+    int highestCardComparison = compareHighestCard(cardList1, cardList2);
+    if (highestCardComparison == 1)
+        return false; 
+    else if (highestCardComparison == -1)
+        return true;
+    else
+        return cardList1[0].getSuit() > cardList2[0].getSuit();
 }
 
 //=============== Helpers ===============
