@@ -9,7 +9,7 @@ using namespace std;
 
 vector<function<bool(const Hand&, const Hand&)>> HandSorter::comparators = {
     compareRoyalFlush, compareStraightFlush, compareFourOfAKind, compareRoyalFlush, compareFlush,
-    compareRoyalFlush, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush
+    compareRoyalFlush, compareThreeOfAKind, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush
 };
 
 void HandSorter::sortHands(vector<Hand>& hands) {
@@ -95,6 +95,22 @@ bool HandSorter::compareFlush(const Hand& h1, const Hand& h2) {
         return true;
     else
         return cardList1[0].getSuit() > cardList2[0].getSuit();
+}
+
+bool HandSorter::compareThreeOfAKind(const Hand& h1, const Hand& h2) {
+    Card c1 = getCardOccuringNTimes(h1.getSortedCards(), 3)[0];
+    Card c2 = getCardOccuringNTimes(h2.getSortedCards(), 3)[0];
+
+    int value1 = c1.getValue();
+    int value2 = c2.getValue();
+
+    if (c1.getValue() == 0)
+        value1 = 13;
+
+    if (c2.getValue() == 0)
+        value2 = 13;
+
+    return value1 > value2;
 }
 
 //=============== Helpers ===============
