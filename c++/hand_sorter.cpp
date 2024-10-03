@@ -8,7 +8,7 @@
 using namespace std;
 
 vector<function<bool(const Hand&, const Hand&)>> HandSorter::comparators = {
-    compareRoyalFlush, compareStraightFlush, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush,
+    compareRoyalFlush, compareStraightFlush, compareRoyalFlush, compareRoyalFlush, compareFlush,
     compareRoyalFlush, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush
 };
 
