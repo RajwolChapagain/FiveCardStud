@@ -20,6 +20,7 @@ class HandSorter {
         static bool compareFlush(const Hand& h1, const Hand& h2);
 
         static int compareHighestCard(const vector<Card>& cardList1, const vector<Card>& cardList2);
+        static vector<Card> getCardOccuringNTimes(const vector<Card>& cardList, int n);
 };
 
 #endif

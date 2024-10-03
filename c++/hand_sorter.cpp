@@ -124,3 +124,29 @@ int HandSorter::compareHighestCard(const vector<Card>& cardList1, const vector<C
 
     return 0;
 }
+
+//Expects: A sorted vector of cards
+vector<Card> HandSorter::getCardOccuringNTimes(const vector<Card>& cardList, int n) {
+    vector<Card> result;
+    int cardOccurrence = 1;
+    int lastCardValue = cardList[0].getValue();
+
+    for (int i = 1; i < cardList.size(); i++) {
+        if (cardList[i].getValue() != lastCardValue) {
+            if (cardOccurrence == n)
+                result.push_back(cardList[i-1]);
+
+            cardOccurrence = 1;
+            lastCardValue = cardList[i].getValue();
+        }
+        else
+            cardOccurrence++;
+
+        if (i == cardList.size() - 1) {
+            if (cardOccurrence == n)
+                result.push_back(cardList[i]);
+        }
+    }
+
+    return result;
+}
