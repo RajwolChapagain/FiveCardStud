@@ -68,6 +68,19 @@ bool HandSorter::compareStraightFlush(const Hand& h1, const Hand& h2) {
         return cardList1[0].getSuit() > cardList2[0].getSuit();
 }
 
+bool HandSorter::compareFlush(const Hand& h1, const Hand& h2) {
+    vector<Card> cardList1 = h1.getSortedCards();
+    vector<Card> cardList2 = h2.getSortedCards();
+
+    int highestCardComparison = compareHighestCard(cardList1, cardList2);
+    if (highestCardComparison == 1)
+        return false; 
+    else if (highestCardComparison == -1)
+        return true;
+    else
+        return cardList1[0].getSuit() > cardList2[0].getSuit();
+}
+
 //=============== Helpers ===============
 
 //Returns:
