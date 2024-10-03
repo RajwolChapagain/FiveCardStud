@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <functional>
 #include "hand.h"
+#include "card.h"
 #include "hand_identifier.h"
 #include "hand_sorter.h"
 
@@ -9,7 +10,7 @@ using namespace std;
 
 vector<function<bool(const Hand&, const Hand&)>> HandSorter::comparators = {
     compareRoyalFlush, compareStraightFlush, compareFourOfAKind, compareFullHouse, compareFlush,
-    compareRoyalFlush, compareThreeOfAKind, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush
+    compareStraight, compareThreeOfAKind, compareRoyalFlush, compareRoyalFlush, compareRoyalFlush
 };
 
 void HandSorter::sortHands(vector<Hand>& hands) {
@@ -113,6 +114,19 @@ bool HandSorter::compareFlush(const Hand& h1, const Hand& h2) {
         return cardList1[0].getSuit() > cardList2[0].getSuit();
 }
 
+bool HandSorter::compareStraight(const Hand& h1, const Hand& h2) {
+    vector<Card> cardList1 = h1.getSortedCards();
+    vector<Card> cardList2 = h2.getSortedCards();
+
+    int highestCardComparison = compareHighestCard(cardList1, cardList2);
+    if (highestCardComparison == 1)
+        return false; 
+    else if (highestCardComparison == -1)
+        return true;
+    else
+        return cardList1.back().getSuit() > cardList2.back().getSuit();
+}
+
 bool HandSorter::compareThreeOfAKind(const Hand& h1, const Hand& h2) {
     Card c1 = getCardOccuringNTimes(h1.getSortedCards(), 3)[0];
     Card c2 = getCardOccuringNTimes(h2.getSortedCards(), 3)[0];
@@ -171,6 +185,16 @@ int HandSorter::compareHighestCard(const vector<Card>& cardList1, const vector<C
     }
 
     return 0;
+}
+
+//Does not work for straights with aces as this always treats aces as high
+Card HandSorter::getHighestCard(vector<Card> cardList) {
+    sort(cardList.begin(), cardList.end());
+
+    if (cardList[0].getValue() == 0)
+        return cardList[0];
+
+    return cardList.back();
 }
 
 //Expects: A sorted vector of cards

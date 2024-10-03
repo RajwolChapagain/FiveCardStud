@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <functional>
+#include "card.h"
 #include "hand.h"
 
 using namespace std;
@@ -20,9 +21,11 @@ class HandSorter {
         static bool compareFourOfAKind(const Hand& h1, const Hand& h2);
         static bool compareFullHouse(const Hand& h1, const Hand& h2);
         static bool compareFlush(const Hand& h1, const Hand& h2);
+        static bool compareStraight(const Hand& h1, const Hand& h2);
         static bool compareThreeOfAKind(const Hand& h1, const Hand& h2);
 
         static int compareHighestCard(const vector<Card>& cardList1, const vector<Card>& cardList2);
+        static Card getHighestCard(vector<Card> cardList);
         static vector<Card> getCardOccuringNTimes(const vector<Card>& cardList, int n);
 };
 
