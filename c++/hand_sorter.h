@@ -24,6 +24,7 @@ class HandSorter {
         static bool compareStraight(const Hand& h1, const Hand& h2);
         static bool compareThreeOfAKind(const Hand& h1, const Hand& h2);
         static bool compareTwoPair(const Hand& h1, const Hand& h2);
+        static bool comparePair(const Hand& h1, const Hand& h2);
 
         static int compareHighestCard(const vector<Card>& cardList1, const vector<Card>& cardList2);
         static Card getHighestCard(vector<Card> cardList);

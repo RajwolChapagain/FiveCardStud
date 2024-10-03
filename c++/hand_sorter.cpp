@@ -10,7 +10,7 @@ using namespace std;
 
 vector<function<bool(const Hand&, const Hand&)>> HandSorter::comparators = {
     compareRoyalFlush, compareStraightFlush, compareFourOfAKind, compareFullHouse, compareFlush,
-    compareStraight, compareThreeOfAKind, compareTwoPair, compareRoyalFlush, compareRoyalFlush
+    compareStraight, compareThreeOfAKind, compareTwoPair, comparePair, compareRoyalFlush
 };
 
 void HandSorter::sortHands(vector<Hand>& hands) {
@@ -168,6 +168,33 @@ bool HandSorter::compareTwoPair(const Hand& h1, const Hand& h2) {
     Card kickerCard2 = kicker2[0];
 
     return kickerCard1.getSuit() > kickerCard2.getSuit();
+}
+
+bool HandSorter::comparePair(const Hand& h1, const Hand& h2) {
+    vector<Card> pair1 = getCardOccuringNTimes(h1.getSortedCards(), 2);
+    vector<Card> pair2 = getCardOccuringNTimes(h2.getSortedCards(), 2);
+
+    int highestCardComparison = compareHighestCard(pair1, pair2);
+
+    if (highestCardComparison == 1)
+        return false;
+    else if (highestCardComparison == -1)
+        return true;
+
+   vector<Card> singles1 = getCardOccuringNTimes(h1.getSortedCards(), 1);
+   vector<Card> singles2 = getCardOccuringNTimes(h2.getSortedCards(), 1);
+
+   int highestSingleComparison = compareHighestCard(singles1, singles2);
+
+    if (highestSingleComparison == 1)
+        return false;
+    else if (highestSingleComparison == -1)
+        return true;
+
+    Card highestSingle1 = getHighestCard(singles1);
+    Card highestSingle2 = getHighestCard(singles2);
+    
+    return highestSingle1.getSuit() > highestSingle2.getSuit();
 }
 
 //=============== Helpers ===============
