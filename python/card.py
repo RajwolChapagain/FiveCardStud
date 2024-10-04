@@ -6,6 +6,9 @@ class Card:
         self.value = value
         self.suit = suit
 
+    def __lt__(self, other):
+        return self.getValue() < other.getValue()
+
     def __str__(self):
         cardString = Card.VALUE_MAP[self.getValue()] + Card.SUIT_MAP[self.getSuit()]
         return f"{cardString : >3}"
