@@ -9,8 +9,8 @@
 using namespace std;
 
 vector<function<bool(const Hand&, const Hand&)>> HandSorter::comparators = {
-    compareRoyalFlush, compareStraightFlush, compareFourOfAKind, compareFullHouse, compareFlush,
-    compareStraight, compareThreeOfAKind, compareTwoPair, comparePair, compareRoyalFlush
+   compareHighCard, comparePair, compareTwoPair, compareThreeOfAKind, compareStraight, 
+   compareFlush, compareFullHouse, compareFourOfAKind, compareStraightFlush, compareRoyalFlush
 };
 
 void HandSorter::sortHands(vector<Hand>& hands) {
@@ -195,6 +195,20 @@ bool HandSorter::comparePair(const Hand& h1, const Hand& h2) {
     Card highestSingle2 = getHighestCard(singles2);
     
     return highestSingle1.getSuit() > highestSingle2.getSuit();
+}
+
+bool HandSorter::compareHighCard(const Hand& h1, const Hand& h2) {
+    int highestCardComparison = compareHighestCard(h1.getSortedCards(), h2.getSortedCards());
+
+    if (highestCardComparison == 1)
+        return false;
+    else if (highestCardComparison == -1)
+        return true;
+
+    Card highestCard1 = getHighestCard(h1.getSortedCards());
+    Card highestCard2 = getHighestCard(h2.getSortedCards());
+
+    return highestCard1.getSuit() > highestCard2.getSuit();
 }
 
 //=============== Helpers ===============
