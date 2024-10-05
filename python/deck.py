@@ -40,5 +40,7 @@ class Deck:
             self.cards[i] = self.cards[random_index]
             self.cards[random_index] = temp
 
+    def deal_card(self):
+        return self.cards.pop(0)
 
 
