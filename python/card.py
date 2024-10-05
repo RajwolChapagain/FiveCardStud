@@ -23,3 +23,9 @@ class Card:
 
     def get_suit(self):
         return self.suit
+
+    def get_value_index(value):
+        return Card.VALUE_MAP.index(value)
+
+    def get_suit_index(suit):
+        return Card.SUIT_MAP.index(suit) 
