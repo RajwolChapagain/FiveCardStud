@@ -1,6 +1,27 @@
 class HandIdentifier:
     def assign_type(hand):
-        pass
+        cards = hand.get_sorted_cards()
+
+        if HandIdentifier.is_royal_straight_flush(cards):
+            hand.set_type(9) 
+        elif HandIdentifier.is_straight_flush(cards):
+            hand.set_type(8)
+        elif HandIdentifier.is_four_of_a_kind(cards):
+            hand.set_type(7)
+        elif HandIdentifier.is_full_house(cards):
+            hand.set_type(6)
+        elif HandIdentifier.is_flush(cards):
+            hand.set_type(5)
+        elif HandIdentifier.is_straight(cards):
+            hand.set_type(4)
+        elif HandIdentifier.is_three_of_a_kind(cards):
+            hand.set_type(3)
+        elif HandIdentifier.is_two_pair(cards):
+            hand.set_type(2)
+        elif HandIdentifier.is_pair(cards):
+            hand.set_type(1)
+        else:
+            hand.set_type(0)
 
     def is_royal_straight_flush(cards):
         if HandIdentifier.is_royal_straight(cards) and HandIdentifier.is_flush(cards):
