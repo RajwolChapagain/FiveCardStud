@@ -8,14 +8,20 @@ class HandIdentifier:
 
         return False
 
+    def is_royal_straight(cards):
+        if cards[0].get_value() == 0 and cards[1].get_value() == 9 and cards[2].get_value() == 10 and cards[3].get_value() == 11 and cards[4].get_value() == 12:
+            return True
+
+        return False
+
     def is_straight_flush(cards):
         if HandIdentifier.is_straight(cards) and HandIdentifier.is_flush(cards):
             return True
 
         return False
 
-    def is_royal_straight(cards):
-        if cards[0].get_value() == 0 and cards[1].get_value() == 9 and cards[2].get_value() == 10 and cards[3].get_value() == 11 and cards[4].get_value() == 12:
+    def is_four_of_a_kind(cards):
+        if 4 in HandIdentifier.get_frequency_set(cards):
             return True
 
         return False
@@ -46,3 +52,17 @@ class HandIdentifier:
             prev_value = curr_value
 
         return True
+
+#=============== Helper methods ===============  
+    def get_frequency_set(cards):
+        frequency_set = []
+
+        prev_value = -1
+        for card in cards:
+            if card.get_value() == prev_value:
+                continue
+
+            frequency_set.append(cards.count(card))
+            prev_value = card.get_value()
+
+        return sorted(frequency_set)
