@@ -1,3 +1,4 @@
+import random
 from card import Card
 
 class Deck:
@@ -7,6 +8,8 @@ class Deck:
         self.cards = []
         for i in range(Deck.NUM_CARDS):
             self.cards.append(Card(i % 13, int(i / 13)))
+
+        self.shuffle()
     
     def __str__(self):
         CARDS_PER_LINE = 13
@@ -28,3 +31,14 @@ class Deck:
             result += str(card)
 
         return result
+
+    def shuffle(self):
+        for i, card in enumerate(self.cards):
+            random_index = random.randrange(0, 52)
+
+            temp = self.cards[i]
+            self.cards[i] = self.cards[random_index]
+            self.cards[random_index] = temp
+
+
+
