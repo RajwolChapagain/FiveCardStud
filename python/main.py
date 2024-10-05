@@ -10,13 +10,23 @@ def main():
     print('*** P O K E R   H A N D   A N A L Y Z E R ***\n\n')
 
     if is_testing:
-        pass
+        file_path = sys.argv[1]
+        print_file(file_path)
     else:
         deck = Deck()
         print_deck(deck)
         deal_from_deck(hands, deck)
         print_hands(hands)
         print_remaining_deck(deck)
+
+#=============== Testing functions ===============
+def print_file(path):
+    print('*** USING TEST DECK ***\n')
+
+    print('*** File: ' + path)
+
+    with open(path, 'r') as f:
+        print(f.read())
 
 #=============== Non-testing functions ===============
 
@@ -36,16 +46,17 @@ def deal_from_deck(hands, deck):
         for j in range(NUM_HANDS):
             hands[j].add_card(deck.deal_card())
 
+def print_remaining_deck(deck):
+    print('*** Here is what remains in the deck...')
+    print(repr(deck))
+
+#=============== Common functions ===============
 def print_hands(hands):
     print('*** Here are the six hands...')
 
     for hand in hands:
         print(hand)
     print()
-
-def print_remaining_deck(deck):
-    print('*** Here is what remains in the deck...')
-    print(repr(deck))
 
 if __name__ == '__main__':
     main()
