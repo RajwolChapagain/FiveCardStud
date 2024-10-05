@@ -53,6 +53,12 @@ class HandIdentifier:
 
         return True
 
+    def is_three_of_a_kind(cards):
+        if 3 in HandIdentifier.get_frequency_set(cards):
+            return True
+
+        return False
+
 #=============== Helper methods ===============  
     def get_frequency_set(cards):
         frequency_set = []
