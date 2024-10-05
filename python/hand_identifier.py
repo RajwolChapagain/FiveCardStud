@@ -24,3 +24,19 @@ class HandIdentifier:
             prev_suit = card.get_suit()
 
         return True
+
+    def is_straight(cards):
+        if HandIdentifier.is_royal_straight(cards):
+            return True
+
+        prev_value = cards[0].get_value() - 1
+
+        for card in cards:
+            curr_value = card.get_value()
+
+            if curr_value != prev_value + 1:
+                return False
+
+            prev_value = curr_value
+
+        return True
