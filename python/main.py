@@ -5,13 +5,19 @@ from hand import Hand
 
 def main():
     is_testing = len(sys.argv) > 1
+    NUM_HANDS = 6
     hands = []
+
+    for i in range(NUM_HANDS):
+        hands.append(Hand())
 
     print('*** P O K E R   H A N D   A N A L Y Z E R ***\n\n')
 
     if is_testing:
         file_path = sys.argv[1]
         print_file(file_path)
+        deal_from_file(hands, file_path)
+        print_hands(hands)
     else:
         deck = Deck()
         print_deck(deck)
@@ -28,6 +34,12 @@ def print_file(path):
     with open(path, 'r') as f:
         print(f.read())
 
+def deal_from_file(hands, path):
+    with open(path, 'r') as f:
+        for i, line in enumerate(f.readlines()):
+            for token in line.split(','):
+                hands[i].add_card(Card(token))
+
 #=============== Non-testing functions ===============
 
 def print_deck(deck):
@@ -37,14 +49,9 @@ def print_deck(deck):
     print(deck)
 
 def deal_from_deck(hands, deck):
-    NUM_HANDS  = 6
-
-    for i in range(NUM_HANDS):
-        hands.append(Hand())
-
     for i in range(Hand.HAND_SIZE):
-        for j in range(NUM_HANDS):
-            hands[j].add_card(deck.deal_card())
+        for hand in hands:
+            hand.add_card(deck.deal_card())
 
 def print_remaining_deck(deck):
     print('*** Here is what remains in the deck...')
