@@ -10,8 +10,9 @@ class Card:
         return self.get_value() < other.get_value()
 
     def __str__(self):
+        PRINT_WIDTH = 4
         card_string = Card.VALUE_MAP[self.get_value()] + Card.SUIT_MAP[self.get_suit()]
-        return f"{card_string : >3}"
+        return f"{card_string : <{PRINT_WIDTH}}"
 
     def __repr__(self):
         class_name = self.__class__.__name__
