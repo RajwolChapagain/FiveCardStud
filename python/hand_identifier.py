@@ -67,6 +67,12 @@ class HandIdentifier:
 
         return False
 
+    def is_two_pair(cards):
+        if HandIdentifier.get_frequency_set(cards).count(2) == 2:
+            return True
+
+        return False
+
 #=============== Helper methods ===============  
     def get_frequency_set(cards):
         frequency_set = []
