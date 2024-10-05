@@ -2,6 +2,7 @@ import sys
 from card import Card
 from deck import Deck
 from hand import Hand
+from hand_identifier import HandIdentifier
 
 def main():
     is_testing = len(sys.argv) > 1
@@ -18,12 +19,16 @@ def main():
         print_file(file_path)
         deal_from_file(hands, file_path)
         print_hands(hands)
+        assign_types(hands)
+        print_ranked_hands(hands)
     else:
         deck = Deck()
         print_deck(deck)
         deal_from_deck(hands, deck)
         print_hands(hands)
         print_remaining_deck(deck)
+        assign_types(hands)
+        print_ranked_hands(hands)
 
 #=============== Testing functions ===============
 def print_file(path):
@@ -56,6 +61,7 @@ def deal_from_deck(hands, deck):
 def print_remaining_deck(deck):
     print('*** Here is what remains in the deck...')
     print(repr(deck))
+    print()
 
 #=============== Common functions ===============
 def print_hands(hands):
@@ -63,6 +69,17 @@ def print_hands(hands):
 
     for hand in hands:
         print(hand)
+    print()
+
+def assign_types(hands):
+    for hand in hands:
+        HandIdentifier.assign_type(hand)
+
+def print_ranked_hands(hands):
+    print("--- WINNING HAND ORDER ---")
+
+    for hand in hands:
+        print(f'{hand} - {Hand.HAND_MAP[hand.get_type()]}')
     print()
 
 if __name__ == '__main__':
