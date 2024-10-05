@@ -3,6 +3,7 @@ from card import Card
 from deck import Deck
 from hand import Hand
 from hand_identifier import HandIdentifier
+from hand_sorter import HandSorter
 
 def main():
     is_testing = len(sys.argv) > 1
@@ -20,6 +21,7 @@ def main():
         deal_from_file(hands, file_path)
         print_hands(hands)
         assign_types(hands)
+        HandSorter.sort_hands(hands)
         print_ranked_hands(hands)
     else:
         deck = Deck()
@@ -28,6 +30,7 @@ def main():
         print_hands(hands)
         print_remaining_deck(deck)
         assign_types(hands)
+        HandSorter.sort_hands(hands)
         print_ranked_hands(hands)
 
 #=============== Testing functions ===============
