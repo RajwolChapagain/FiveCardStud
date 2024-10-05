@@ -20,3 +20,11 @@ class Deck:
                 result += '\n'
 
         return result
+
+    def __repr__(self):
+        result = ''
+
+        for i, card in enumerate(self.cards):
+            result += str(card)
+
+        return result
