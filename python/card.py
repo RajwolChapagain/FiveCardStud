@@ -27,6 +27,9 @@ class Card:
     def __lt__(self, other):
         return self.get_value() < other.get_value()
 
+    def __eq__(self, other):
+        return self.get_value() == other.get_value()
+
     def __str__(self):
         PRINT_WIDTH = 4
         card_string = Card.VALUE_MAP[self.get_value()] + Card.SUIT_MAP[self.get_suit()]
