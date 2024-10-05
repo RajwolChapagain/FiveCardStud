@@ -26,6 +26,14 @@ class HandIdentifier:
 
         return False
 
+    def is_full_house(cards):
+        frequency_set = HandIdentifier.get_frequency_set(cards)
+
+        if 3 in frequency_set and 2 in frequency_set:
+            return True
+
+        return False
+
     def is_flush(cards):
         prev_suit = cards[0].get_suit()
 
