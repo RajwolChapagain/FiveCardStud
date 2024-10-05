@@ -8,6 +8,12 @@ class HandIdentifier:
 
         return False
 
+    def is_straight_flush(cards):
+        if HandIdentifier.is_straight(cards) and HandIdentifier.is_flush(cards):
+            return True
+
+        return False
+
     def is_royal_straight(cards):
         if cards[0].get_value() == 0 and cards[1].get_value() == 9 and cards[2].get_value() == 10 and cards[3].get_value() == 11 and cards[4].get_value() == 12:
             return True
