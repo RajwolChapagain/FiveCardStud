@@ -1,4 +1,6 @@
 from functools import cmp_to_key
+from hand import Hand
+from hand_identifier import HandIdentifier
 
 class HandSorter:
     def sort_hands(hands):
@@ -37,3 +39,37 @@ class HandSorter:
             return -1
         
         return 1
+
+#=============== Helpers ===============
+    def compare_highest_card(l1, l2):
+        value_list1 = []
+        value_list2 = []
+
+        for card1, card2 in zip(l1, l2):
+            if card1.get_value() == 0:
+                if HandIdentifier.is_straight(l1) and len(l1) == Hand.HAND_SIZE:
+                    value_list1.append(0)
+                else:
+                    value_list1.append(13)
+            else:
+                value_list1.append(card1.get_value())
+
+            if card2.get_value() == 0:
+                if HandIdentifier.is_straight(l2) and len(l2) == Hand.HAND_SIZE:
+                    value_list2.append(0)
+                else:
+                    value_list2.append(13)
+            else:
+                value_list2.append(card2.get_value())
+
+        value_list1.sort(reverse=True)
+        value_list2.sort(reverse=True)
+
+        for value1, value2 in zip(value_list1, value_list2):
+            if value1 > value2:
+                return -1
+            elif value1 < value2:
+                return 1
+
+        return 0
+
