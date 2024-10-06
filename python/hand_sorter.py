@@ -1,3 +1,4 @@
+import copy
 from functools import cmp_to_key
 from hand import Hand
 from hand_identifier import HandIdentifier
@@ -172,8 +173,8 @@ class HandSorter:
         if kicker_card_comparison != 0:
             return kicker_card_comparison
 
-        kicker_card1= kicker1[0]
-        kicker_card2= kicker2[0]
+        kicker_card1 = kicker1[0]
+        kicker_card2 = kicker2[0]
 
         if kicker_card1.get_suit() > kicker_card2.get_suit():
             return -1
@@ -197,8 +198,8 @@ class HandSorter:
         if highest_single_comparison != 0:
             return highest_single_comparison
 
-        highest_single1= max(singles1) 
-        highest_single2= max(singles2) 
+        highest_single1 = copy.deepcopy(max(singles1))
+        highest_single2 = copy.deepcopy(max(singles2)) 
 
         if min(singles1).get_value() == 0:
             highest_single1 = min(singles1)
@@ -211,7 +212,24 @@ class HandSorter:
         return 1
 
     def compare_high_card(h1, h2):
-        return -1
+        highest_card_comparison = HandSorter.compare_highest_card(h1.get_sorted_cards(), h2.get_sorted_cards())
+
+        if highest_card_comparison != 0:
+            return highest_card_comparison
+        
+        highest_card1 = copy.deepcopy(max(h1.get_sorted_cards()))
+        highest_card2 = copy.deepcopy(max(h2.get_sorted_cards())) 
+
+        if min(h1.get_sorted_cards()).get_value() == 0:
+            highest_card1 = min(h1.get_sorted_cards())
+        if min(h2.get_sorted_cards()).get_value() == 0:
+            highest_card2 = min(h2.get_sorted_cards())
+
+        if highest_card1.get_suit() > highest_card2.get_suit():
+            return -1
+
+        return 1
+
 #=============== Helpers ===============
     def compare_highest_card(l1, l2):
         value_list1 = []
