@@ -24,8 +24,27 @@ class HandSorter:
                 hands[start_index:] = HandSorter.sort_subarray(hands[start_index:])
 
     def sort_subarray(hands):
-        if hands[0].get_type() == 9:
+        hand_type = hands[0].get_type()
+        if hand_type == 9:
             hands.sort(key=cmp_to_key(HandSorter.compare_royal_flush))
+        elif hand_type == 8:
+            hands.sort(key=cmp_to_key(HandSorter.compare_straight_flush))
+        elif hand_type == 7:
+            hands.sort(key=cmp_to_key(HandSorter.compare_four_of_a_kind))
+        elif hand_type == 6:
+            hands.sort(key=cmp_to_key(HandSorter.compare_full_house))
+        elif hand_type == 5:
+            hands.sort(key=cmp_to_key(HandSorter.compare_flush))
+        elif hand_type == 4:
+            hands.sort(key=cmp_to_key(HandSorter.compare_straight))
+        elif hand_type == 3:
+            hands.sort(key=cmp_to_key(HandSorter.compare_three_of_a_kind))
+        elif hand_type == 2:
+            hands.sort(key=cmp_to_key(HandSorter.compare_two_pair))
+        elif hand_type == 1:
+            hands.sort(key=cmp_to_key(HandSorter.compare_pair))
+        else:
+            hands.sort(key=cmp_to_key(HandSorter.compare_high_card))
 
         return hands
 
@@ -40,6 +59,43 @@ class HandSorter:
         
         return 1
 
+    def compare_straight_flush(h1, h2):
+        l1 = h1.get_sorted_cards()
+        l2 = h2.get_sorted_cards()
+
+        highest_card_comparison = HandSorter.compare_highest_card(l1, l2)
+
+        if highest_card_comparison != 0:
+            return highest_card_comparison
+        
+        if l1[0].get_suit() > l2[0].get_suit():
+            return -1
+        
+        return 1
+
+    def compare_four_of_a_kind(h1, h2):
+        return -1
+
+    def compare_full_house(h1, h2):
+        return -1
+
+    def compare_flush(h1, h2):
+        return -1
+
+    def compare_straight(h1, h2):
+        return -1
+
+    def compare_three_of_a_kind(h1, h2):
+        return -1
+
+    def compare_two_pair(h1, h2):
+        return -1
+
+    def compare_pair(h1, h2):
+        return -1
+
+    def compare_high_card(h1, h2):
+        return -1
 #=============== Helpers ===============
     def compare_highest_card(l1, l2):
         value_list1 = []
