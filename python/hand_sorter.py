@@ -156,7 +156,29 @@ class HandSorter:
         return 1
 
     def compare_two_pair(h1, h2):
-        return -1
+        pairs1 = HandSorter.get_cards_occuring_n_times(h1.get_sorted_cards(), 2)
+        pairs2 = HandSorter.get_cards_occuring_n_times(h2.get_sorted_cards(), 2)
+
+        highest_card_comparison = HandSorter.compare_highest_card(pairs1, pairs2)
+
+        if highest_card_comparison != 0:
+            return highest_card_comparison
+
+        kicker1 = HandSorter.get_cards_occuring_n_times(h1.get_sorted_cards(), 1)
+        kicker2 = HandSorter.get_cards_occuring_n_times(h2.get_sorted_cards(), 1)
+
+        kicker_card_comparison = HandSorter.compare_highest_card(kicker1, kicker2)
+
+        if kicker_card_comparison != 0:
+            return kicker_card_comparison
+
+        kicker_card1= kicker1[0]
+        kicker_card2= kicker2[0]
+
+        if kicker_card1.get_suit() > kicker_card2.get_suit():
+            return -1
+
+        return 1
 
     def compare_pair(h1, h2):
         return -1
@@ -170,16 +192,22 @@ class HandSorter:
 
         for card1, card2 in zip(l1, l2):
             if card1.get_value() == 0:
-                if HandIdentifier.is_straight(l1) and len(l1) == Hand.HAND_SIZE:
-                    value_list1.append(0)
+                if len(l1) == Hand.HAND_SIZE:
+                    if HandIdentifier.is_straight(l1): 
+                        value_list1.append(0)
+                    else:
+                        value_list1.append(13)
                 else:
                     value_list1.append(13)
             else:
                 value_list1.append(card1.get_value())
 
             if card2.get_value() == 0:
-                if HandIdentifier.is_straight(l2) and len(l2) == Hand.HAND_SIZE:
-                    value_list2.append(0)
+                if len(l2) == Hand.HAND_SIZE:
+                    if HandIdentifier.is_straight(l2):
+                        value_list2.append(0)
+                    else:
+                        value_list2.append(13)
                 else:
                     value_list2.append(13)
             else:
