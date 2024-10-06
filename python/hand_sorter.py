@@ -124,7 +124,18 @@ class HandSorter:
         return 1
 
     def compare_straight(h1, h2):
-        return -1
+        l1 = h1.get_sorted_cards()
+        l2 = h2.get_sorted_cards()
+
+        highest_card_comparison = HandSorter.compare_highest_card(l1, l2)
+
+        if highest_card_comparison != 0:
+            return highest_card_comparison
+        
+        if max(l1).get_suit() > max(l2).get_suit():
+            return -1
+        
+        return 1
 
     def compare_three_of_a_kind(h1, h2):
         c1 = HandSorter.get_cards_occuring_n_times(h1.get_sorted_cards(), 3)[0]
