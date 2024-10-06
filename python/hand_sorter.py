@@ -92,7 +92,22 @@ class HandSorter:
         return 1
 
     def compare_full_house(h1, h2):
-        return -1
+        c1 = HandSorter.get_cards_occuring_n_times(h1.get_sorted_cards(), 3)[0]
+        c2 = HandSorter.get_cards_occuring_n_times(h2.get_sorted_cards(), 3)[0]
+
+        value1 = c1.get_value()
+        value2 = c2.get_value()
+
+        if c1.get_value() == 0:
+            value1 = 13
+
+        if c2.get_value() == 0:
+            value2 = 13
+
+        if value1 > value2:
+            return -1
+
+        return 1
 
     def compare_flush(h1, h2):
         return -1
