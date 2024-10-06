@@ -62,7 +62,7 @@ def has_duplicate(hands):
             if card_hash in card_hashes:
                 print('*** ERROR - DUPLICATED CARD FOUND IN DECK ***\n')
 
-                print(f'*** Duplicate:{card} ***')
+                print(f'*** Duplicate: {card.__str__(PRINT_WIDTH=0)} ***')
                 return True
             else:
                 card_hashes.append(card_hash)
