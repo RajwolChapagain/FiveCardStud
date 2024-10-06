@@ -61,4 +61,17 @@ To use a test set of hands, pass the relative path of the appropriately formatte
 ./a.out ../handsets/test
 ```
 
+### Python
+1. Navigate to the python directory:
+```
+cd fivecardstud/python
+```
+2. Run the code:
+```
+python3 main.py
+```
+To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
+```
+python3 main.py ../handsets/test
+```
 
