@@ -181,7 +181,34 @@ class HandSorter:
         return 1
 
     def compare_pair(h1, h2):
-        return -1
+        pair1 = HandSorter.get_cards_occuring_n_times(h1.get_sorted_cards(), 2)
+        pair2 = HandSorter.get_cards_occuring_n_times(h2.get_sorted_cards(), 2)
+
+        highest_card_comparison = HandSorter.compare_highest_card(pair1, pair2)
+
+        if highest_card_comparison != 0:
+            return highest_card_comparison
+
+        singles1 = HandSorter.get_cards_occuring_n_times(h1.get_sorted_cards(), 1)
+        singles2 = HandSorter.get_cards_occuring_n_times(h2.get_sorted_cards(), 1)
+
+        highest_single_comparison = HandSorter.compare_highest_card(singles1, singles2)
+
+        if highest_single_comparison != 0:
+            return highest_single_comparison
+
+        highest_single1= max(singles1) 
+        highest_single2= max(singles2) 
+
+        if min(singles1).get_value() == 0:
+            highest_single1 = min(singles1)
+        if min(singles2).get_value() == 0:
+            highest_single2 = min(singles2)
+
+        if highest_single1.get_suit() > highest_single2.get_suit():
+            return -1
+
+        return 1
 
     def compare_high_card(h1, h2):
         return -1
