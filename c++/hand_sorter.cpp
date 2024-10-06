@@ -223,8 +223,11 @@ int HandSorter::compareHighestCard(const vector<Card>& cardList1, const vector<C
     for (int i = 0; i < cardList1.size(); i++) {
         //Push value for first list
         if (cardList1[i].getValue() == 0) {
-            if (HandIdentifier::isStraight(cardList1) && cardList1.size() == Hand::HAND_SIZE)
-                valueList1.push_back(0);
+            if (cardList1.size() == Hand::HAND_SIZE)
+                if (HandIdentifier::isStraight(cardList1))
+                    valueList1.push_back(0);
+                else
+                    valueList1.push_back(13);
             else
                 valueList1.push_back(13);
         }
@@ -233,8 +236,11 @@ int HandSorter::compareHighestCard(const vector<Card>& cardList1, const vector<C
 
         //Push value for second list
         if (cardList2[i].getValue() == 0) {
-            if (HandIdentifier::isStraight(cardList2) && cardList1.size() == Hand::HAND_SIZE)
-                valueList2.push_back(0);
+            if (cardList2.size() == Hand::HAND_SIZE)
+                if (HandIdentifier::isStraight(cardList2)) 
+                    valueList2.push_back(0);
+                else
+                    valueList2.push_back(13);
             else
                 valueList2.push_back(13);
         }
