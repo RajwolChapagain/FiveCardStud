@@ -110,7 +110,18 @@ class HandSorter:
         return 1
 
     def compare_flush(h1, h2):
-        return -1
+        l1 = h1.get_sorted_cards()
+        l2 = h2.get_sorted_cards()
+
+        highest_card_comparison = HandSorter.compare_highest_card(l1, l2)
+
+        if highest_card_comparison != 0:
+            return highest_card_comparison
+        
+        if l1[0].get_suit() > l2[0].get_suit():
+            return -1
+        
+        return 1
 
     def compare_straight(h1, h2):
         return -1
