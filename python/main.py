@@ -19,6 +19,10 @@ def main():
         file_path = sys.argv[1]
         print_file(file_path)
         deal_from_file(hands, file_path)
+
+        if has_duplicate(hands):
+            return
+
         print_hands(hands)
         assign_types(hands)
         HandSorter.sort_hands(hands)
@@ -47,6 +51,23 @@ def deal_from_file(hands, path):
         for i, line in enumerate(f.readlines()):
             for token in line.split(','):
                 hands[i].add_card(Card(token))
+
+def has_duplicate(hands):
+    card_hashes = []
+
+    for hand in hands:
+        for card in hand.get_sorted_cards():
+            card_hash = card.get_value() * 10 + card.get_suit()
+
+            if card_hash in card_hashes:
+                print('*** ERROR - DUPLICATED CARD FOUND IN DECK ***\n')
+
+                print(f'*** Duplicate:{card} ***')
+                return True
+            else:
+                card_hashes.append(card_hash)
+
+    return False
 
 #=============== Non-testing functions ===============
 
