@@ -129,3 +129,14 @@ class HandSorter:
 
         return 0
 
+    def get_cards_occuring_n_times(card_list, n):
+        result = []
+        occurence = 1
+        last_val = card_list[0].get_value()
+        
+        for card in card_list:
+            if card not in result:
+                if card_list.count(card) == n:
+                    result.append(card)
+
+        return result
