@@ -3,7 +3,7 @@ module card_module
 
     private
     public :: Card, init_card, get_value, get_suit, to_string
-    public :: VALUE_MAP!, SUIT_MAP
+    public :: VALUE_MAP, SUIT_MAP
 
     character(2) :: VALUE_MAP(0:12)
     character(1) :: SUIT_MAP(0:3)
