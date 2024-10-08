@@ -3,6 +3,12 @@ module card_module
 
     private
     public :: Card, init_card, get_value, get_suit
+    public :: VALUE_MAP!, SUIT_MAP
+
+    character(2) :: VALUE_MAP(13)
+    character(1) :: SUIT_MAP(4)
+    data VALUE_MAP / 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K' /
+    data SUIT_MAP / 'D', 'C', 'H', 'S' /
 
     type Card
         integer :: val, suit
