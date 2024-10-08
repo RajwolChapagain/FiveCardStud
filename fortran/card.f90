@@ -2,18 +2,18 @@ module card_module
     implicit none
 
     private
-    public :: Card, init_card, get_value, get_suit
+    public :: Card, init_card, get_value, get_suit, to_string
     public :: VALUE_MAP!, SUIT_MAP
 
-    character(2) :: VALUE_MAP(13)
-    character(1) :: SUIT_MAP(4)
+    character(2) :: VALUE_MAP(0:12)
+    character(1) :: SUIT_MAP(0:3)
     data VALUE_MAP / 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K' /
     data SUIT_MAP / 'D', 'C', 'H', 'S' /
 
     type Card
         integer :: val, suit
     contains
-        procedure :: init_card, get_value, get_suit
+        procedure :: init_card, get_value, get_suit, to_string
     end type Card
 
 contains
@@ -35,5 +35,11 @@ contains
         integer :: suit
         suit = this%suit
     end function get_suit
+
+    function to_string(this) result (string)
+        class(card) :: this
+        character(:), allocatable :: string
+        string = trim(VALUE_MAP(this%get_value())) // trim(SUIT_MAP(this%get_suit()))
+    end function to_string
 
 end module card_module
