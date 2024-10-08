@@ -36,10 +36,13 @@ contains
         suit = this%suit
     end function get_suit
 
-    function to_string(this) result (string)
+    function to_string(this) result (padded_string)
         class(card) :: this
         character(:), allocatable :: string
+        character(4) :: padded_string
         string = trim(VALUE_MAP(this%get_value())) // trim(SUIT_MAP(this%get_suit()))
+        padded_string = adjustl(string)
+        
     end function to_string
 
 end module card_module
