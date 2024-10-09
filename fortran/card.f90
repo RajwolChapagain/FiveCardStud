@@ -2,8 +2,7 @@ module card_module
     implicit none
 
     private
-    public :: Card
-    public :: VALUE_MAP, SUIT_MAP
+    public :: VALUE_MAP, SUIT_MAP, Card
 
     character(2) :: VALUE_MAP(0:12)
     character(1) :: SUIT_MAP(0:3)
