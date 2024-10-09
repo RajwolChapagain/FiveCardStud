@@ -9,6 +9,7 @@ module hand_module
     type hand
         type(card) :: cards(0:4)
         integer :: last_index = -1
+        integer :: hand_type = -1
     contains
         procedure :: add_card, to_string
     end type hand
