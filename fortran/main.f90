@@ -6,12 +6,21 @@ program main
     type(Card) :: deck(0:51)
     type(card) :: new_card
     type(hand) :: hands(0:5)
-    integer :: i,j 
+    integer :: i,j, argc
+    logical :: is_testing
 
     print *, '*** P O K E R   H A N D   A N A L Y Z E R ***'
     print *, ''
     print *, ''
     
+    argc = command_argument_count()
+    
+    if (argc == 1) then
+        is_testing = .true.
+    else
+        is_testing = .false.
+    end if
+
     call init_deck(deck)
     call print_deck(deck)
     call deal_from_deck(hands, deck)
