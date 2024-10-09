@@ -28,7 +28,13 @@ program main
         call get_command_argument(1, cmdarg)
         call print_file(cmdarg) 
         call deal_from_file(hands, cmdarg)
+
+        if (has_duplicate(hands)) then
+            stop
+        end if
+
         call print_hands(hands)
+
     else
         call init_deck(deck)
         call print_deck(deck)
@@ -159,5 +165,37 @@ contains
 
         close(5)
     end subroutine deal_from_file
+
+    logical function has_duplicate(hands) result(found_duplicate)
+        type(hand), intent(in) :: hands(0:5)
+        type(card) :: current_card
+        integer :: card_hashes(30)
+        integer i, j, k, card_hash
+
+        card_hashes(:) = -1
+
+        found_duplicate = .false.
+
+        outer_loop : do i = 0, 5
+            do j = 0, 4
+                current_card = hands(i)%cards(j)
+                card_hash = current_card%get_value() * 10 +current_card%get_suit()
+                inner_loop: do k = 1, 30
+                    if (card_hashes(k) == -1) then
+                        card_hashes(k) = card_hash
+                        exit inner_loop
+                    end if
+
+                    if (card_hash == card_hashes(k)) then
+                        found_duplicate = .true.
+                        print *, '*** ERROR - DUPLICATED CARD FOUND IN DECK ***'
+                        print *
+                        print *, '*** DUPLICATE - ', trim(hands(i)%cards(j)%to_string()), ' ***'
+                        exit outer_loop
+                    endif
+                end do inner_loop
+            end do
+        end do outer_loop
+    end function has_duplicate
 
 end program main
