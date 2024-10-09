@@ -15,6 +15,7 @@ program main
     call init_deck(deck)
     call print_deck(deck)
     call deal_from_deck(hands, deck)
+    call print_hands(hands)
 
 contains
     subroutine init_deck(deck)
@@ -72,4 +73,13 @@ contains
 
     end subroutine deal_from_deck
     
+    subroutine print_hands(hands)
+        type(hand), intent(in) :: hands(0:5)
+        integer :: i
+
+        print *, '*** Here are the six hands...'
+        do i = 0, 5
+            print *, hands(i)%to_string()
+        end do
+    end subroutine print_hands
 end program main
