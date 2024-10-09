@@ -88,4 +88,54 @@ contains
             prev_value = cards(i)%get_value()
         end do
     end function is_straight
+
+    !=============== Helper procedures ===============
+    function get_frequency_set(cards) result(set)
+        type(card), intent(in) :: cards(0:4)
+        integer, allocatable :: set(:)
+        integer, allocatable :: temp(:)
+        integer i, j, prev_value
+
+        prev_value = -1
+        allocate(set(0))
+        do i = 0, 4
+            if (cards(i)%get_value() == prev_value) then
+                cycle
+            end if
+
+            !========== set reallocation begins ==========
+            allocate(temp(size(set)))
+            temp = set
+
+            deallocate(set)
+            allocate(set(size(temp) + 1))
+
+            do j = 1, size(temp)
+                set(j) = temp(j)
+            end do
+            
+            set(size(temp) + 1) = get_card_frequency(cards(i), cards)
+            deallocate(temp)
+            !========== set reallocation ends ==========
+
+            prev_value = cards(i)%get_value()
+        end do
+    end function get_frequency_set
+
+    !Only works for a card_list with 5 cards
+    function get_card_frequency(c, card_list) result(frequency)
+        type(card), intent(in) :: c
+        type(Card), intent(in) :: card_list(0:4)
+        integer :: frequency, i
+
+        frequency = 0
+
+        do i = 0, 4
+            if (c%get_value() == card_list(i)%get_value()) then
+                frequency = frequency + 1
+            end if
+        end do
+            
+    end function get_card_frequency
+
 end module hand_identifier_module
