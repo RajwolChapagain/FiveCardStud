@@ -10,7 +10,7 @@ module hand_module
         type(card) :: cards(0:4)
         integer :: last_index = -1
     contains
-        procedure :: add_card
+        procedure :: add_card, to_string
     end type hand
 
 contains
@@ -22,4 +22,15 @@ contains
         this%last_index = this%last_index + 1
     end subroutine add_card
 
+    function to_string(this) result(string)
+        class(hand), intent(in) :: this
+        character(:), allocatable :: string
+        integer :: i
+
+        string = ''
+        do i = 0, size(this%cards) - 1
+            string = string // this%cards(i)%to_string()
+        end do
+
+    end function to_string
 end module hand_module
