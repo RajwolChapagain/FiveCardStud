@@ -27,6 +27,8 @@ program main
         print *, ''
         call get_command_argument(1, cmdarg)
         call print_file(cmdarg) 
+        call deal_from_file(hands, cmdarg)
+        call print_hands(hands)
     else
         call init_deck(deck)
         call print_deck(deck)
@@ -131,6 +133,31 @@ contains
         end do
 
         close(5)
+
+        print *
     end subroutine print_file
+
+    subroutine deal_from_file(hands, file_path)
+        type(hand) :: hands(0:5)
+        type(card) :: new_card
+        character(50), intent(in) :: file_path
+        character(80) :: line
+        character(3) :: card_token
+        integer :: i, j
+
+        open(unit=5, file=file_path, status='old')
+
+        do i = 0, 5 !For each hand
+            read (5,"(a80)") line
+            
+            do j = 0, 4 !For each card
+                card_token = line(4 * j + 1: 4 * j + 3)
+                call new_card%init_card_from_string(card_token)
+                call hands(i)%add_card(new_card)
+            end do
+        end do
+
+        close(5)
+    end subroutine deal_from_file
 
 end program main
