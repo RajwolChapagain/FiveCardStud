@@ -16,6 +16,7 @@ program main
     call print_deck(deck)
     call deal_from_deck(hands, deck)
     call print_hands(hands)
+    call print_remaining_deck(deck)
 
 contains
     subroutine init_deck(deck)
@@ -81,5 +82,19 @@ contains
         do i = 0, 5
             print *, hands(i)%to_string()
         end do
+        print *, ''
     end subroutine print_hands
+
+    subroutine print_remaining_deck(deck)
+        type(card), intent(in) :: deck(0:51)
+        character(:), allocatable :: line
+
+        line = ''
+        print *, '*** Here is what remains in the deck...'
+        do i = 30, size(deck) - 1
+            line = line // deck(i)%to_string()
+        end do
+
+        print *, line
+    end subroutine print_remaining_deck
 end program main
