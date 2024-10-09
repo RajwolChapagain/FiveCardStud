@@ -1,8 +1,12 @@
 program main
     use card_module
+    use hand_module
 
     implicit none
     type(Card) :: deck(0:51)
+    type(card) :: new_card
+    type(hand) :: hands(0:5)
+    integer :: i,j 
 
     print *, '*** P O K E R   H A N D   A N A L Y Z E R ***'
     print *, ''
@@ -10,7 +14,7 @@ program main
     
     call init_deck(deck)
     call print_deck(deck)
-
+    call deal_from_deck(hands, deck)
 
 contains
     subroutine init_deck(deck)
@@ -34,7 +38,7 @@ contains
     end subroutine init_deck
 
     subroutine print_deck(deck)
-        type(Card) :: deck(0:51)
+        type(Card), intent(in) :: deck(0:51)
         integer :: i
         character(:), allocatable :: line
 
@@ -50,6 +54,22 @@ contains
                 line = ''
             end if 
         end do
+        print *, ''
     end subroutine print_deck
+
+    subroutine deal_from_deck(hands, deck)
+        type(card), intent(in) :: deck(0:51)
+        type(hand) :: hands(0:5)
+        integer :: i, j, counter
+
+        counter = 0
+        do i = 0, 4
+            do j = 0, 5 
+                call hands(j)%add_card(deck(counter))
+                counter = counter + 1
+            end do
+        end do
+
+    end subroutine deal_from_deck
     
 end program main
