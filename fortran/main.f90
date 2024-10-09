@@ -7,6 +7,7 @@ program main
     type(card) :: new_card
     type(hand) :: hands(0:5)
     integer :: i,j, argc
+    character(50) :: cmdarg
     logical :: is_testing
 
     print *, '*** P O K E R   H A N D   A N A L Y Z E R ***'
@@ -21,11 +22,18 @@ program main
         is_testing = .false.
     end if
 
-    call init_deck(deck)
-    call print_deck(deck)
-    call deal_from_deck(hands, deck)
-    call print_hands(hands)
-    call print_remaining_deck(deck)
+    if (is_testing) then
+        print *, '*** USING TEST DECK ***'
+        print *, ''
+        call get_command_argument(1, cmdarg)
+        call print_file(cmdarg) 
+    else
+        call init_deck(deck)
+        call print_deck(deck)
+        call deal_from_deck(hands, deck)
+        call print_hands(hands)
+        call print_remaining_deck(deck)
+    endif
 
 contains
     subroutine init_deck(deck)
@@ -106,4 +114,23 @@ contains
 
         print *, line
     end subroutine print_remaining_deck
+
+
+    !=============== Testing procedures ===============   
+    subroutine print_file(file_path)
+        character(50), intent(in) :: file_path
+        character(80) :: line
+
+        print *, '*** File: ', trim(file_path)
+
+        open(unit=5, file=file_path, status='old')
+
+        do i = 0, 5
+            read (5,"(a80)") line
+            print *, line
+        end do
+
+        close(5)
+    end subroutine print_file
+
 end program main
