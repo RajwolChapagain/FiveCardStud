@@ -11,7 +11,7 @@ module hand_module
         integer :: last_index = -1
         integer :: hand_type = -1
     contains
-        procedure :: add_card, to_string
+        procedure :: add_card, to_string, get_sorted_cards
     end type hand
 
 contains
@@ -32,6 +32,27 @@ contains
         do i = 0, size(this%cards) - 1
             string = string // this%cards(i)%to_string()
         end do
-
     end function to_string
+
+    function get_sorted_cards(this) result(sorted_cards)
+        class(hand), intent(in) :: this      
+        type(card) :: sorted_cards(0:4)
+        integer :: i, j
+        type(card) :: temp
+
+
+        sorted_cards = this%cards
+
+        do i = 0, 3
+            do j = 0, 3 - i
+                if (sorted_cards(j)%get_value() > sorted_cards(j + 1)%get_value()) then
+                    ! Swap the sorted_cards
+                    temp = sorted_cards(j)
+                    sorted_cards(j) = sorted_cards(j + 1)
+                    sorted_cards(j + 1) = temp
+                end if
+            end do
+        end do
+
+    end function get_sorted_cards
 end module hand_module
