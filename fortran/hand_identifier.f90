@@ -13,6 +13,8 @@ contains
             h%hand_type = 9
         else if (is_straight_flush(cards)) then
             h%hand_type = 8
+        else if (is_four_of_a_kind(cards)) then
+            h%hand_type = 7
         else if (is_flush(cards)) then
             h%hand_type = 5
         else if (is_straight(cards)) then
@@ -23,7 +25,7 @@ contains
     end subroutine assign_type
 
     logical function is_royal_straight_flush(cards) result(b)
-        type(card) :: cards(0:4)
+        type(card), intent(in) :: cards(0:4)
 
         b = .false.
 
@@ -33,7 +35,7 @@ contains
     end function is_royal_straight_flush
 
     logical function is_royal_straight(cards) result(b)
-        type(card) :: cards(0:4)
+        type(card), intent(in) :: cards(0:4)
 
         b = .false.
 
@@ -43,7 +45,7 @@ contains
     end function is_royal_straight
 
     logical function is_straight_flush(cards) result(b)
-        type(card) :: cards(0:4)
+        type(card), intent(in) :: cards(0:4)
 
         b = .false.
 
@@ -51,9 +53,19 @@ contains
             b = .true.
         end if
     end function is_straight_flush
-    
+ 
+    logical function is_four_of_a_kind(cards) result(b)
+        type(card), intent(in) :: cards(0:4)
+
+        b = .false.
+
+        if (any(get_frequency_set(cards) == 4)) then
+            b = .true.
+        end if
+    end function is_four_of_a_kind
+
     logical function is_flush(cards) result(b)
-        type(card) :: cards(0:4)
+        type(card), intent(in) :: cards(0:4)
         integer :: prev_suit, i
 
         prev_suit = cards(0)%get_suit()
@@ -69,7 +81,7 @@ contains
     end function is_flush
 
     logical function is_straight(cards) result(b)
-        type(card) :: cards(0:4)
+        type(card), intent(in) :: cards(0:4)
         integer :: prev_value, i
 
         b = .true.
