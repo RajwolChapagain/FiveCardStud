@@ -13,6 +13,8 @@ contains
             h%hand_type = 9
         else if (is_flush(cards)) then
             h%hand_type = 5
+        else if (is_straight(cards)) then
+            h%hand_type = 4
         else
             h%hand_type = 0
         end if
@@ -53,4 +55,25 @@ contains
             prev_suit = cards(i)%get_suit()
         end do
     end function is_flush
+
+    logical function is_straight(cards) result(b)
+        type(card) :: cards(0:4)
+        integer :: prev_value, i
+
+        b = .true.
+
+        if (is_royal_straight(cards)) then
+            return
+        endif
+
+        prev_value = cards(0)%get_value()
+
+        do i = 1, 4
+            if (cards(i)%get_value() /= prev_value + 1) then
+                b = .false.
+                return
+            end if
+            prev_value = cards(i)%get_value()
+        end do
+    end function is_straight
 end module hand_identifier_module
