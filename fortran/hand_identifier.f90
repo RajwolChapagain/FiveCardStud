@@ -15,6 +15,8 @@ contains
             h%hand_type = 8
         else if (is_four_of_a_kind(cards)) then
             h%hand_type = 7
+        else if (is_full_house(cards)) then
+            h%hand_type = 6
         else if (is_flush(cards)) then
             h%hand_type = 5
         else if (is_straight(cards)) then
@@ -63,6 +65,18 @@ contains
             b = .true.
         end if
     end function is_four_of_a_kind
+
+    logical function is_full_house(cards) result(b)
+        type(card), intent(in) :: cards(0:4)
+        integer, allocatable :: set(:)
+
+        b = .false.
+        set = get_frequency_set(cards)
+
+        if (any(set == 3) .and. any(set == 2)) then
+            b = .true.
+        end if
+    end function is_full_house
 
     logical function is_flush(cards) result(b)
         type(card), intent(in) :: cards(0:4)
