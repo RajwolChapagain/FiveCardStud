@@ -11,6 +11,8 @@ contains
 
         if (is_royal_straight_flush(cards)) then
             h%hand_type = 9
+        else if (is_straight_flush(cards)) then
+            h%hand_type = 8
         else if (is_flush(cards)) then
             h%hand_type = 5
         else if (is_straight(cards)) then
@@ -25,7 +27,7 @@ contains
 
         b = .false.
 
-        if (is_royal_straight(cards) .and.is_flush(cards)) then
+        if (is_royal_straight(cards) .and. is_flush(cards)) then
             b = .true.
         end if
     end function is_royal_straight_flush
@@ -40,6 +42,16 @@ contains
         end if
     end function is_royal_straight
 
+    logical function is_straight_flush(cards) result(b)
+        type(card) :: cards(0:4)
+
+        b = .false.
+
+        if (is_straight(cards) .and. is_flush(cards)) then
+            b = .true.
+        end if
+    end function is_straight_flush
+    
     logical function is_flush(cards) result(b)
         type(card) :: cards(0:4)
         integer :: prev_suit, i
