@@ -1,6 +1,7 @@
 program main
     use card_module
     use hand_module
+    use hand_identifier_module
 
     implicit none
     type(Card) :: deck(0:51)
@@ -34,13 +35,14 @@ program main
         end if
 
         call print_hands(hands)
-
+        call assign_types(hands)
     else
         call init_deck(deck)
         call print_deck(deck)
         call deal_from_deck(hands, deck)
         call print_hands(hands)
         call print_remaining_deck(deck)
+        call assign_types(hands)
     endif
 
 contains
@@ -98,17 +100,7 @@ contains
         end do
 
     end subroutine deal_from_deck
-    
-    subroutine print_hands(hands)
-        type(hand), intent(in) :: hands(0:5)
-        integer :: i
 
-        print *, '*** Here are the six hands...'
-        do i = 0, 5
-            print *, hands(i)%to_string()
-        end do
-        print *, ''
-    end subroutine print_hands
 
     subroutine print_remaining_deck(deck)
         type(card), intent(in) :: deck(0:51)
@@ -197,5 +189,27 @@ contains
             end do
         end do outer_loop
     end function has_duplicate
+    
+
+    !=============== Shared procedures ===============   
+    subroutine print_hands(hands)
+        type(hand), intent(in) :: hands(0:5)
+        integer :: i
+
+        print *, '*** Here are the six hands...'
+        do i = 0, 5
+            print *, hands(i)%to_string()
+        end do
+        print *, ''
+    end subroutine print_hands
+
+    subroutine assign_types(hands)
+        type(hand) :: hands(0:5)
+        integer :: i
+        
+        do i = 0, 5
+            call assign_type(hands(i))
+        end do
+    end subroutine assign_types
 
 end program main
