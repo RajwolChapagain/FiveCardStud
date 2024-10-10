@@ -21,6 +21,8 @@ contains
             h%hand_type = 5
         else if (is_straight(cards)) then
             h%hand_type = 4
+        else if (is_three_of_a_kind(cards)) then
+            h%hand_type = 3
         else
             h%hand_type = 0
         end if
@@ -114,6 +116,18 @@ contains
             prev_value = cards(i)%get_value()
         end do
     end function is_straight
+
+    logical function is_three_of_a_kind(cards) result(b)
+        type(card), intent(in) :: cards(0:4)
+        integer, allocatable :: set(:)
+
+        b = .false.
+        set = get_frequency_set(cards)
+
+        if (any(set == 3)) then
+            b = .true.
+        end if
+    end function is_three_of_a_kind
 
     !=============== Helper procedures ===============
     function get_frequency_set(cards) result(set)
