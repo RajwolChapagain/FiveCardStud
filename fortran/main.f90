@@ -36,6 +36,7 @@ program main
 
         call print_hands(hands)
         call assign_types(hands)
+        call print_ranked_hands(hands)
     else
         call init_deck(deck)
         call print_deck(deck)
@@ -43,6 +44,7 @@ program main
         call print_hands(hands)
         call print_remaining_deck(deck)
         call assign_types(hands)
+        call print_ranked_hands(hands)
     endif
 
 contains
@@ -113,6 +115,7 @@ contains
         end do
 
         print *, line
+        print *
     end subroutine print_remaining_deck
 
 
@@ -211,5 +214,16 @@ contains
             call assign_type(hands(i))
         end do
     end subroutine assign_types
+
+    subroutine print_ranked_hands(hands)
+        type(hand), intent(in) :: hands(0:5)
+        integer :: i
+        
+        print *, '--- WINNING HAND ORDER ---'
+
+        do i = 0, 5
+            print *, hands(i)%to_string(), ' - ', trim(hand_types(hands(i)%hand_type))
+        end do
+    end subroutine print_ranked_hands
 
 end program main
