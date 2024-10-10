@@ -2,6 +2,7 @@ program main
     use card_module
     use hand_module
     use hand_identifier_module
+    use hand_sorter_module
 
     implicit none
     type(Card) :: deck(0:51)
@@ -36,6 +37,7 @@ program main
 
         call print_hands(hands)
         call assign_types(hands)
+        call sort_hands(hands)
         call print_ranked_hands(hands)
     else
         call init_deck(deck)
@@ -44,6 +46,7 @@ program main
         call print_hands(hands)
         call print_remaining_deck(deck)
         call assign_types(hands)
+        call sort_hands(hands)
         call print_ranked_hands(hands)
     endif
 
