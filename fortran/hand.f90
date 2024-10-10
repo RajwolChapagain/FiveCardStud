@@ -5,6 +5,8 @@ module hand_module
 
     private
     public hand
+    
+    character(30), public :: hand_types(0:9) = [ character(30) :: 'High Card', 'Pair', 'Two Pair', 'Three of a Kind', 'Straight', 'Flush', 'Full House', 'Four of a Kind', 'Straight Flush', 'Royal Straight Flush' ]
 
     type hand
         type(card) :: cards(0:4)
