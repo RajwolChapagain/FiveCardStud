@@ -1,6 +1,7 @@
 module hand_sorter_module
     use card_module
     use hand_module
+    use hand_identifier_module
 
     implicit none
 
@@ -94,5 +95,82 @@ contains
             b = .false.
          end if
     end function compare_royal_flush
+
+    !=============== Helpers ===============
+
+    !Returns 1 if first list is weaker, -1 if second list is weaker and 0 if they are tied
+    integer function compare_highest_card(l1, l2) result (cmp)
+        type(card) :: l1(:), l2(:)
+        integer :: value_list1(size(l1)), value_list2(size(l2)), i, j, temp
+
+        cmp = 0
+
+        do i = 1, size(l1)
+            if (l1(i)%get_value() == 0) then
+                if (size(l1) == 5) then
+                    if (is_straight(l1)) then
+                        value_list1(i) = 0
+                    else
+                        value_list1(i) = 13
+                    end if
+                else
+                    value_list1(i) = 13
+                end if
+            else
+                value_list1(i) = l1(i)%get_value()
+            end if
+
+            if (l2(i)%get_value() == 0) then
+                if (size(l2) == 5) then
+                    if (is_straight(l2)) then
+                        value_list2(i) = 0
+                    else
+                        value_list2(i) = 13
+                    end if
+                else
+                    value_list2(i) = 13
+                end if
+            else
+                value_list2(i) = l2(i)%get_value()
+            end if
+        end do
+
+        ! Sort the first value list
+        do i = 1, size(value_list1) - 1
+            do j = 1, size(value_list1) - i
+                if (value_list1(j) < value_list1(j + 1)) then
+                    ! Swap the sorted_cards
+                    temp = value_list1(j)
+                    value_list1(j) = value_list1(j + 1)
+                    value_list1(j + 1) = temp
+                end if
+            end do
+        end do
+
+        ! Sort the second value list
+        do i = 1, size(value_list2) - 1
+            do j = 1, size(value_list2) - i
+                if (value_list2(j) < value_list2(j + 1)) then
+                    ! Swap the sorted_cards
+                    temp = value_list2(j)
+                    value_list2(j) = value_list2(j + 1)
+                    value_list2(j + 1) = temp
+                end if
+            end do
+        end do
+
+        print *, value_list1
+        print *, value_list2
+
+        do i = 1, size(value_list1)
+            if (value_list1(i) < value_list2(i)) then
+                cmp = 1
+                return
+            else if (value_list1(i) > value_list2(i)) then
+                cmp = -1
+                return
+            end if
+        end do
+    end function compare_highest_card
 
 end module
