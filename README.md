@@ -74,4 +74,21 @@ To use a test set of hands, pass the relative path of the appropriately formatte
 ```
 python3 main.py ../handsets/test
 ```
+### Fortran
+1. Navigate to the fortran directory:
+```
+cd fivecardstud/fortran
+```
+2. Compile the code:
+```
+gfortran card.f90 hand.f90 hand_identifier.f90 hand_sorter.f90 main.f90
+```
+3. Run it:
+```
+./a.out
+```
+To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
+```
+./a.out ../handsets/test
+```
 
