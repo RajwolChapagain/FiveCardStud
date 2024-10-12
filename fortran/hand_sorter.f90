@@ -229,9 +229,28 @@ contains
     logical function compare_three_of_a_kind(h1, h2) result(b)
         type(hand), intent(in) :: h1, h2
         type(card) :: l1(5), l2(5)
+        integer :: value1, value2
+
+        l1 = get_cards_occuring_n_times(h1%get_sorted_cards(), 3)
+        l2 = get_cards_occuring_n_times(h2%get_sorted_cards(), 3)
+
+        value1 = l1(1)%get_value()
+        value2 = l2(1)%get_value()
 
         b = .true.
 
+        if (value1 == 0) then
+            value1 = 13
+        end if 
+
+        if (value2 == 0) then
+            value2 = 13
+        end if
+
+        if (value1 > value2) then
+            b = .false.
+            return
+        end if  
     end function compare_three_of_a_kind
 
     logical function compare_two_pair(h1, h2) result(b)
