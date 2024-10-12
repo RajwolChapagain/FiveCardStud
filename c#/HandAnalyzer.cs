@@ -823,23 +823,32 @@ public class HandAnalyzer
 		{
 			if (cardList1[i].getValue() == 0)
 			{
-				//Account for when Aces are low in a straight or straight flush
-				if (detectHandType(firstHand) != (int) handType.STRAIGHT_FLUSH && 
-						detectHandType(firstHand) != (int) handType.STRAIGHT)
-					valueList1.Add(13);
-				else
-					valueList1.Add(0);
+                if (cardList1.Count == 5)
+                {
+                    if (detectHandType(firstHand) == (int) handType.STRAIGHT_FLUSH || 
+                            detectHandType(firstHand) == (int) handType.STRAIGHT)
+                        valueList1.Add(0);
+                    else
+                        valueList1.Add(13);
+                }
+                else
+                    valueList1.Add(13);
 			}
 			else
 				valueList1.Add(cardList1[i].getValue());
 
 			if (cardList2[i].getValue() == 0)
 			{
-				if (detectHandType(secondHand) != (int) handType.STRAIGHT_FLUSH && 
-						detectHandType(secondHand) != (int) handType.STRAIGHT)
-					valueList2.Add(13);
-				else
-					valueList2.Add(0);
+                if (cardList2.Count == 5)
+                {
+                    if (detectHandType(secondHand) == (int) handType.STRAIGHT_FLUSH || 
+                            detectHandType(secondHand) == (int) handType.STRAIGHT)
+                        valueList2.Add(0);
+                    else
+                        valueList2.Add(13);
+                }
+                else
+                    valueList2.Add(13);
 			}
 			else
 				valueList2.Add(cardList2[i].getValue());
