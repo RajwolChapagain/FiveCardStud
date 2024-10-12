@@ -46,6 +46,24 @@ contains
 
         if (hand_type == 9) then
             call sort(hands, compare_royal_flush)
+        else if (hand_type == 8) then
+            call sort(hands, compare_straight_flush)
+        else if (hand_type == 7) then
+            call sort(hands, compare_four_of_a_kind)
+        else if (hand_type == 6) then
+            call sort(hands, compare_full_house)
+        else if (hand_type == 5) then
+            call sort(hands, compare_flush)
+        else if (hand_type == 4) then
+            call sort(hands, compare_straight)
+        else if (hand_type == 3) then
+            call sort(hands, compare_three_of_a_kind)
+        else if (hand_type == 2) then
+            call sort(hands, compare_two_pair)
+        else if (hand_type == 1) then
+            call sort(hands, compare_pair)
+        else
+            call sort(hands, compare_high_card)
         end if
 
     end subroutine sort_subarray
@@ -95,6 +113,77 @@ contains
             b = .false.
          end if
     end function compare_royal_flush
+
+    logical function compare_straight_flush(h1, h2) result(b)
+        type(hand), intent(in) :: h1, h2
+        type(card) :: l1(5), l2(5)
+
+        b = .true.
+    end function compare_straight_flush
+
+    logical function compare_four_of_a_kind(h1, h2) result(b)
+        type(hand), intent(in) :: h1, h2
+        type(card) :: l1(5), l2(5)
+
+        b = .true.
+
+    end function compare_four_of_a_kind
+
+    logical function compare_full_house(h1, h2) result(b)
+        type(hand), intent(in) :: h1, h2
+        type(card) :: l1(5), l2(5)
+
+        b = .true.
+
+    end function compare_full_house
+
+    logical function compare_flush(h1, h2) result(b)
+        type(hand), intent(in) :: h1, h2
+        type(card) :: l1(5), l2(5)
+
+        b = .true.
+
+    end function compare_flush
+
+    logical function compare_straight(h1, h2) result(b)
+        type(hand), intent(in) :: h1, h2
+        type(card) :: l1(5), l2(5)
+
+        b = .true.
+
+    end function compare_straight
+
+    logical function compare_three_of_a_kind(h1, h2) result(b)
+        type(hand), intent(in) :: h1, h2
+        type(card) :: l1(5), l2(5)
+
+        b = .true.
+
+    end function compare_three_of_a_kind
+
+    logical function compare_two_pair(h1, h2) result(b)
+        type(hand), intent(in) :: h1, h2
+        type(card) :: l1(5), l2(5)
+
+        b = .true.
+
+    end function compare_two_pair
+
+    logical function compare_pair(h1, h2) result(b)
+        type(hand), intent(in) :: h1, h2
+        type(card) :: l1(5), l2(5)
+
+        b = .true.
+
+    end function compare_pair
+
+    logical function compare_high_card(h1, h2) result(b)
+        type(hand), intent(in) :: h1, h2
+        type(card) :: l1(5), l2(5)
+
+        b = .true.
+
+    end function compare_high_card
 
     !=============== Helpers ===============
 
