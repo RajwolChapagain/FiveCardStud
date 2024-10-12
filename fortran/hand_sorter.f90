@@ -100,7 +100,7 @@ contains
 
     !Returns 1 if first list is weaker, -1 if second list is weaker and 0 if they are tied
     integer function compare_highest_card(l1, l2) result (cmp)
-        type(card) :: l1(:), l2(:)
+        type(card), intent(in) :: l1(:), l2(:)
         integer :: value_list1(size(l1)), value_list2(size(l2)), i, j, temp
 
         cmp = 0
@@ -172,5 +172,54 @@ contains
             end if
         end do
     end function compare_highest_card
+
+    function get_cards_occuring_n_times(card_list, n) result(c)
+        type(card), intent(in) :: card_list(:)
+        type(card), allocatable :: c(:)
+        integer, intent(in) :: n
+        type(card), allocatable :: temp(:)
+        integer :: i, j, last_val
+        integer, allocatable :: value_list(:), temp_int(:)
+
+        last_val = card_list(1)%get_value()
+
+        allocate(c(0))
+        allocate(value_list(0))
+
+        do i = 1, size(card_list)
+            if (.not. any(value_list == card_list(i)%get_value())) then
+                if (get_card_frequency(card_list(i), card_list) == n) then
+                    ! Append card to c
+                    allocate(temp(size(c)))
+                    temp = c
+
+                    deallocate(c)
+                    allocate(c(size(temp) + 1))
+
+                    do j = 1, size(temp)
+                        c(j) = temp(j)
+                    end do
+
+                    c(size(temp) + 1) = card_list(i) 
+                    deallocate(temp) 
+
+                    ! Append card value to value_list
+                    allocate(temp_int(size(value_list)))
+                    temp_int = value_list
+
+                    deallocate(value_list)
+                    allocate(value_list(size(temp_int) + 1))
+
+                    do j = 1, size(temp_int)
+                        value_list(j) = temp_int(j)
+                    end do
+
+                    value_list(size(temp_int) + 1) = card_list(i)%get_value()
+                    deallocate(temp_int) 
+
+                end if
+            end if
+        end do
+    end function get_cards_occuring_n_times
 
 end module
