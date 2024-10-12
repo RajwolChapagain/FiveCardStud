@@ -188,7 +188,7 @@ contains
                         found_duplicate = .true.
                         print *, '*** ERROR - DUPLICATED CARD FOUND IN DECK ***'
                         print *
-                        print *, '*** DUPLICATE - ', trim(hands(i)%cards(j)%to_string()), ' ***'
+                        print *, '*** DUPLICATE: ', trim(hands(i)%cards(j)%to_string()), ' ***'
                         exit outer_loop
                     endif
                 end do inner_loop
