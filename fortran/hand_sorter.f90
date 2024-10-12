@@ -141,7 +141,7 @@ contains
 
     logical function compare_four_of_a_kind(h1, h2) result(b)
         type(hand), intent(in) :: h1, h2
-        type(card) :: l1(5), l2(5)
+        type(card) :: l1(1), l2(1)
         integer :: value1, value2
 
         l1 = get_cards_occuring_n_times(h1%get_sorted_cards(), 4)
@@ -168,7 +168,7 @@ contains
 
     logical function compare_full_house(h1, h2) result(b)
         type(hand), intent(in) :: h1, h2
-        type(card) :: l1(5), l2(5)
+        type(card) :: l1(1), l2(1)
         integer :: value1, value2
 
         l1 = get_cards_occuring_n_times(h1%get_sorted_cards(), 3)
@@ -244,7 +244,7 @@ contains
 
     logical function compare_three_of_a_kind(h1, h2) result(b)
         type(hand), intent(in) :: h1, h2
-        type(card) :: l1(5), l2(5)
+        type(card) :: l1(1), l2(1)
         integer :: value1, value2
 
         l1 = get_cards_occuring_n_times(h1%get_sorted_cards(), 3)
@@ -271,10 +271,41 @@ contains
 
     logical function compare_two_pair(h1, h2) result(b)
         type(hand), intent(in) :: h1, h2
-        type(card) :: l1(5), l2(5)
+        type(card) :: l1(2), l2(2), kicker1(1), kicker2(1), kicker_card1, kicker_card2
+        integer :: highest_card_comparison, kicker_card_comparison
 
+        l1 = get_cards_occuring_n_times(h1%get_sorted_cards(), 2)
+        l2 = get_cards_occuring_n_times(h2%get_sorted_cards(), 2)
         b = .true.
 
+        highest_card_comparison = compare_highest_card(l1, l2)
+
+        if (highest_card_comparison == 1) then
+            return
+        else if (highest_card_comparison == -1) then
+            b = .false.
+            return
+        end if
+
+        kicker1 = get_cards_occuring_n_times(h1%get_sorted_cards(), 1)
+        kicker2 = get_cards_occuring_n_times(h2%get_sorted_cards(), 1)
+
+        kicker_card_comparison = compare_highest_card(kicker1, kicker2)
+
+        if (kicker_card_comparison == 1) then
+            return
+        else if (kicker_card_comparison == -1) then
+            b = .false.
+            return
+        end if
+
+        kicker_card1 = kicker1(1)
+        kicker_card2 = kicker2(1)
+
+        if (kicker_card1%get_suit() > kicker_card2%get_suit()) then
+            b = .false.
+            return
+        end if
     end function compare_two_pair
 
     logical function compare_pair(h1, h2) result(b)
