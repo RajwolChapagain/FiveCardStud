@@ -65,7 +65,6 @@ contains
         else
             call sort(hands, compare_high_card)
         end if
-
     end subroutine sort_subarray
     
     subroutine sort(array, cmp_fn)
@@ -358,10 +357,38 @@ contains
 
     logical function compare_high_card(h1, h2) result(b)
         type(hand), intent(in) :: h1, h2
-        type(card) :: l1(5), l2(5)
+        type(card) :: l1(5), l2(5), highest_card1, highest_card2
+        integer :: highest_card_comparison
 
         b = .true.
+        l1 = h1%get_sorted_cards()
+        l2 = h2%get_sorted_cards()
 
+        highest_card_comparison = compare_highest_card(l1, l2)
+
+        if (highest_card_comparison == 1) then
+            return
+        else if (highest_card_comparison == -1) then
+            b = .false.
+            return
+        end if
+
+        if (l1(1)%get_value() == 0) then
+            highest_card1 = l1(1)
+        else
+            highest_card1 = l1(size(l1))
+        end if
+
+        if (l2(1)%get_value() == 0) then
+            highest_card2 = l2(1)
+        else
+            highest_card2 = l2(size(l2))
+        end if
+
+        if (highest_card1%get_suit() > highest_card2%get_suit()) then
+            b = .false.
+            return
+        end if
     end function compare_high_card
 
     !=============== Helpers ===============
