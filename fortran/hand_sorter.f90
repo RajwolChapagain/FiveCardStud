@@ -310,10 +310,50 @@ contains
 
     logical function compare_pair(h1, h2) result(b)
         type(hand), intent(in) :: h1, h2
-        type(card) :: l1(5), l2(5)
+        type(card) :: pair1(1), pair2(1), singles1(3), singles2(3), highest_single1, highest_single2
+        integer :: highest_card_comparison, highest_single_comparison
 
         b = .true.
+        pair1 = get_cards_occuring_n_times(h1%get_sorted_cards(), 2)
+        pair2 = get_cards_occuring_n_times(h2%get_sorted_cards(), 2)
 
+        highest_card_comparison = compare_highest_card(pair1, pair2)
+
+        if (highest_card_comparison == 1) then
+            return
+        else if (highest_card_comparison == -1) then
+            b = .false.
+            return
+        end if
+
+        singles1 = get_cards_occuring_n_times(h1%get_sorted_cards(), 1)
+        singles2 = get_cards_occuring_n_times(h2%get_sorted_cards(), 1)
+
+        highest_single_comparison = compare_highest_card(singles1, singles2)
+
+        if (highest_single_comparison == 1) then
+            return
+        else if (highest_single_comparison == -1) then
+            b = .false.
+            return
+        end if
+
+        if (singles1(1)%get_value() == 0) then
+            highest_single1 = singles1(1)
+        else
+            highest_single1 = singles1(size(singles1))
+        end if
+
+        if (singles2(1)%get_value() == 0) then
+            highest_single2 = singles2(1)
+        else
+            highest_single2 = singles2(size(singles2))
+        end if
+
+        if (highest_single1%get_suit() > highest_single2%get_suit()) then
+            b = .false.
+            return
+        end if
     end function compare_pair
 
     logical function compare_high_card(h1, h2) result(b)
