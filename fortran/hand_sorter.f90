@@ -117,8 +117,27 @@ contains
     logical function compare_straight_flush(h1, h2) result(b)
         type(hand), intent(in) :: h1, h2
         type(card) :: l1(5), l2(5)
+        integer :: highest_card_comparison
 
         b = .true.
+
+        l1 = h1%get_sorted_cards()
+        l2 = h2%get_sorted_cards()
+
+        highest_card_comparison = compare_highest_card(l1, l2)
+
+        if (highest_card_comparison == 1) then
+            return
+        else if (highest_card_comparison == -1) then
+            b = .false.
+            return
+        end if
+
+        if (l1(1)%get_suit() > l2(1)%get_suit()) then
+            b = .false.
+            return
+        end if
+
     end function compare_straight_flush
 
     logical function compare_four_of_a_kind(h1, h2) result(b)
@@ -247,9 +266,6 @@ contains
                 end if
             end do
         end do
-
-        print *, value_list1
-        print *, value_list2
 
         do i = 1, size(value_list1)
             if (value_list1(i) < value_list2(i)) then
