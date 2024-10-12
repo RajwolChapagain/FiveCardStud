@@ -63,3 +63,7 @@ int Card::getValue() const {
 int Card::getSuit() const {
     return suit;
 }
+
+string Card::getRawString() const {
+    return Card::VALUE_MAP[getValue()] + Card::SUIT_MAP[getSuit()]; 
+}

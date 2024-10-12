@@ -33,6 +33,7 @@ class Card {
         //Methods
         int getValue() const;
         int getSuit() const;       
+        string getRawString() const;
 };
 
 #endif

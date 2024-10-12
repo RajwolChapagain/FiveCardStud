@@ -116,7 +116,7 @@ bool hasDuplicate(const vector<Hand>& hands) {
             if (find(cardHashes.begin(), cardHashes.end(), cardHash) != cardHashes.end()) { 
                 cout << "*** ERROR - DUPLICATED CARD FOUND IN DECK ***" << endl << endl;
 
-                cout << "*** Duplicate: " << card << " ***" << endl;
+                cout << "*** Duplicate: " << card.getRawString() << " ***" << endl;
                 return true;
             }
             else
