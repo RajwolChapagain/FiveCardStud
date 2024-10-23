@@ -4,7 +4,7 @@ include("hand.jl")
 println("*** P O K E R   H A N D   A N A L Y Z E R ***\n\n")
 
 # =============== Non-testing functions ===============
-#
+
 function init_deck(deck :: Vector{Card})
     for i in eachindex(deck) 
         deck[i] = Card(((i - 1) % 13) + 1, ceil(i / 13))
@@ -52,6 +52,17 @@ end
 
 # =============== Testing functions ===============
 
+function print_file(path :: String)
+    println("*** USING TEST DECK ***\n")
+
+    println("*** File: " * path)
+    
+    f = open(path, "r")
+    content = read(f, String)
+    print(content)
+    close(f)
+end
+
 # =============== Common functions ===============
 
 function print_hands(hands :: Vector{Hand})
@@ -68,7 +79,8 @@ end
 hands = [Hand() for _ in 1:6]
 
 if length(ARGS) == 1
-    println("*** USING TEST DECK ***\n")
+    file_path = ARGS[1]
+    print_file(file_path)
 else
     deck = Vector{Card}(undef, 52)
     init_deck(deck)
