@@ -61,6 +61,17 @@ function print_file(path :: String)
     content = read(f, String)
     print(content)
     close(f)
+    println()
+end
+
+function deal_from_file(hands :: Vector{Hand}, path :: String)
+    lines = readlines(path)
+
+    for (i, line) in enumerate(lines)
+        for token in split(line, ",")
+            add_card(hands[i], Card(String(token)))
+        end
+    end
 end
 
 # =============== Common functions ===============
@@ -81,6 +92,8 @@ hands = [Hand() for _ in 1:6]
 if length(ARGS) == 1
     file_path = ARGS[1]
     print_file(file_path)
+    deal_from_file(hands, file_path)
+    print_hands(hands)
 else
     deck = Vector{Card}(undef, 52)
     init_deck(deck)
