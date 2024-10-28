@@ -16,6 +16,10 @@ function add_card(hand, card)
     push!(hand.cards, card)
 end
 
+function get_sorted_cards(hand::Hand)
+    return sort(hand.cards)
+end
+
 function Base.show(io::IO, hand::Hand)
     for card in hand.cards
         print(card)
