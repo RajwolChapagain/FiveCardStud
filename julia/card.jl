@@ -24,3 +24,7 @@ end
 function get_card_string(c :: Card)
     return VALUE_MAP[c.value] * SUIT_MAP[c.suit]
 end
+
+function Base.isless(c1::Card, c2::Card)
+    return c1.value < c2.value
+end
