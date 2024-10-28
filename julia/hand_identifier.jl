@@ -69,3 +69,22 @@ function is_straight(cards::Vector{Card})
 
     return true
 end
+
+# =============== Helpers ===============
+
+function get_frequency_set(cards::Vector{Card})
+    set = []
+
+    prev_value = -1
+
+    for card in cards
+        if card.value == prev_value
+            continue
+        end
+
+        push!(set, count(x -> x == card, cards))
+        prev_value = card.value
+    end
+
+    return sort(set)
+end
