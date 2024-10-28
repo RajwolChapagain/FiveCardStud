@@ -1,3 +1,5 @@
+#!/usr/bin/env julia
+
 include("card.jl")
 include("hand.jl")
 
