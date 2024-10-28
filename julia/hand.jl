@@ -2,7 +2,7 @@ const HAND_SIZE = 5
 const HAND_MAP =  ["High Card", "Pair", "Two Pair", "Three of a Kind", "Straight",
                 "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Straight Flush"]
 
-struct Hand
+mutable struct Hand
     cards :: Vector{Card}
     type :: Int64
 end
@@ -18,6 +18,10 @@ end
 
 function get_sorted_cards(hand::Hand)
     return sort(hand.cards)
+end
+
+function set_type(hand::Hand, type::Int64)
+    hand.type = type
 end
 
 function Base.show(io::IO, hand::Hand)
