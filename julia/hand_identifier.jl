@@ -15,6 +15,8 @@ function assign_type(hand::Hand)
         set_type(hand, 5)
     elseif is_three_of_a_kind(cards)
         set_type(hand, 4)
+    elseif is_two_pair(cards)
+        set_type(hand, 3)
     else
         set_type(hand, 1)
     end
@@ -96,6 +98,16 @@ end
 
 function is_three_of_a_kind(cards::Vector{Card})
     if 3 in get_frequency_set(cards)
+        return true
+    end
+
+    return false
+end
+
+function is_two_pair(cards::Vector{Card})
+    frequency_set = get_frequency_set(cards)
+
+    if count(x -> x == 2, frequency_set) == 2
         return true
     end
 
