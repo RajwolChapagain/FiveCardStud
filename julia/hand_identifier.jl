@@ -7,6 +7,8 @@ function assign_type(hand::Hand)
         set_type(hand, 9)
     elseif is_four_of_a_kind(cards)
         set_type(hand, 8)
+    elseif is_full_house(cards)
+        set_type(hand, 7)
     elseif is_flush(cards)
         set_type(hand, 6)
     elseif is_straight(cards)
@@ -42,6 +44,16 @@ end
 
 function is_four_of_a_kind(cards::Vector{Card})
     if 4 in get_frequency_set(cards)
+        return true
+    end
+
+    return false
+end
+
+function is_full_house(cards::Vector{Card})
+    frequency_set = get_frequency_set(cards)
+
+    if 3 in frequency_set && 2 in frequency_set
         return true
     end
 
