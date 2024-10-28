@@ -1,4 +1,4 @@
-#!/usr/bin/env julia
+#!/usr2/local/julia-1.10.4/bin/julia
 
 include("card.jl")
 include("hand.jl")
@@ -50,7 +50,7 @@ function print_remaining_deck(deck :: Vector{Card})
     for card in deck
         print(card)
     end
-    println()
+    println("\n")
 end
 
 # =============== Testing functions ===============
@@ -115,6 +115,16 @@ function assign_types(hands::Vector{Hand})
     end
 end
 
+function print_ranked_hands(hands::Vector{Hand})
+    println("--- WINNING HAND ORDER ---")
+
+    for hand in hands
+        print(hand)
+        println(" - ", HAND_MAP[hand.type])
+    end
+    println()
+end
+
 # =============== Logic ===============
 hands = [Hand() for _ in 1:6]
 
@@ -129,6 +139,7 @@ if length(ARGS) == 1
 
     print_hands(hands)
     assign_types(hands)
+    print_ranked_hands(hands)
 else
     deck = Vector{Card}(undef, 52)
     init_deck(deck)
@@ -137,4 +148,5 @@ else
     print_hands(hands)
     print_remaining_deck(deck)
     assign_types(hands)
+    print_ranked_hands(hands)
 end
