@@ -76,6 +76,26 @@ function deal_from_file(hands :: Vector{Hand}, path :: String)
     end
 end
 
+function has_duplicate(hands :: Vector{Hand})
+    card_hashes = []
+
+    for hand in hands
+        for card in get_sorted_cards(hand)
+            card_hash = card.value * 10 + card.suit
+            if card_hash in card_hashes
+                println("*** ERROR - DUPLICATED CARD FOUND IN DECK ***\n")
+
+                println("*** Duplicate:", card)
+                return true
+            else
+                push!(card_hashes, card_hash)
+            end
+        end
+    end
+
+    return false
+end
+
 # =============== Common functions ===============
 
 function print_hands(hands :: Vector{Hand})
@@ -95,6 +115,11 @@ if length(ARGS) == 1
     file_path = ARGS[1]
     print_file(file_path)
     deal_from_file(hands, file_path)
+
+    if has_duplicate(hands)
+        return
+    end
+
     print_hands(hands)
 else
     deck = Vector{Card}(undef, 52)
