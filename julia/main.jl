@@ -2,6 +2,7 @@
 
 include("card.jl")
 include("hand.jl")
+include("hand_identifier.jl")
 
 println("*** P O K E R   H A N D   A N A L Y Z E R ***\n\n")
 
@@ -108,6 +109,12 @@ function print_hands(hands :: Vector{Hand})
     println()
 end
 
+function assign_types(hands::Vector{Hand})
+    for hand in hands
+        assign_type(hand)
+    end
+end
+
 # =============== Logic ===============
 hands = [Hand() for _ in 1:6]
 
@@ -121,6 +128,7 @@ if length(ARGS) == 1
     end
 
     print_hands(hands)
+    assign_types(hands)
 else
     deck = Vector{Card}(undef, 52)
     init_deck(deck)
@@ -128,4 +136,5 @@ else
     deal_from_deck(hands, deck)
     print_hands(hands)
     print_remaining_deck(deck)
+    assign_types(hands)
 end
