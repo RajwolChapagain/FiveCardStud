@@ -3,6 +3,7 @@
 include("card.jl")
 include("hand.jl")
 include("hand_identifier.jl")
+include("hand_sorter.jl")
 
 println("*** P O K E R   H A N D   A N A L Y Z E R ***\n\n")
 
@@ -139,6 +140,7 @@ if length(ARGS) == 1
 
     print_hands(hands)
     assign_types(hands)
+    sort_hands(hands)
     print_ranked_hands(hands)
 else
     deck = Vector{Card}(undef, 52)
@@ -148,5 +150,6 @@ else
     print_hands(hands)
     print_remaining_deck(deck)
     assign_types(hands)
+    sort_hands(hands)
     print_ranked_hands(hands)
 end
