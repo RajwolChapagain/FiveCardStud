@@ -37,3 +37,23 @@ function is_flush(cards::Vector{Card})
 
     return true
 end
+
+function is_straight(cards::Vector{Card})
+    if is_royal_straight(cards)
+        return true
+    end
+
+    prev_value = cards[1].value - 1
+
+    for card in cards
+        curr_value = card.value
+
+        if curr_value != prev_value + 1
+            return false
+        end
+        
+        prev_value = curr_value
+    end
+
+    return true
+end
