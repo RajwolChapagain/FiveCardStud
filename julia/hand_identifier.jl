@@ -5,6 +5,8 @@ function assign_type(hand::Hand)
         set_type(hand, 10)
     elseif is_straight_flush(cards)
         set_type(hand, 9)
+    elseif is_four_of_a_kind(cards)
+        set_type(hand, 8)
     elseif is_flush(cards)
         set_type(hand, 6)
     elseif is_straight(cards)
@@ -32,6 +34,14 @@ end
 
 function is_straight_flush(cards::Vector{Card})
     if is_straight(cards) && is_flush(cards)
+        return true
+    end
+
+    return false
+end
+
+function is_four_of_a_kind(cards::Vector{Card})
+    if 4 in get_frequency_set(cards)
         return true
     end
 
