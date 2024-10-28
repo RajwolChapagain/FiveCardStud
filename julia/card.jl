@@ -28,3 +28,7 @@ end
 function Base.isless(c1::Card, c2::Card)
     return c1.value < c2.value
 end
+
+function Base.:(==)(c1::Card, c2::Card)
+    return c1.value == c2.value
+end
