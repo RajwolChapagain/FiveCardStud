@@ -13,6 +13,8 @@ function assign_type(hand::Hand)
         set_type(hand, 6)
     elseif is_straight(cards)
         set_type(hand, 5)
+    elseif is_three_of_a_kind(cards)
+        set_type(hand, 4)
     else
         set_type(hand, 1)
     end
@@ -90,6 +92,14 @@ function is_straight(cards::Vector{Card})
     end
 
     return true
+end
+
+function is_three_of_a_kind(cards::Vector{Card})
+    if 3 in get_frequency_set(cards)
+        return true
+    end
+
+    return false
 end
 
 # =============== Helpers ===============
