@@ -29,7 +29,26 @@ function compare_royal_flush(h1, h2)
     return false
 end
 
-comparators = [compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush] 
+function compare_straight_flush(h1, h2)
+    l1 = get_sorted_cards(h1)
+    l2 = get_sorted_cards(h2)
+    
+    highest_card_comparison = compare_highest_card(l1, l2)
+
+    if highest_card_comparison == 1
+        return true
+    elseif highest_card_comparison == -1
+        return false
+    end
+
+    if l1[1].suit < l2[1].suit
+        return true
+    end
+
+    return false
+end
+
+comparators = [compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_straight_flush, compare_royal_flush] 
 
 
 # =============== Helpers ===============
