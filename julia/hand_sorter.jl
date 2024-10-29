@@ -85,3 +85,19 @@ function compare_highest_card(l1, l2)
 
     return 0
 end
+
+function get_cards_occuring_n_times(card_list, n)
+    result = []
+    occurence = 1
+    last_val = card_list[1].value
+
+    for card in card_list
+        if !(card in result)
+            if count(x -> x == card, card_list) == n
+                push!(result, card)
+            end
+        end
+    end
+
+    return result
+end
