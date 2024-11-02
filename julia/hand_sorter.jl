@@ -92,6 +92,25 @@ function compare_full_house(h1, h2)
     return false
 end
 
+function compare_flush(h1, h2)
+    l1 = get_sorted_cards(h1)
+    l2 = get_sorted_cards(h2)
+
+    highest_card_comparison = compare_highest_card(l1, l2)
+
+    if highest_card_comparison == 1
+        return true
+    elseif highest_card_comparison == -1
+        return false
+    end
+
+    if l1[1].suit < l2[1].suit
+        return true
+    end
+
+    return false
+end
+
 function compare_three_of_a_kind(h1, h2)
     c1 = get_cards_occuring_n_times(get_sorted_cards(h1), 3)[1]
     c2 = get_cards_occuring_n_times(get_sorted_cards(h2), 3)[1]
@@ -114,7 +133,7 @@ function compare_three_of_a_kind(h1, h2)
     return false
 end
 
-comparators = [compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_three_of_a_kind, compare_royal_flush, compare_royal_flush, compare_full_house, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush] 
+comparators = [compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_three_of_a_kind, compare_royal_flush, compare_flush, compare_full_house, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush] 
 
 
 # =============== Helpers ===============
