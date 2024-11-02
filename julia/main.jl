@@ -39,7 +39,7 @@ function print_deck(deck :: Vector{Card})
 end
 
 function deal_from_deck(hands :: Vector{Hand}, deck :: Vector{Card})
-    for i in 1:6
+    for i in 1:5
         for hand in hands
             add_card(hand, popfirst!(deck))
         end
