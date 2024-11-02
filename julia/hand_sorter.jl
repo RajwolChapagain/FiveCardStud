@@ -203,7 +203,54 @@ function compare_two_pair(h1, h2)
     return false
 end
 
-comparators = [compare_royal_flush, compare_royal_flush, compare_two_pair, compare_three_of_a_kind, compare_straight, compare_flush, compare_full_house, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush] 
+function compare_pair(h1, h2)
+    l1 = get_sorted_cards(h1)
+    l2 = get_sorted_cards(h2)
+
+    pair1 = get_cards_occuring_n_times(l1, 2)
+    pair2 = get_cards_occuring_n_times(l2, 2)
+
+    highest_card_comparison = compare_highest_card(pair1, pair2)
+
+    if highest_card_comparison == 1
+        return true
+    elseif highest_card_comparison == -1
+        return false
+    end
+
+    singles1 = get_cards_occuring_n_times(l1, 1)
+    singles2 = get_cards_occuring_n_times(l2, 1)
+
+    highest_single_comparison = compare_highest_card(singles1, singles2)
+
+    if highest_single_comparison == 1
+        return true
+    elseif highest_single_comparison == -1
+        return false
+    end
+
+    sort!(singles1)
+    sort!(singles2)
+
+    highest_single_suit1 = singles1[length(singles1)].suit
+    highest_single_suit2 = singles2[length(singles2)].suit
+
+    if singles1[1].value == 1
+        highest_single_suit1 = singles1[1].suit
+    end
+
+    if singles2[1].value == 1
+        highest_single_suit2 = singles2[1].suit
+    end
+
+    if highest_single_suit1 < highest_single_suit2
+        return true
+    end
+
+    return false
+end
+
+comparators = [compare_royal_flush, compare_pair, compare_two_pair, compare_three_of_a_kind, compare_straight, compare_flush, compare_full_house, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush] 
 
 
 # =============== Helpers ===============
