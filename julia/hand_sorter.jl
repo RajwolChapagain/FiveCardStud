@@ -250,7 +250,37 @@ function compare_pair(h1, h2)
     return false
 end
 
-comparators = [compare_royal_flush, compare_pair, compare_two_pair, compare_three_of_a_kind, compare_straight, compare_flush, compare_full_house, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush] 
+function compare_high_card(h1, h2)
+    l1 = get_sorted_cards(h1)
+    l2 = get_sorted_cards(h2)
+
+    highest_card_comparison = compare_highest_card(l1, l2)
+
+    if highest_card_comparison == 1
+        return true
+    elseif highest_card_comparison == -1
+        return false
+    end
+
+    highest_card_suit1 = l1[length(l1)].suit
+    highest_card_suit2 = l2[length(l2)].suit
+
+    if l1[1].value == 1
+        highest_card_suit1 = l1[1].suit
+    end
+
+    if l2[1].value == 1
+        highest_card_suit2 = l2[1].suit
+    end
+
+    if highest_card_suit1 < highest_card_suit2
+        return true
+    end
+
+    return false
+end
+
+comparators = [compare_high_card, compare_pair, compare_two_pair, compare_three_of_a_kind, compare_straight, compare_flush, compare_full_house, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush] 
 
 
 # =============== Helpers ===============
