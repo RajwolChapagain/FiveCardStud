@@ -70,7 +70,51 @@ function compare_four_of_a_kind(h1, h2)
     return false
 end
 
-comparators = [compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush] 
+function compare_full_house(h1, h2)
+    c1 = get_cards_occuring_n_times(get_sorted_cards(h1), 3)[1]
+    c2 = get_cards_occuring_n_times(get_sorted_cards(h2), 3)[1]
+
+    value1 = c1.value
+    value2 = c2.value
+
+    if value1 == 1
+        value1 = 14
+    end
+
+    if value2 == 1
+        value2 = 14
+    end
+
+    if value1 < value2
+        return true
+    end
+
+    return false
+end
+
+function compare_three_of_a_kind(h1, h2)
+    c1 = get_cards_occuring_n_times(get_sorted_cards(h1), 3)[1]
+    c2 = get_cards_occuring_n_times(get_sorted_cards(h2), 3)[1]
+
+    value1 = c1.value
+    value2 = c2.value
+
+    if value1 == 1
+        value1 = 14
+    end
+
+    if value2 == 1
+        value2 = 14
+    end
+
+    if value1 < value2
+        return true
+    end
+
+    return false
+end
+
+comparators = [compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_three_of_a_kind, compare_royal_flush, compare_royal_flush, compare_full_house, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush] 
 
 
 # =============== Helpers ===============
