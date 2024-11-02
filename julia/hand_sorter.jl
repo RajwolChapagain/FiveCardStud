@@ -167,7 +167,43 @@ function compare_three_of_a_kind(h1, h2)
     return false
 end
 
-comparators = [compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_three_of_a_kind, compare_straight, compare_flush, compare_full_house, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush] 
+function compare_two_pair(h1, h2)
+    l1 = get_sorted_cards(h1)
+    l2 = get_sorted_cards(h2)
+
+    pairs1 = get_cards_occuring_n_times(l1, 2)
+    pairs2 = get_cards_occuring_n_times(l2, 2)
+
+    highest_card_comparison = compare_highest_card(pairs1, pairs2)
+
+    if highest_card_comparison == 1
+        return true
+    elseif highest_card_comparison == -1
+        return false
+    end
+
+    kicker1 = get_cards_occuring_n_times(l1, 1)
+    kicker2 = get_cards_occuring_n_times(l2, 1)
+
+    kicker_card_comparison = compare_highest_card(kicker1, kicker2)
+
+    if kicker_card_comparison == 1
+        return true
+    elseif kicker_card_comparison == -1
+        return false
+    end
+
+    kicker_card1 = kicker1[1]
+    kicker_card2 = kicker2[1]
+
+    if kicker_card1.suit < kicker_card2.suit
+        return true
+    end
+
+    return false
+end
+
+comparators = [compare_royal_flush, compare_royal_flush, compare_two_pair, compare_three_of_a_kind, compare_straight, compare_flush, compare_full_house, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush] 
 
 
 # =============== Helpers ===============
