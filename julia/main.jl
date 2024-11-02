@@ -1,5 +1,3 @@
-#!/usr2/local/julia-1.10.4/bin/julia
-
 include("card.jl")
 include("hand.jl")
 include("hand_identifier.jl")
