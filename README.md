@@ -74,6 +74,7 @@ To use a test set of hands, pass the relative path of the appropriately formatte
 ```
 python3 main.py ../handsets/test
 ```
+
 ### Fortran
 1. Navigate to the fortran directory:
 ```
@@ -92,3 +93,16 @@ To use a test set of hands, pass the relative path of the appropriately formatte
 ./a.out ../handsets/test
 ```
 
+### Julia
+1. Navigate to the julia directory:
+```
+cd fivecardstud/julia
+```
+2. Run the code:
+```
+julia main.jl
+```
+To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
+```
+julia main.jl ../handsets/test
+```
