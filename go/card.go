@@ -49,6 +49,10 @@ func CardFromString(cardString string) Card {
     return Card{valueIndex, suitIndex} 
 }
 
+func GetRawString(c Card) string {
+    return VALUE_MAP[c.value] + SUIT_MAP[c.suit]
+}
+
 //=============== Sort interface methods ===============
 
 type ByValue []Card
