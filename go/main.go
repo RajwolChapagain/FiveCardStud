@@ -8,10 +8,13 @@ import (
 
 
 func main() {
+    hands := [6]Hand{}
     fmt.Println("*** P O K E R   H A N D   A N A L Y Z E R***\n\n")
 
     deck := CreateDeck()
     PrintDeck(deck)
+    DealFromDeck(&hands, &deck)
+    PrintRemainingDeck(deck)
 }
 
 func CreateDeck() []Card {
@@ -46,5 +49,23 @@ func PrintDeck(d []Card) {
         }
     }
     
+    fmt.Println()
+}
+
+func DealFromDeck(hands *[6]Hand, deck *[]Card) {
+    for i := 0; i < HAND_SIZE; i++ {
+        for i := range *hands {
+            hand := &hands[i]
+            hand.AddCard((*deck)[0])
+            *deck = (*deck)[1:]
+        }
+    }
+}
+
+func PrintRemainingDeck(deck []Card) {
+    fmt.Println("*** Here is what remains in the deck...")
+    for _, card := range deck {
+        fmt.Print(card)
+    }
     fmt.Println()
 }
