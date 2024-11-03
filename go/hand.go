@@ -21,3 +21,13 @@ func (h *Hand) AddCard(c Card) {
         os.Exit(1)
     }
 }
+
+func (h Hand) String() string {
+    var result string
+
+    for _, card := range h.cards {
+        result += card.String()
+    }
+
+    return result
+}
