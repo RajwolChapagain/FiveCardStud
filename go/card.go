@@ -48,3 +48,19 @@ func CardFromString(cardString string) Card {
     
     return Card{valueIndex, suitIndex} 
 }
+
+//=============== Sort interface methods ===============
+
+type ByValue []Card
+
+func (v ByValue) Len() int {
+    return len(v)
+}
+
+func (v ByValue) Less(i, j int) bool {
+    return v[i].value < v[j].value
+}
+
+func (v ByValue) Swap(i, j int) {
+    v[i], v[j] = v[j], v[i]
+}
