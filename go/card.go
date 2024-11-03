@@ -64,3 +64,10 @@ func (v ByValue) Less(i, j int) bool {
 func (v ByValue) Swap(i, j int) {
     v[i], v[j] = v[j], v[i]
 }
+
+//=============== Stringer interface method ===============
+func (c Card) String() string {
+    rawString := VALUE_MAP[c.value] + SUIT_MAP[c.suit]
+    return fmt.Sprintf("%-4s", rawString)
+}
+
