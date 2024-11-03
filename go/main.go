@@ -14,8 +14,11 @@ func main() {
     deck := CreateDeck()
     PrintDeck(deck)
     DealFromDeck(&hands, &deck)
+    PrintHands(hands)
     PrintRemainingDeck(deck)
 }
+
+// =============== Non-testing functions ===============
 
 func CreateDeck() []Card {
     deck := []Card{}
@@ -67,5 +70,17 @@ func PrintRemainingDeck(deck []Card) {
     for _, card := range deck {
         fmt.Print(card)
     }
+    fmt.Println()
+}
+
+// =============== Common functions ===============
+
+func PrintHands(hands [6]Hand) {
+    fmt.Println("*** Here are the six hands...")
+
+    for _, hand := range hands {
+        fmt.Println(hand)
+    }
+
     fmt.Println()
 }
