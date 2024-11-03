@@ -4,18 +4,28 @@ import (
     "fmt"
     "math/rand"
     "time"
+    "os"
+    "bufio"
+    "strings"
 )
 
 
 func main() {
     hands := [6]Hand{}
-    fmt.Println("*** P O K E R   H A N D   A N A L Y Z E R***\n\n")
+    fmt.Println("*** P O K E R   H A N D   A N A L Y Z E R ***\n\n")
 
-    deck := CreateDeck()
-    PrintDeck(deck)
-    DealFromDeck(&hands, &deck)
-    PrintHands(hands)
-    PrintRemainingDeck(deck)
+    if len(os.Args) == 2 {
+        filePath := os.Args[1]
+        PrintFile(filePath)
+        DealFromFile(&hands, filePath)
+        PrintHands(hands)
+    } else {
+        deck := CreateDeck()
+        PrintDeck(deck)
+        DealFromDeck(&hands, &deck)
+        PrintHands(hands)
+        PrintRemainingDeck(deck)
+    }
 }
 
 // =============== Non-testing functions ===============
@@ -71,6 +81,49 @@ func PrintRemainingDeck(deck []Card) {
         fmt.Print(card)
     }
     fmt.Println()
+}
+
+// =============== Testing functions ===============
+
+func PrintFile(path string) {
+    fmt.Println("*** USING TEST DECK ***\n")
+
+    fmt.Println("*** File:", path)
+
+    content, err := os.ReadFile(path)
+
+    if err != nil {
+        fmt.Println("Error reading file:", err)
+        return
+    }
+
+    fmt.Println(string(content))
+}
+
+func DealFromFile(hands *[6]Hand, path string) {
+    file, err := os.Open(path)
+
+    if err != nil {
+        fmt.Println("Error opening file:", err)
+        return
+    }
+    defer file.Close()
+
+    i := 0
+    // Create a new scanner to read the file line by line
+    scanner := bufio.NewScanner(file)
+    for scanner.Scan() {
+        for _, token := range strings.Split(scanner.Text(), ",") {
+            (*hands)[i].AddCard(CardFromString(token))
+        }
+
+        i += 1
+    }
+
+    // Check for errors during scanning
+    if err := scanner.Err(); err != nil {
+        fmt.Println("Error reading file:", err)
+    }
 }
 
 // =============== Common functions ===============
