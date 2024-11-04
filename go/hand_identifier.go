@@ -11,6 +11,8 @@ func AssignType(h *Hand) {
         h.handType = 9
     } else if IsStraightFlush(cards) {
         h.handType = 8
+    } else if IsFourOfAKind(cards) {
+        h.handType = 7
     } else if IsFlush(cards) {
         h.handType = 5
     } else if IsStraight(cards) {
@@ -44,6 +46,18 @@ func IsStraightFlush(cards []Card) bool {
     return false
 }
 
+
+func IsFourOfAKind(cards []Card) bool {
+    set := GetFrequencySet(cards)
+
+    for _, v := range set {
+        if v == 4 {
+            return true
+        }
+    }
+
+    return false
+}
 
 func IsFlush(cards []Card) bool {
     prevSuit := cards[0].suit
