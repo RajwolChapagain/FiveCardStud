@@ -1,5 +1,9 @@
 package main
 
+import (
+    "sort"
+)
+
 func AssignType(h *Hand) {
     cards := h.GetSortedCards()
 
@@ -71,4 +75,35 @@ func IsStraight(cards []Card) bool {
     }
 
     return true
+}
+
+// =============== Helper ===============
+
+func GetFrequencySet(cards []Card) []int {
+    set := []int{}
+
+    prevValue := -1
+
+    for _, card := range cards {
+        currValue := card.value
+
+        if currValue == prevValue {
+            continue
+        }
+
+        count := 0
+
+        for _, c := range cards {
+            if c.value == currValue {
+                count += 1
+            }
+        }
+
+        set = append(set, count)
+        prevValue = currValue
+    }
+
+    sort.Ints(set)
+
+    return set
 }
