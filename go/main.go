@@ -18,6 +18,11 @@ func main() {
         filePath := os.Args[1]
         PrintFile(filePath)
         DealFromFile(&hands, filePath)
+
+        if HasDuplicate(hands) {
+            return
+        }
+
         PrintHands(hands)
     } else {
         deck := CreateDeck()
@@ -124,6 +129,30 @@ func DealFromFile(hands *[6]Hand, path string) {
     if err := scanner.Err(); err != nil {
         fmt.Println("Error reading file:", err)
     }
+}
+
+func HasDuplicate(hands [6]Hand) bool {
+    hashes := []int{}
+
+    for _, hand := range hands {
+        for _, card := range hand.cards {
+            hash := card.value * 10 + card.suit
+
+            for _, elem := range hashes {
+                if elem == hash {
+                    fmt.Println("*** ERROR - DUPLICATED CARD FOUND IN DECK ***\n")
+
+                    fmt.Println("*** Duplicate: " + card.GetRawString())
+
+                    return true
+                }
+            }
+                   
+            hashes = append(hashes, hash)
+        }
+    }
+
+    return false
 }
 
 // =============== Common functions ===============
