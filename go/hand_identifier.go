@@ -23,6 +23,8 @@ func AssignType(h *Hand) {
         h.handType = 3
     } else if IsTwoPair(cards) {
         h.handType = 2
+    } else if IsPair(cards) {
+        h.handType = 1
     } else {
         h.handType = 0
     }
@@ -126,6 +128,18 @@ func IsTwoPair(cards []Card) bool {
         return true
     }
 
+    return false
+}
+
+func IsPair(cards []Card) bool {
+    set := GetFrequencySet(cards)
+
+    for _, v := range set {
+        if v == 2 {
+            return true
+        }
+    }
+    
     return false
 }
 
