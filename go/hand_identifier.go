@@ -17,6 +17,8 @@ func AssignType(h *Hand) {
         h.handType = 5
     } else if IsStraight(cards) {
         h.handType = 4
+    } else if IsThreeOfAKind(cards) {
+        h.handType = 3
     } else {
         h.handType = 0
     }
@@ -89,6 +91,18 @@ func IsStraight(cards []Card) bool {
     }
 
     return true
+}
+
+func IsThreeOfAKind(cards []Card) bool {
+    set := GetFrequencySet(cards)
+
+    for _, v := range set {
+        if v == 3 {
+            return true
+        }
+    }
+
+    return false
 }
 
 // =============== Helper ===============
