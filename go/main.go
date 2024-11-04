@@ -25,6 +25,7 @@ func main() {
 
         PrintHands(hands)
         AssignTypes(&hands)
+        PrintRankedHands(hands)
     } else {
         deck := CreateDeck()
         PrintDeck(deck)
@@ -32,6 +33,7 @@ func main() {
         PrintHands(hands)
         PrintRemainingDeck(deck)
         AssignTypes(&hands)
+        PrintRankedHands(hands)
     }
 }
 
@@ -87,7 +89,7 @@ func PrintRemainingDeck(deck []Card) {
     for _, card := range deck {
         fmt.Print(card)
     }
-    fmt.Println()
+    fmt.Println("\n")
 }
 
 // =============== Testing functions ===============
@@ -172,5 +174,13 @@ func PrintHands(hands [6]Hand) {
 func AssignTypes(hands *[6]Hand) {
     for i, _ := range hands {
         AssignType(&hands[i])
+    }
+}
+
+func PrintRankedHands(hands [6]Hand) {
+    fmt.Println("--- WINNING HAND ORDER ---")
+
+    for _, hand := range hands {
+        fmt.Printf("%s - %s\n", hand.String(), HAND_MAP[hand.handType])
     }
 }
