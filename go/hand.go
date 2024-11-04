@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "os"
+    "sort"
 )
 
 const HAND_SIZE = 5
@@ -30,4 +31,12 @@ func (h Hand) String() string {
     }
 
     return result
+}
+
+func (h Hand) GetSortedCards() []Card {
+    copySlice := make([]Card, len(h.cards))
+	copy(copySlice, h.cards)
+
+    sort.Sort(ByValue(copySlice))
+    return copySlice
 }
