@@ -13,6 +13,8 @@ func AssignType(h *Hand) {
         h.handType = 8
     } else if IsFourOfAKind(cards) {
         h.handType = 7
+    } else if IsFullHouse(cards) {
+        h.handType = 6
     } else if IsFlush(cards) {
         h.handType = 5
     } else if IsStraight(cards) {
@@ -56,6 +58,16 @@ func IsFourOfAKind(cards []Card) bool {
         if v == 4 {
             return true
         }
+    }
+
+    return false
+}
+
+func IsFullHouse(cards []Card) bool {
+    set := GetFrequencySet(cards)
+
+    if set[0] == 2 && set[1] == 3 {
+        return true
     }
 
     return false
