@@ -25,6 +25,7 @@ func main() {
 
         PrintHands(hands)
         AssignTypes(&hands)
+        SortHands(&hands)
         PrintRankedHands(hands)
     } else {
         deck := CreateDeck()
@@ -33,6 +34,7 @@ func main() {
         PrintHands(hands)
         PrintRemainingDeck(deck)
         AssignTypes(&hands)
+        SortHands(&hands)
         PrintRankedHands(hands)
     }
 }
