@@ -44,3 +44,57 @@ func CompareRoyalFlush(h1, h2 Hand) bool {
     
     return false
 }
+
+// =============== Helpers ===============
+
+//Returns:
+//  1 if l1 is stronger
+// -1 if l1 is weaker
+//  0 if both are equal
+func CompareHighestCard(l1, l2 []Card) int {
+    valueList1 := []int{}
+    valueList2 := []int{}
+
+    for i := 0; i < len(l1); i++ {
+        valueList1 = append(valueList1, l1[i].value)
+
+        if l1[i].value == 0 {
+            // Treat ace as high
+            valueList1[i] = 13
+
+            // If it's a straight that doesn't end in an ace, treat ace as low
+            if len(l1) == HAND_SIZE {
+                if IsStraight(l1) && !IsRoyalStraight(l1) {
+                    valueList1[i] = 0
+                }
+            }  
+        }
+
+      
+
+        valueList2 = append(valueList2, l2[i].value)
+
+        if l2[i].value == 0 {
+            valueList2[i] = 13
+ 
+            if len(l2) == HAND_SIZE {
+                if IsStraight(l2) && !IsRoyalStraight(l2) {
+                    valueList2[i] = 0
+                }
+            }       
+        }
+    }
+
+	sort.Sort(sort.Reverse(sort.IntSlice(valueList1)))
+	sort.Sort(sort.Reverse(sort.IntSlice(valueList2)))
+
+    for i := 0; i < len(valueList1); i++ {
+        if valueList1[i] > valueList2[i] {
+            return 1
+        } else if valueList1[i] < valueList2[i] {
+            return -1
+        }
+    }
+
+    return 0
+}
