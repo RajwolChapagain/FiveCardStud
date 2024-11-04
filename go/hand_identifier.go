@@ -21,6 +21,8 @@ func AssignType(h *Hand) {
         h.handType = 4
     } else if IsThreeOfAKind(cards) {
         h.handType = 3
+    } else if IsTwoPair(cards) {
+        h.handType = 2
     } else {
         h.handType = 0
     }
@@ -112,6 +114,16 @@ func IsThreeOfAKind(cards []Card) bool {
         if v == 3 {
             return true
         }
+    }
+
+    return false
+}
+
+func IsTwoPair(cards []Card) bool {
+    set := GetFrequencySet(cards)
+
+    if set[1] == 2 && set[2] == 2 {
+        return true
     }
 
     return false
