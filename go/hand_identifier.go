@@ -5,6 +5,12 @@ func AssignType(h *Hand) {
 
     if IsRoyalStraightFlush(cards) {
         h.handType = 9
+    } else if IsStraightFlush(cards) {
+        h.handType = 8
+    } else if IsFlush(cards) {
+        h.handType = 5
+    } else if IsStraight(cards) {
+        h.handType = 4
     } else {
         h.handType = 0
     }
@@ -26,6 +32,15 @@ func IsRoyalStraight(cards []Card) bool {
     return false
 }
 
+func IsStraightFlush(cards []Card) bool {
+    if IsStraight(cards) && IsFlush(cards) {
+        return true
+    }
+
+    return false
+}
+
+
 func IsFlush(cards []Card) bool {
     prevSuit := cards[0].suit
 
@@ -33,6 +48,26 @@ func IsFlush(cards []Card) bool {
         if card.suit != prevSuit {
             return false
         }
+    }
+
+    return true
+}
+
+func IsStraight(cards []Card) bool {
+    if IsRoyalStraight(cards) {
+        return true
+    }
+
+    prevValue := cards[0].value - 1
+
+    for _, card := range cards {
+        currValue := card.value
+
+        if currValue != prevValue + 1 {
+            return false
+        }
+
+        prevValue = currValue
     }
 
     return true
