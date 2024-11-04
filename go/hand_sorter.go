@@ -64,6 +64,11 @@ func CompareStraightFlush(h1, h2 Hand) bool {
     return false
 }
 
+
+func CompareFourOfAKind(h1, h2 Hand) bool {
+    return true
+}
+
 // =============== Helpers ===============
 
 //Returns:
@@ -116,4 +121,40 @@ func CompareHighestCard(l1, l2 []Card) int {
     }
 
     return 0
+}
+
+func GetCardsOccuringNTimes(cardList []Card, n int) []Card {
+    result := []Card{}
+
+    for _, card := range cardList {
+        if !SliceContainsCard(result, card) {
+            if CountCard(cardList, card) == n {
+                result = append(result, card)
+            }
+        }
+    }
+
+    return result
+}
+
+func SliceContainsCard(slice []Card, c Card) bool {
+    for _, card := range slice {
+        if card.value == c.value {
+            return true
+        }
+    }
+
+    return false
+}
+
+func CountCard(slice []Card, c Card) int {
+    occurence := 0
+
+    for _, card := range slice {
+        if card.value == c.value {
+            occurence += 1
+        }
+    }
+
+    return occurence
 }
