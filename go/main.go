@@ -24,12 +24,14 @@ func main() {
         }
 
         PrintHands(hands)
+        AssignTypes(&hands)
     } else {
         deck := CreateDeck()
         PrintDeck(deck)
         DealFromDeck(&hands, &deck)
         PrintHands(hands)
         PrintRemainingDeck(deck)
+        AssignTypes(&hands)
     }
 }
 
@@ -165,4 +167,10 @@ func PrintHands(hands [6]Hand) {
     }
 
     fmt.Println()
+}
+
+func AssignTypes(hands *[6]Hand) {
+    for i, _ := range hands {
+        AssignType(&hands[i])
+    }
 }
