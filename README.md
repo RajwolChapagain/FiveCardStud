@@ -23,7 +23,7 @@ java Main
 
 To run the program using test files, place them into the fivecardstud/handsets directory. One is provided for you. Pass the relative path of the appropriately formatted test file as the first command line argument while running the program like so:
 ```
-java Main ../handsets/test
+java Main ../handsets/test_sort
 ```
 ### C#
 1. Navigate to the c# directory:
@@ -40,7 +40,7 @@ mono Poker.exe
 ```
 To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
 ```
-mono Poker.exe ../handsets/test
+mono Poker.exe ../handsets/test_sort
 ```
 
 ### C++
@@ -58,7 +58,7 @@ g++ main.cpp card.cpp deck.cpp hand.cpp hand_identifier.cpp hand_sorter.cpp
 ```
 To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
 ```
-./a.out ../handsets/test
+./a.out ../handsets/test_sort
 ```
 
 ### Python
@@ -72,7 +72,7 @@ python3 main.py
 ```
 To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
 ```
-python3 main.py ../handsets/test
+python3 main.py ../handsets/test_sort
 ```
 
 ### Fortran
@@ -90,7 +90,7 @@ gfortran card.f90 hand.f90 hand_identifier.f90 hand_sorter.f90 main.f90
 ```
 To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
 ```
-./a.out ../handsets/test
+./a.out ../handsets/test_sort
 ```
 
 ### Julia
@@ -104,5 +104,19 @@ julia main.jl
 ```
 To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
 ```
-julia main.jl ../handsets/test
+julia main.jl ../handsets/test_sort
+```
+
+### Go
+1. Navigate to the go directory:
+```
+cd fivecardstud/go
+```
+2. Run the code:
+```
+go run main.go card.go hand.go hand_identifier.go hand_sorter.go
+```
+To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
+```
+go run main.go card.go hand.go hand_identifier.go hand_sorter.go ../handsets/test_sort
 ```
