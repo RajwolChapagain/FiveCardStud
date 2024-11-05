@@ -4,7 +4,7 @@ import (
     "sort"
 )
 
-var comparators = [10] func (Hand, Hand) bool {CompareRoyalFlush, CompareRoyalFlush, CompareRoyalFlush, CompareRoyalFlush, CompareStraight, CompareFlush, CompareFullHouse, CompareFourOfAKind, CompareStraightFlush, CompareRoyalFlush}
+var comparators = [10] func (Hand, Hand) bool {CompareRoyalFlush, CompareRoyalFlush, CompareRoyalFlush, CompareThreeOfAKind, CompareStraight, CompareFlush, CompareFullHouse, CompareFourOfAKind, CompareStraightFlush, CompareRoyalFlush}
 
 func SortHands(hands *[6]Hand) {
     handsSlice := hands[:]
@@ -157,6 +157,28 @@ func CompareStraight(h1, h2 Hand) bool {
     if highestCardSuit1 > highestCardSuit2 {
         return true
     }
+    return false
+}
+
+func CompareThreeOfAKind(h1, h2 Hand) bool {
+    c1 := GetCardsOccuringNTimes(h1.GetSortedCards(), 3)[0]
+    c2 := GetCardsOccuringNTimes(h2.GetSortedCards(), 3)[0]
+
+    value1 := c1.value
+    value2 := c2.value
+
+    if value1 == 0 {
+        value1 = 13
+    }
+
+    if value2 == 0 {
+        value2 = 13
+    }
+
+    if value1 > value2 {
+        return true
+    }
+
     return false
 }
 
