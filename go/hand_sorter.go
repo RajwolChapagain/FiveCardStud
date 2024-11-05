@@ -4,7 +4,7 @@ import (
     "sort"
 )
 
-var comparators = [10] func (Hand, Hand) bool {CompareRoyalFlush, CompareRoyalFlush, CompareRoyalFlush, CompareThreeOfAKind, CompareStraight, CompareFlush, CompareFullHouse, CompareFourOfAKind, CompareStraightFlush, CompareRoyalFlush}
+var comparators = [10] func (Hand, Hand) bool {CompareRoyalFlush, CompareRoyalFlush, CompareTwoPair, CompareThreeOfAKind, CompareStraight, CompareFlush, CompareFullHouse, CompareFourOfAKind, CompareStraightFlush, CompareRoyalFlush}
 
 func SortHands(hands *[6]Hand) {
     handsSlice := hands[:]
@@ -179,6 +179,42 @@ func CompareThreeOfAKind(h1, h2 Hand) bool {
         return true
     }
 
+    return false
+}
+
+func CompareTwoPair(h1, h2 Hand) bool {
+    l1 := h1.GetSortedCards()
+    l2 := h2.GetSortedCards()
+
+    pairs1 := GetCardsOccuringNTimes(l1, 2)
+    pairs2 := GetCardsOccuringNTimes(l2, 2)
+
+    highestCardComparison := CompareHighestCard(pairs1, pairs2)
+
+    if highestCardComparison == 1 {
+        return true
+    } else if highestCardComparison == -1 {
+        return false
+    }
+
+    kicker1 := GetCardsOccuringNTimes(l1, 1)
+    kicker2 := GetCardsOccuringNTimes(l2, 1)
+
+    kickerCardComparison := CompareHighestCard(kicker1, kicker2)
+
+    if kickerCardComparison == 1 {
+        return true
+    } else if kickerCardComparison == -1 {
+        return false
+    }
+
+    kickerCard1 := kicker1[0]
+    kickerCard2 := kicker2[0]
+
+    if kickerCard1.suit > kickerCard2.suit {
+        return true
+    }
+    
     return false
 }
 
