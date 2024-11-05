@@ -18,15 +18,15 @@ func SortHands(hands *[6]Hand) {
 
     for i, hand := range handsSlice {
         if hand.handType != lastType {
-            sort.Slice(handsSlice[startIndex:i], func (i, j int) bool {
-                return comparators[lastType](handsSlice[i], handsSlice[j])
+            sort.Slice(handsSlice[startIndex:i], func (j, k int) bool {
+                return comparators[lastType](handsSlice[j], handsSlice[k])
             })
 
             startIndex = i
             lastType = hand.handType
         } else if i == len(hands) - 1 {
-            sort.Slice(handsSlice[startIndex:], func (i, j int) bool {
-                return comparators[lastType](handsSlice[i], handsSlice[j])
+            sort.Slice(handsSlice[startIndex:], func (j, k int) bool {
+                return comparators[lastType](handsSlice[j], handsSlice[k])
             })
         }
     }
