@@ -4,7 +4,7 @@ import (
     "sort"
 )
 
-var comparators = [10] func (Hand, Hand) bool {CompareRoyalFlush, CompareRoyalFlush, CompareTwoPair, CompareThreeOfAKind, CompareStraight, CompareFlush, CompareFullHouse, CompareFourOfAKind, CompareStraightFlush, CompareRoyalFlush}
+var comparators = [10] func (Hand, Hand) bool {CompareRoyalFlush, ComparePair, CompareTwoPair, CompareThreeOfAKind, CompareStraight, CompareFlush, CompareFullHouse, CompareFourOfAKind, CompareStraightFlush, CompareRoyalFlush}
 
 func SortHands(hands *[6]Hand) {
     handsSlice := hands[:]
@@ -212,6 +212,57 @@ func CompareTwoPair(h1, h2 Hand) bool {
     kickerCard2 := kicker2[0]
 
     if kickerCard1.suit > kickerCard2.suit {
+        return true
+    }
+    
+    return false
+}
+
+func ComparePair(h1, h2 Hand) bool {
+    l1 := h1.GetSortedCards()
+    l2 := h2.GetSortedCards()
+
+    pair1 := GetCardsOccuringNTimes(l1, 2)
+    pair2 := GetCardsOccuringNTimes(l2, 2)
+    
+    highestCardComparison := CompareHighestCard(pair1, pair2)
+
+    if highestCardComparison == 1 {
+        return true
+    } else if highestCardComparison == -1 {
+        return false
+    }
+
+    singles1 := GetCardsOccuringNTimes(l1, 1)
+    singles2 := GetCardsOccuringNTimes(l2, 1)
+
+    highestSingleComparison := CompareHighestCard(singles1, singles2)
+
+    if highestSingleComparison == 1 {
+        return true
+    } else if highestSingleComparison == -1 {
+        return false
+    }
+    
+    sort.Slice(singles1, func(i, j int) bool {
+        return singles1[i].value < singles1[j].value
+    })
+
+    sort.Slice(singles2, func(i, j int) bool {
+        return singles2[i].value < singles2[j].value
+    })
+
+    highestSingleSuit1 := singles1[len(singles1) - 1].suit
+    highestSingleSuit2 := singles2[len(singles2) - 1].suit
+
+    if singles1[0].value == 0 {
+        highestSingleSuit1 = singles1[0].suit
+    }
+    if singles2[0].value == 0 {
+        highestSingleSuit2 = singles2[0].suit
+    }
+
+    if highestSingleSuit1 > highestSingleSuit2 {
         return true
     }
     
