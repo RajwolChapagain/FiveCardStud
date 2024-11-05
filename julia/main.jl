@@ -85,7 +85,7 @@ function has_duplicate(hands :: Vector{Hand})
             if card_hash in card_hashes
                 println("*** ERROR - DUPLICATED CARD FOUND IN DECK ***\n")
 
-                println("*** Duplicate: ", card)
+                println("*** Duplicate: ", get_card_string(card), " ***")
                 return true
             else
                 push!(card_hashes, card_hash)
