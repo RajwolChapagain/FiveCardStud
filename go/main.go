@@ -148,7 +148,7 @@ func HasDuplicate(hands [6]Hand) bool {
                 if elem == hash {
                     fmt.Println("*** ERROR - DUPLICATED CARD FOUND IN DECK ***\n")
 
-                    fmt.Println("*** Duplicate: " + card.GetRawString())
+                    fmt.Println("*** Duplicate: " + card.GetRawString() + " ***")
 
                     return true
                 }
