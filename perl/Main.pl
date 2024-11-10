@@ -22,6 +22,7 @@ sub main {
         print_hands(@hands);
         print_remaining_deck(@deck);
         assign_types(\@hands);
+        print_ranked_hands(@hands);
     } else {
         my $file_path = $ARGV[0];
         print_file($file_path);
@@ -29,6 +30,7 @@ sub main {
         check_duplicate(@hands);
         print_hands(@hands);
         assign_types(\@hands);
+        print_ranked_hands(@hands);
     }
 }
 
@@ -157,4 +159,13 @@ sub assign_types {
     foreach my $hand (@$hands_ref) {
         HandIdentifier::assign_type($hand)
     }
+}
+
+sub print_ranked_hands {
+    my @hands = @_;
+
+    foreach my $hand (@hands) {
+        print $hand->to_string . "- " . @Hand::HAND_MAP[$hand->get_type] . "\n"; 
+    }
+    print "\n";
 }
