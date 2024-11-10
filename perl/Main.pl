@@ -15,6 +15,8 @@ sub main {
 
 }
 
+# =============== Non-testing subroutines ===============
+
 sub init_deck {
     my $deck_ref = shift;
 
@@ -36,9 +38,11 @@ sub init_deck {
 sub print_deck {
     my @deck = @_;
 
+    print "*** USING RANDOMIZED DECK OF CARDS ***\n\n";
 
+    print "*** Shuffled 52 card deck:\n";
     for my $i (0..$#deck) {
-        print $deck[$i]->to_string . " ";
+        printf("%-4s", $deck[$i]->to_string);
 
         if ( ($i + 1) % 13 == 0) {
             print "\n";
