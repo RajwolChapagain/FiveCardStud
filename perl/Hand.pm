@@ -45,4 +45,16 @@ sub to_string {
     return $result;
 }
 
+sub get_type {
+    my $self = shift;
+
+    return $self->{type};
+}
+
+sub set_type {
+    my $self = shift;
+
+    $self->{type} = shift;
+}
+
 return 1;
