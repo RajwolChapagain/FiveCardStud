@@ -10,8 +10,12 @@ sub assign_type {
 
     if (is_royal_straight_flush(@cards)) {
         $hand->set_type(9);
+    } elsif (is_straight_flush(@cards)) {
+        $hand->set_type(8);
     } elsif (is_flush(@cards)) {
         $hand->set_type(5);
+    } elsif (is_straight(@cards)) {
+        $hand->set_type(4);
     } else {
         $hand->set_type(0);
     }
@@ -37,6 +41,16 @@ sub is_royal_straight {
     return 0;
 }
 
+sub is_straight_flush {
+    my @cards = @_;
+
+    if (is_straight(@cards) and is_flush(@cards)) {
+        return 1;
+    }
+
+    return 0;
+}
+
 sub is_flush {
     my @cards = @_;
 
@@ -46,6 +60,28 @@ sub is_flush {
         if ($card->get_suit != $prev_suit) {
             return 0;
         }
+    }
+
+    return 1;
+}
+
+sub is_straight {
+    my @cards = @_;
+    
+    if (is_royal_straight(@cards)) {
+        return 1;
+    }
+
+    my $prev_value = $cards[0]->get_value - 1;
+
+    foreach my $card (@cards) {
+        my $curr_value = $card->get_value;
+
+        if ($curr_value != $prev_value + 1) {
+            return 0;
+        }
+
+        $prev_value = $curr_value;
     }
 
     return 1;
