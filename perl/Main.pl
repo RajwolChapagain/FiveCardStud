@@ -17,6 +17,7 @@ sub main {
     print_deck(@deck);
     deal_from_deck(\@hands,\@deck);
     print_hands(@hands);
+    print_remaining_deck(@deck);
 }
 
 # =============== Non-testing subroutines ===============
@@ -65,6 +66,16 @@ sub deal_from_deck {
             @$hand_ref[$i]->add_card(shift @$deck_ref);
         }
     }
+}
+
+sub print_remaining_deck {
+    my @deck = @_;
+
+    print "*** Here is what remains in the deck...\n";
+    foreach my $card (@deck) {
+        printf("%-4s", $card->to_string);
+    }
+    print "\n";
 }
 
 # =============== Common subroutines ===============
