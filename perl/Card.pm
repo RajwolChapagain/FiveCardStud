@@ -38,6 +38,14 @@ sub new {
         $value = get_value_index($value_string);
         $suit = get_suit_index($suit_string);
 
+        if ($value == -1) {
+            die "Error: Card can't have value ", $value_string;
+        }
+
+        if ($suit == -1) {
+            die "Error: Card can't have suit ", $suit_string;
+        }
+
         my $self = bless {
             value => $value,
             suit => $suit
