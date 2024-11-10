@@ -10,14 +10,20 @@ main();
 sub main {
     print "*** P O K E R   H A N D   A N A L Y Z E R ***\n\n\n";
 
-    my @deck = ();
     my @hands = (Hand->new(), Hand->new(), Hand->new(), Hand->new(), Hand->new(), Hand->new());
 
-    init_deck(\@deck);
-    print_deck(@deck);
-    deal_from_deck(\@hands,\@deck);
-    print_hands(@hands);
-    print_remaining_deck(@deck);
+
+    if (@ARGV == 0) {
+        my @deck = ();
+        init_deck(\@deck);
+        print_deck(@deck);
+        deal_from_deck(\@hands,\@deck);
+        print_hands(@hands);
+        print_remaining_deck(@deck);
+    } else {
+        my $file_path = $ARGV[0];
+        print_file($file_path);
+    }
 }
 
 # =============== Non-testing subroutines ===============
@@ -78,6 +84,25 @@ sub print_remaining_deck {
     print "\n";
 }
 
+# =============== Testing subroutines ===============
+
+sub print_file {
+    my $path = shift;
+    
+    print "*** USING TEST DECK ***\n\n";
+
+    print "*** File: $path\n";
+
+    open(my $in,  "<",  $path);
+
+
+    while (<$in>) {
+        print $_;
+    }
+
+    print "\n";
+}
+
 # =============== Common subroutines ===============
 
 sub print_hands {
@@ -88,6 +113,5 @@ sub print_hands {
     foreach my $hand (@hands) {
         print $hand->to_string . "\n";
     }
-
     print "\n";
 }
