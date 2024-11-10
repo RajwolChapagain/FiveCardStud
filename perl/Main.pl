@@ -8,6 +8,8 @@ use Hand;
 main();
 
 sub main {
+    print "*** P O K E R   H A N D   A N A L Y Z E R ***\n\n\n";
+
     my @deck = ();
 
     init_deck(\@deck);
