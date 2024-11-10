@@ -24,6 +24,8 @@ sub assign_type {
         $hand->set_type(3);
     } elsif (is_two_pair(@cards)) {
         $hand->set_type(2);
+    } elsif (is_pair(@cards)) {
+        $hand->set_type(1);
     } else {
         $hand->set_type(0);
     }
@@ -130,6 +132,7 @@ sub is_three_of_a_kind {
 
     return 0;
 }
+
 sub is_two_pair {
     my @cards = @_;
 
@@ -143,6 +146,18 @@ sub is_two_pair {
 
     if ($two_count == 2) {
         return 1;
+    }
+
+    return 0;
+}
+
+sub is_pair {
+    my @cards = @_;
+
+    foreach my $freq (get_frequency_set(@cards)) {
+        if ($freq == 2) {
+            return 1;
+        }
     }
 
     return 0;
