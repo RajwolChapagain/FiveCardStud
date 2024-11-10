@@ -5,6 +5,7 @@ use lib $RealBin;
 use Card;
 use Hand;
 use HandIdentifier;
+use HandSorter;
 
 main();
 
@@ -22,6 +23,7 @@ sub main {
         print_hands(@hands);
         print_remaining_deck(@deck);
         assign_types(\@hands);
+        HandSorter::sort_hands(\@hands);
         print_ranked_hands(@hands);
     } else {
         my $file_path = $ARGV[0];
@@ -30,6 +32,7 @@ sub main {
         check_duplicate(@hands);
         print_hands(@hands);
         assign_types(\@hands);
+        HandSorter::sort_hands(\@hands);
         print_ranked_hands(@hands);
     }
 }
@@ -164,6 +167,7 @@ sub assign_types {
 sub print_ranked_hands {
     my @hands = @_;
 
+    print "--- WINNING HAND ORDER ---\n";
     foreach my $hand (@hands) {
         print $hand->to_string . "- " . @Hand::HAND_MAP[$hand->get_type] . "\n"; 
     }
