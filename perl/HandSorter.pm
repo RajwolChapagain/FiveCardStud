@@ -56,9 +56,6 @@ sub compare_royal_flush {
     return 0;
 }
 
-return 1;
-
-
 # =============== Helpers ===============
 
 sub compare_highest_card {
@@ -110,3 +107,22 @@ sub compare_highest_card {
 
     return 0;
 }
+
+sub get_cards_occuring_n_times {
+    my ($card_list_ref, $n) = @_;
+
+    my @card_list = @$card_list_ref;
+    my @result = ();
+
+    foreach my $card (@card_list) {
+        if (!(grep {$_->get_value == $card->get_value} @result)) {
+            if (HandIdentifier::get_card_count($card, @card_list) == $n) {
+                push @result, $card;
+            }
+        }
+    }
+
+    return @result;
+}
+
+return 1;
