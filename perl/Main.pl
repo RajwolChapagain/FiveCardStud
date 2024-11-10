@@ -4,6 +4,7 @@ use FindBin qw($RealBin);
 use lib $RealBin;
 use Card;
 use Hand;
+use HandIdentifier;
 
 main();
 
@@ -20,12 +21,14 @@ sub main {
         deal_from_deck(\@hands,\@deck);
         print_hands(@hands);
         print_remaining_deck(@deck);
+        assign_types(\@hands);
     } else {
         my $file_path = $ARGV[0];
         print_file($file_path);
         deal_from_file(\@hands, $file_path);
         check_duplicate(@hands);
         print_hands(@hands);
+        assign_types(\@hands);
     }
 }
 
@@ -84,7 +87,7 @@ sub print_remaining_deck {
     foreach my $card (@deck) {
         printf("%-4s", $card->to_string);
     }
-    print "\n";
+    print "\n\n";
 }
 
 # =============== Testing subroutines ===============
@@ -146,4 +149,12 @@ sub print_hands {
         print $hand->to_string . "\n";
     }
     print "\n";
+}
+
+sub assign_types {
+    my $hands_ref = shift;
+
+    foreach my $hand (@$hands_ref) {
+        HandIdentifier::assign_type($hand)
+    }
 }
