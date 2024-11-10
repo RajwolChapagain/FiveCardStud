@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use HandIdentifier;
 
-my @comparators = (\&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_full_house, \&compare_four_of_a_kind, \&compare_straight_flush, \&compare_royal_flush);
+my @comparators = (\&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_straight, \&compare_royal_flush, \&compare_full_house, \&compare_four_of_a_kind, \&compare_straight_flush, \&compare_royal_flush);
 
 
 sub sort_hands {
@@ -33,15 +33,15 @@ sub sort_ties {
             $start_index = $i;
             $last_type = @$hand_ref[$i]->get_type;
         } elsif ($i == $#$hand_ref) {
-            @$hand_ref[$start_index..$i] = sort { $comparators[$last_type]($a, $b) } @$hand_ref[$start_index..$i];
+                @$hand_ref[$start_index..$i] = sort { $comparators[$last_type]($a, $b) } @$hand_ref[$start_index..$i];
         }
     }
 }
 
 # =============== Comparators ===============
 # All return:
-# 1 if h1 is weaker
-# 0 if h1 is stronger
+#  1 if h1 is weaker
+# -1 if h1 is stronger
 
 sub compare_royal_flush {
     my ($h1, $h2) = @_;
@@ -131,6 +131,42 @@ sub compare_full_house {
     }
 
     return 0;
+}
+
+sub compare_straight {
+    my ($h1, $h2) = @_;
+
+    my @l1 = $h1->get_sorted_cards;
+    my @l2 = $h2->get_sorted_cards;
+
+    my $highest_card_comparison = compare_highest_card(\@l1, \@l2);
+
+    if ($highest_card_comparison == 1) {
+        return 1;
+    } elsif ($highest_card_comparison == -1) {
+        return -1;
+    }
+
+    my $highest_card_suit1 = -1;
+    my $highest_card_suit2 = -1;
+
+    if (!HandIdentifier::is_royal_straight(@l1)) {
+        $highest_card_suit1 = $l1[$#l1]->get_suit;
+    } else {
+        $highest_card_suit1 = $l1[0]->get_suit;
+    }
+
+    if (!HandIdentifier::is_royal_straight(@l2)) {
+        $highest_card_suit2 = $l2[$#l2]->get_suit;
+    } else {
+        $highest_card_suit2 = $l2[0]->get_suit;
+    }
+
+    if ($highest_card_suit1 < $highest_card_suit2) {
+        return 1;
+    }
+
+    return -1;
 }
 
 # =============== Helpers ===============
