@@ -21,6 +21,16 @@ sub init_deck {
     for my $i (0..51) {
         push @{$deck_ref}, Card->new($i % 13, $i / 13);
     }
+
+    # Shuffle deck
+    for my $i (0..$#$deck_ref) {
+        my $rand_int = int(rand(52));
+
+        my $temp = @$deck_ref[$i];
+        @$deck_ref[$i] = @$deck_ref[$rand_int];
+        @$deck_ref[$rand_int] = $temp;
+    }
+
 }
 
 sub print_deck {
