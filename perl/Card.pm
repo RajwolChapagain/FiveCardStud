@@ -23,3 +23,5 @@ sub to_string {
     
     return $VALUE_MAP[$self->{value}] . $SUIT_MAP[$self->{suit}];
 }
+
+return 1;
