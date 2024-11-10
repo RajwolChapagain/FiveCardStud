@@ -19,6 +19,8 @@ sub new {
     if (@args == 1) {  # If a string of comma-separated cards is passed in
         my @tokens = split(",", $args[0]);
 
+        chomp @tokens;
+
         foreach my $token (@tokens) {
             $self->add_card(Card->new($token)); 
         }
