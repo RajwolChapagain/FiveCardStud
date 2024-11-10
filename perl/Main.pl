@@ -23,6 +23,8 @@ sub main {
     } else {
         my $file_path = $ARGV[0];
         print_file($file_path);
+        deal_from_file(\@hands, $file_path);
+        print_hands(@hands);
     }
 }
 
@@ -99,8 +101,17 @@ sub print_file {
     while (<$in>) {
         print $_;
     }
-
     print "\n";
+}
+
+sub deal_from_file {
+    my ($hands_ref, $path) = @_;
+
+    open(my $in, "<", $path);
+
+    foreach my $hand (@$hands_ref) {
+        $hand = Hand->new(scalar(<$in>));
+    }
 }
 
 # =============== Common subroutines ===============
