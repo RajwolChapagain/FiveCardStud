@@ -2,6 +2,7 @@ package HandSorter;
 
 use strict;
 use warnings;
+use HandIdentifier;
 
 my @comparators = (\&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush);
 
@@ -56,3 +57,56 @@ sub compare_royal_flush {
 }
 
 return 1;
+
+
+# =============== Helpers ===============
+
+sub compare_highest_card {
+    my ($l1_ref, $l2_ref) = @_;
+
+    my @l1 = @$l1_ref;
+    my @l2 = @$l2_ref;
+
+    my @value_list1 = ();
+    my @value_list2 = ();
+
+
+    for my $i (0..$#l1) {
+        push @value_list1, $l1[$i]->get_value;
+
+        if ($l1[$i]->get_value == 0) {
+            @value_list1[$i] = 13;
+
+            if (@l1 == $Hand::HAND_SIZE) {
+                if (HandIdentifier::is_straight(@l1) and !HandIdentifier::is_royal_straight(@l1)) {
+                    @value_list1[$i] = 0;
+                }
+            }
+        }
+
+        push @value_list2, $l2[$i]->get_value;
+
+        if ($l2[$i]->get_value == 0) {
+            @value_list2[$i] = 13;
+
+            if (@l2 == $Hand::HAND_SIZE) {
+                if (HandIdentifier::is_straight(@l2) and !HandIdentifier::is_royal_straight(@l2)) {
+                    @value_list2[$i] = 0;
+                }
+            }
+        }
+    }
+
+    @value_list1 = sort { $b <=> $a } @value_list1;
+    @value_list2 = sort { $b <=> $a } @value_list2;
+
+    for my $i (0..$#value_list1) {
+        if ($value_list1[$i] < $value_list2[$i]) {
+            return 1;
+        } elsif ($value_list1[$i] > $value_list2[$i]) {
+            return -1;
+        }
+    }
+
+    return 0;
+}
