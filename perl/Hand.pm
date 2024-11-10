@@ -57,4 +57,10 @@ sub set_type {
     $self->{type} = shift;
 }
 
+sub get_sorted_cards {
+    my $self = shift;
+
+    return sort {$a->get_value <=> $b->get_value} @{$self->{cards}};
+}
+
 return 1;
