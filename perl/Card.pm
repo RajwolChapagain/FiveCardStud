@@ -21,7 +21,19 @@ sub new {
 sub to_string {
     my $self = shift;
     
-    return $VALUE_MAP[$self->{value}] . $SUIT_MAP[$self->{suit}];
+    return $VALUE_MAP[$self->get_value] . $SUIT_MAP[$self->get_suit];
+}
+
+sub get_value {
+    my $self = shift;
+
+    return $self->{value};
+}
+
+sub get_suit {
+    my $self = shift;
+
+    return $self->{suit};
 }
 
 return 1;
