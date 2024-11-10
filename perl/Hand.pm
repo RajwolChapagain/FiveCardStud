@@ -33,4 +33,16 @@ sub add_card {
     push @{$self->{cards}}, shift;
 }
 
+sub to_string {
+    my $self = shift;
+
+    my $result = "";
+
+    foreach my $card (@{$self->{cards}}) {
+        $result .= sprintf("%-4s", $card->to_string);
+    }
+
+    return $result;
+}
+
 return 1;
