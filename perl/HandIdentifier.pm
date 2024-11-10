@@ -88,3 +88,37 @@ sub is_straight {
 }
 
 return 1;
+
+# =============== Helpers ===============
+
+sub get_frequency_set {
+    my @cards = @_;
+
+    my @frequency_set = ();
+    my $prev_value = -1;
+
+    foreach my $card (@cards) {
+        if ($card->get_value != $prev_value) {
+            push @frequency_set, get_card_count($card, @cards);
+            $prev_value = $card->get_value;
+        }
+
+
+    }
+
+    return sort @frequency_set;
+}
+
+sub get_card_count {
+    my ($card, @card_list) = @_;
+
+    my $count = 0;
+
+    foreach my $c (@card_list) {
+        if ($c->get_value == $card->get_value) {
+            $count += 1;
+        }
+    }
+
+    return $count;
+}
