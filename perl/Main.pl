@@ -11,10 +11,12 @@ sub main {
     print "*** P O K E R   H A N D   A N A L Y Z E R ***\n\n\n";
 
     my @deck = ();
+    my @hands = (Hand->new(), Hand->new(), Hand->new(), Hand->new(), Hand->new(), Hand->new());
 
     init_deck(\@deck);
     print_deck(@deck);
-
+    deal_from_deck(\@hands,\@deck);
+    print_hands(@hands);
 }
 
 # =============== Non-testing subroutines ===============
@@ -50,4 +52,31 @@ sub print_deck {
             print "\n";
         }
     }
+
+    print "\n";
+}
+
+sub deal_from_deck {
+    my $hand_ref = shift;
+    my $deck_ref = shift;
+
+    for my $i (0..4) {
+        for my $i (0..$#$hand_ref) {
+            @$hand_ref[$i]->add_card(shift @$deck_ref);
+        }
+    }
+}
+
+# =============== Common subroutines ===============
+
+sub print_hands {
+    my @hands = @_;
+
+    print "*** Here are the six hands...\n";
+
+    foreach my $hand (@hands) {
+        print $hand->to_string . "\n";
+    }
+
+    print "\n";
 }
