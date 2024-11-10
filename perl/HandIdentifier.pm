@@ -12,6 +12,8 @@ sub assign_type {
         $hand->set_type(9);
     } elsif (is_straight_flush(@cards)) {
         $hand->set_type(8);
+    } elsif (is_four_of_a_kind(@cards)) {
+        $hand->set_type(7);
     } elsif (is_flush(@cards)) {
         $hand->set_type(5);
     } elsif (is_straight(@cards)) {
@@ -46,6 +48,18 @@ sub is_straight_flush {
 
     if (is_straight(@cards) and is_flush(@cards)) {
         return 1;
+    }
+
+    return 0;
+}
+
+sub is_four_of_a_kind {
+    my @cards = @_;
+
+    foreach my $freq (get_frequency_set(@cards)) {
+        if ($freq == 4) {
+            return 1;
+        }
     }
 
     return 0;
