@@ -20,6 +20,8 @@ sub assign_type {
         $hand->set_type(5);
     } elsif (is_straight(@cards)) {
         $hand->set_type(4);
+    } elsif (is_three_of_a_kind(@cards)) {
+        $hand->set_type(3);
     } else {
         $hand->set_type(0);
     }
@@ -113,6 +115,18 @@ sub is_straight {
     }
 
     return 1;
+}
+
+sub is_three_of_a_kind {
+    my @cards = @_;
+
+    foreach my $freq (get_frequency_set(@cards)) {
+        if ($freq == 3) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 return 1;
