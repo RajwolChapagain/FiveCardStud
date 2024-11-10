@@ -105,4 +105,16 @@ sub get_suit_index {
     return -1;
 }
 
+sub less_than {
+    my ($self, $other) = @_;
+
+    return $self->{value} < $other->{value};
+}
+
+sub equal {
+    my ($self, $other) = @_;
+
+    return $self->{value} == $other->{value};
+}
+
 return 1;
