@@ -24,6 +24,7 @@ sub main {
         my $file_path = $ARGV[0];
         print_file($file_path);
         deal_from_file(\@hands, $file_path);
+        check_duplicate(@hands);
         print_hands(@hands);
     }
 }
@@ -111,6 +112,26 @@ sub deal_from_file {
 
     foreach my $hand (@$hands_ref) {
         $hand = Hand->new(scalar(<$in>));
+    }
+}
+
+sub check_duplicate {
+    my @hands = @_;
+
+    my @hashes = ();
+
+    foreach my $hand (@hands) {
+        foreach my $card ($hand->get_sorted_cards) {
+            my $card_hash = $card->get_value * 10 + $card->get_suit;
+
+            foreach my $hash (@hashes) {
+                if ($hash == $card_hash) {
+                    die "*** ERROR - DUPLICATED CARD FOUND IN DECK ***\n\n*** Duplicate: " . $card->to_string . " ***\n";
+                }
+            }
+
+            push @hashes, $card_hash;
+        }
     }
 }
 
