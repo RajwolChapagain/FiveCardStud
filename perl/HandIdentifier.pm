@@ -14,6 +14,8 @@ sub assign_type {
         $hand->set_type(8);
     } elsif (is_four_of_a_kind(@cards)) {
         $hand->set_type(7);
+    } elsif (is_full_house(@cards)) {
+        $hand->set_type(6);
     } elsif (is_flush(@cards)) {
         $hand->set_type(5);
     } elsif (is_straight(@cards)) {
@@ -60,6 +62,18 @@ sub is_four_of_a_kind {
         if ($freq == 4) {
             return 1;
         }
+    }
+
+    return 0;
+}
+
+sub is_full_house {
+    my @cards = @_;
+
+    my @freq_set = get_frequency_set(@cards);
+
+    if ((grep { $_ == 3 } @freq_set) and (grep { $_ == 2 } @freq_set)) {
+        return 1;
     }
 
     return 0;
