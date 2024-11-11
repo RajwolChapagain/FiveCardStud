@@ -5,8 +5,8 @@ This repository contains a program written for Dr. Pound's CSC 330 class in vari
 To run this program, first clone the repository using the following command:
 ```
 git clone https://anvil.cs.mercer.edu/chapagain_r/fivecardstud.git
-
 ```
+
 ### Java
 1. Navigate to the java directory:
 ```
@@ -20,11 +20,11 @@ javac Main.java
 ```
 java Main
 ```
-
-To run the program using test files, place them into the fivecardstud/handsets directory. One is provided for you. Pass the relative path of the appropriately formatted test file as the first command line argument while running the program like so:
+To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
 ```
 java Main ../handsets/test_sort
 ```
+
 ### C#
 1. Navigate to the c# directory:
 ```
