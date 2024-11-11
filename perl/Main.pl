@@ -171,5 +171,4 @@ sub print_ranked_hands {
     foreach my $hand (@hands) {
         print $hand->to_string . "- " . @Hand::HAND_MAP[$hand->get_type] . "\n"; 
     }
-    print "\n";
 }
