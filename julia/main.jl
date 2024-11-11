@@ -121,7 +121,6 @@ function print_ranked_hands(hands::Vector{Hand})
         print(hand)
         println(" - ", HAND_MAP[hand.type])
     end
-    println()
 end
 
 # =============== Logic ===============
