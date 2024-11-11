@@ -5,7 +5,7 @@ if [ "$#" -lt 1 ]; then
     exit 1
 fi
 
-CMD1="go run go/main.go go/hand.go go/card.go go/hand_sorter.go go/hand_identifier.go"
+CMD1="perl perl/Main.pl"
 CMD2="julia julia/main.jl"
 
 
