@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use HandIdentifier;
 
-my @comparators = (\&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_straight, \&compare_flush, \&compare_full_house, \&compare_four_of_a_kind, \&compare_straight_flush, \&compare_royal_flush);
+my @comparators = (\&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_three_of_a_kind, \&compare_straight, \&compare_flush, \&compare_full_house, \&compare_four_of_a_kind, \&compare_straight_flush, \&compare_royal_flush);
 
 
 sub sort_hands {
@@ -184,6 +184,34 @@ sub compare_straight {
     }
 
     if ($highest_card_suit1 < $highest_card_suit2) {
+        return 1;
+    }
+
+    return -1;
+}
+
+sub compare_three_of_a_kind {
+    my ($h1, $h2) = @_;
+
+    my @l1 = $h1->get_sorted_cards;
+    my @l2 = $h2->get_sorted_cards;
+
+    my $c1 = (get_cards_occuring_n_times(\@l1, 3))[0];
+    my $c2 = (get_cards_occuring_n_times(\@l2, 3))[0];
+
+    my $value1 = $c1->get_value;
+    my $value2 = $c2->get_value;
+
+
+    if ($value1 == 0) {
+            $value1 = 13;
+    }
+
+    if ($value2 == 0) {
+            $value2 = 13;
+    }
+
+    if ($value1 < $value2) {
         return 1;
     }
 
