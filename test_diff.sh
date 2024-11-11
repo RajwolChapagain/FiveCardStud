@@ -8,8 +8,11 @@ fi
 CMD1="perl perl/Main.pl"
 CMD2="julia julia/main.jl"
 
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
 
-echo "******* Comparing commands ($CMD1) and ($CMD2) *******"
+echo -e "******* Comparing commands (${GREEN}$CMD1${NC}) and (${GREEN}$CMD2${NC}) *******"
+echo
 
 for FILE_PATH in "$@"; do
     echo "Comparing output for file: $FILE_PATH"
