@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use HandIdentifier;
 
-my @comparators = (\&compare_royal_flush, \&compare_royal_flush, \&compare_royal_flush, \&compare_three_of_a_kind, \&compare_straight, \&compare_flush, \&compare_full_house, \&compare_four_of_a_kind, \&compare_straight_flush, \&compare_royal_flush);
+my @comparators = (\&compare_royal_flush, \&compare_royal_flush, \&compare_two_pair, \&compare_three_of_a_kind, \&compare_straight, \&compare_flush, \&compare_full_house, \&compare_four_of_a_kind, \&compare_straight_flush, \&compare_royal_flush);
 
 
 sub sort_hands {
@@ -212,6 +212,44 @@ sub compare_three_of_a_kind {
     }
 
     if ($value1 < $value2) {
+        return 1;
+    }
+
+    return -1;
+}
+
+sub compare_two_pair {
+    my ($h1, $h2) = @_;
+
+    my @l1 = $h1->get_sorted_cards;
+    my @l2 = $h2->get_sorted_cards;
+
+    my @pairs1 = get_cards_occuring_n_times(\@l1, 2);
+    my @pairs2 = get_cards_occuring_n_times(\@l2, 2);
+
+    my $highest_card_comparison = compare_highest_card(\@pairs1, \@pairs2);
+
+    if ($highest_card_comparison == 1) {
+        return 1;
+    } elsif ($highest_card_comparison == -1) {
+        return -1;
+    }
+
+    my @kicker1 = get_cards_occuring_n_times(\@l1, 1);
+    my @kicker2 = get_cards_occuring_n_times(\@l2, 1);
+
+    my $kicker_card_comparison = compare_highest_card(\@kicker1, \@kicker2);
+
+    if ($kicker_card_comparison == 1) {
+        return 1;
+    } elsif ($kicker_card_comparison == -1) {
+        return -1;
+    }
+
+    my $kicker_card1 = $kicker1[0];
+    my $kicker_card2 = $kicker2[0];
+
+    if ($kicker_card1->get_suit < $kicker_card2->get_suit) {
         return 1;
     }
 
