@@ -53,7 +53,7 @@ sub compare_royal_flush {
         return 1;
     }
 
-    return 0;
+    return -1;
 }
 
 sub compare_straight_flush {
@@ -67,14 +67,14 @@ sub compare_straight_flush {
     if ($highest_card_comparison == 1) {
         return 1;
     } elsif ($highest_card_comparison == -1) {
-        return 0;
+        return -1;
     }
 
     if ($l1[0]->get_suit < $l2[0]->get_suit) {
         return 1;
     }
 
-    return 0;
+    return -1;
 }
 
 sub compare_four_of_a_kind {
@@ -102,7 +102,7 @@ sub compare_four_of_a_kind {
         return 1;
     }
 
-    return 0;
+    return -1;
 }
 
 sub compare_full_house {
@@ -130,7 +130,7 @@ sub compare_full_house {
         return 1;
     }
 
-    return 0;
+    return -1;
 }
 
 sub compare_straight {
