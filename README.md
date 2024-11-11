@@ -120,3 +120,17 @@ To use a test set of hands, pass the relative path of the appropriately formatte
 ```
 go run main.go card.go hand.go hand_identifier.go hand_sorter.go ../handsets/test_sort
 ```
+
+### Perl
+1. Navigate to the perl directory:
+```
+cd fivecardstud/perl
+```
+2. Run the code:
+```
+perl Main.pl
+```
+To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
+```
+perl Main.pl ../handsets/test_sort
+```
