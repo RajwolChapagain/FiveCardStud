@@ -14,7 +14,7 @@ echo "******* Comparing commands ($CMD1) and ($CMD2) *******"
 for FILE_PATH in "$@"; do
     echo "Comparing output for file: $FILE_PATH"
 
-    diff <($CMD1 $FILE_PATH) <($CMD2 $FILE_PATH)
+    diff --side-by-side --suppress-common-lines <($CMD1 $FILE_PATH) <($CMD2 $FILE_PATH)
 
     if [ $?  -eq 0 ]; then
         echo "The outputs are identical for $FILE_PATH"
