@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use HandIdentifier;
 
-my @comparators = (\&compare_royal_flush, \&compare_royal_flush, \&compare_two_pair, \&compare_three_of_a_kind, \&compare_straight, \&compare_flush, \&compare_full_house, \&compare_four_of_a_kind, \&compare_straight_flush, \&compare_royal_flush);
+my @comparators = (\&compare_royal_flush, \&compare_pair, \&compare_two_pair, \&compare_three_of_a_kind, \&compare_straight, \&compare_flush, \&compare_full_house, \&compare_four_of_a_kind, \&compare_straight_flush, \&compare_royal_flush);
 
 
 sub sort_hands {
@@ -250,6 +250,55 @@ sub compare_two_pair {
     my $kicker_card2 = $kicker2[0];
 
     if ($kicker_card1->get_suit < $kicker_card2->get_suit) {
+        return 1;
+    }
+
+    return -1;
+}
+
+sub compare_pair {
+    my ($h1, $h2) = @_;
+
+    my @l1 = $h1->get_sorted_cards;
+    my @l2 = $h2->get_sorted_cards;
+
+    my @pair1 = get_cards_occuring_n_times(\@l1, 2);
+    my @pair2 = get_cards_occuring_n_times(\@l2, 2);
+
+    my $highest_card_comparison = compare_highest_card(\@pair1, \@pair2);
+
+    if ($highest_card_comparison == 1) {
+        return 1;
+    } elsif ($highest_card_comparison == -1) {
+        return -1;
+    }
+
+    my @singles1 = get_cards_occuring_n_times(\@l1, 1);
+    my @singles2 = get_cards_occuring_n_times(\@l2, 1);
+
+    my $highest_single_comparison = compare_highest_card(\@singles1, \@singles2);
+
+    if ($highest_single_comparison == 1) {
+        return 1;
+    } elsif ($highest_single_comparison == -1) {
+        return -1;
+    }
+
+    @singles1 = sort { $a->get_value <=> $b->get_value } @singles1;
+    @singles2 = sort { $a->get_value <=> $b->get_value } @singles2;
+
+    my $highest_single_suit1 = $singles1[$#singles1]->get_suit;
+    my $highest_single_suit2 = $singles2[$#singles2]->get_suit;
+
+    if ($singles1[0]->get_value == 0) {
+        $highest_single_suit1 = $singles1[0]->get_suit;
+    }
+
+    if ($singles2[0]->get_value == 0) {
+        $highest_single_suit2 = $singles2[0]->get_suit;
+    }
+
+    if ($highest_single_suit1 < $highest_single_suit2) {
         return 1;
     }
 
