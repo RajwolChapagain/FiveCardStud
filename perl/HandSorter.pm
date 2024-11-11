@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use HandIdentifier;
 
-my @comparators = (\&compare_royal_flush, \&compare_pair, \&compare_two_pair, \&compare_three_of_a_kind, \&compare_straight, \&compare_flush, \&compare_full_house, \&compare_four_of_a_kind, \&compare_straight_flush, \&compare_royal_flush);
+my @comparators = (\&compare_high_card, \&compare_pair, \&compare_two_pair, \&compare_three_of_a_kind, \&compare_straight, \&compare_flush, \&compare_full_house, \&compare_four_of_a_kind, \&compare_straight_flush, \&compare_royal_flush);
 
 
 sub sort_hands {
@@ -299,6 +299,38 @@ sub compare_pair {
     }
 
     if ($highest_single_suit1 < $highest_single_suit2) {
+        return 1;
+    }
+
+    return -1;
+}
+
+sub compare_high_card {
+    my ($h1, $h2) = @_;
+
+    my @l1 = $h1->get_sorted_cards;
+    my @l2 = $h2->get_sorted_cards;
+
+    my $highest_card_comparison = compare_highest_card(\@l1, \@l2);
+
+    if ($highest_card_comparison == 1) {
+        return 1;
+    } elsif ($highest_card_comparison == -1) {
+        return -1;
+    }
+
+    my $highest_card_suit1 = $l1[$#l1]->get_suit;
+    my $highest_card_suit2 = $l2[$#l2]->get_suit;
+
+    if ($l1[0]->get_value == 0) {
+        $highest_card_suit1 = $l1[0]->get_suit;
+    }
+
+    if ($l2[0]->get_value == 0) {
+        $highest_card_suit2 = $l2[0]->get_suit;
+    }
+
+    if ($highest_card_suit1 < $highest_card_suit2) {
         return 1;
     }
 
