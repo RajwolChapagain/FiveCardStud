@@ -169,6 +169,6 @@ sub print_ranked_hands {
 
     print "--- WINNING HAND ORDER ---\n";
     foreach my $hand (@hands) {
-        print $hand->to_string . "- " . @Hand::HAND_MAP[$hand->get_type] . "\n"; 
+        print $hand->to_string . " - " . @Hand::HAND_MAP[$hand->get_type] . "\n"; 
     }
 }
