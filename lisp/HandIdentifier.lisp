@@ -11,6 +11,9 @@
 (defun is-straight-flush (cards)
   (and (is-straight cards) (is-flush cards)))
 
+(defun is-four-of-a-kind (cards)
+  (member 4 (get-frequency-set cards)))
+
 (defun is-flush (cards)
   (let ((prev-suit (card-suit (first cards))))
     (dolist (card cards)
@@ -35,6 +38,7 @@
     (cond 
       ((is-royal-straight-flush cards) (setf (hand-type hand) 9))
       ((is-straight-flush cards) (setf (hand-type hand) 8))
+      ((is-four-of-a-kind cards) (setf (hand-type hand) 7))
       ((is-flush cards) (setf (hand-type hand) 5))
       ((is-straight cards) (setf (hand-type hand) 4))
       ((setf (hand-type hand) 0)))))
