@@ -21,3 +21,15 @@
       ((is-royal-straight-flush cards) (setf (hand-type hand) 9))
       ((is-flush cards) (setf (hand-type hand) 5))
       ((setf (hand-type hand) 0)))))
+
+; =============== Helpers ===============
+
+(defun get-frequency-set (cards)
+  (let ((frequency-set (list))
+        (prev-value -1))
+    (dolist (card cards)
+      (if (not (= prev-value (card-value card)))
+        (progn
+          (push (count card cards :test #'card=) frequency-set)
+          (setq prev-value (card-value card)))))
+    (sort frequency-set #'<)))
