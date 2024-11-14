@@ -12,6 +12,20 @@
               :initarg :hand-type
               :type integer)))
 
+(defun comma-split (string)
+  (loop for start = 0 then (1+ finish)
+        for finish = (position #\, string :start start)
+        collecting (subseq string start finish)
+        until (null finish)))
+
+(defun hand-from-string(line)
+  (let ((hand (make-instance 'hand)))
+    (dolist (token (comma-split line))
+      (let ((card (card-from-string token)))
+        (add-card hand card)))
+    hand))
+
+
 (defmethod add-card(hand card)
     (setf (hand-cards hand) (nconc (hand-cards hand) (list card))))
 
