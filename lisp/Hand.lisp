@@ -16,6 +16,5 @@
 
 (defmethod to-string(hand)
   (let ((result ""))
-    (dolist (card (hand-cards hand))
-      (setq result (concatenate 'string result (format nil "~4a" (to-string card)))))
-  result))
+    (dolist (card (hand-cards hand) result)
+      (setq result (concatenate 'string result (format nil "~4a" (to-string card)))))))
