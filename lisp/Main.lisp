@@ -42,7 +42,17 @@
   (with-open-file (stream path :direction :input)
     (loop for line = (read-line stream nil)
           while line
-          do (format t "~a~%" line))))
+          do (format t "~a~%" line)))
+  (terpri))
+
+(defun deal-from-file (hands path)
+  (with-open-file (stream path :direction :input)
+    (let ((i 0))
+      (loop for line = (read-line stream nil)
+            while line
+            do (progn 
+                 (setf (nth i hands) (hand-from-string line))
+                 (incf i))))))
 
 ; =============== Common functions ===============
 (defun print-hands (hands)
@@ -66,5 +76,7 @@
       (print-remaining-deck deck)))
   ((= (length sb-ext:*posix-argv*) 2)
    (let ((filepath (second sb-ext:*posix-argv*)))
-     (print-file filepath))))
+     (print-file filepath)
+     (deal-from-file hands filepath))
+   (print-hands hands)))
 
