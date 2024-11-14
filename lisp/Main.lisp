@@ -1,6 +1,7 @@
 (load "Card.lisp")
 (load "Hand.lisp")
 (load "HandIdentifier.lisp")
+(load "HandSorter.lisp")
 
 ; =============== Non-testing functions ===============
 (defun create-deck ()
@@ -101,6 +102,7 @@
       (print-hands hands)
       (print-remaining-deck deck))
     (assign-types hands)
+    (sort-hands hands)
     (print-ranked-hands hands))
   ((= (length sb-ext:*posix-argv*) 2)
    (let ((filepath (second sb-ext:*posix-argv*)))
@@ -109,4 +111,5 @@
    (check-duplicate hands)
    (print-hands hands)
    (assign-types hands)
+   (sort-hands hands)
    (print-ranked-hands hands)))
