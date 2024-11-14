@@ -3,6 +3,7 @@
 (defgeneric add-card(hand card))
 (defgeneric to-string(hand))
 (defgeneric get-sorted-cards(hand))
+(defgeneric hand>(hand1 hand2))
 
 (defclass hand()
   ((cards :accessor hand-cards
@@ -36,3 +37,6 @@
 
 (defmethod get-sorted-cards(hand)
     (sort (copy-list (hand-cards hand)) #'card<))
+
+(defmethod hand>(hand1 hand2)
+  (> (hand-type hand1) (hand-type hand2)))
