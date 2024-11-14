@@ -42,6 +42,9 @@
 (defun is-two-pair (cards)
   (= (count 2 (get-frequency-set cards)) 2))
 
+(defun is-pair (cards)
+  (member 2 (get-frequency-set cards)))
+
 (defun assign-type (hand)
   (let ((cards (get-sorted-cards hand)))
     (cond 
@@ -53,6 +56,7 @@
       ((is-straight cards) (setf (hand-type hand) 4))
       ((is-three-of-a-kind cards) (setf (hand-type hand) 3))
       ((is-two-pair cards) (setf (hand-type hand) 2))
+      ((is-pair cards) (setf (hand-type hand) 1))
       ((setf (hand-type hand) 0)))))
 
 ; =============== Helpers ===============
