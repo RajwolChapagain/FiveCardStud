@@ -13,6 +13,7 @@
          :type integer)))
 
 (defun card-from-string (card-string)
+  (setq card-string (string-trim '(#\Space) card-string))
   (let* ((value-string (subseq card-string 0 (- (length card-string) 1)))
         (suit-string (subseq card-string (- (length card-string) 1)))
         (value (position value-string *value-map* :test #'string=))
