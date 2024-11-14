@@ -2,6 +2,7 @@
 
 (defgeneric add-card(hand card))
 (defgeneric to-string(hand))
+(defgeneric get-sorted-cards(hand))
 
 (defclass hand()
   ((cards :accessor hand-cards
@@ -18,3 +19,6 @@
   (let ((result ""))
     (dolist (card (hand-cards hand) result)
       (setq result (concatenate 'string result (format nil "~4a" (to-string card)))))))
+
+(defmethod get-sorted-cards(hand)
+    (sort (copy-list (hand-cards hand)) #'card<))
