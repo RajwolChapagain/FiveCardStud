@@ -11,5 +11,16 @@
          :initarg :suit
          :type integer)))
 
+(defun card-from-string (card-string)
+  (let* ((value-string (subseq card-string 0 (- (length card-string) 1)))
+        (suit-string (subseq card-string (- (length card-string) 1)))
+        (value (position value-string *value-map* :test #'string=))
+        (suit (position suit-string *suit-map* :test #'string=)))
+    (if (or (null value) (null suit))
+      (progn
+      (format t "ERROR: Invalid string passed for value or suit while initializing card")
+      (quit))
+    (make-instance 'card :value value :suit suit))))
+
 (defmethod to-string((object card))
   (format nil "~a~a" (nth (card-value object) *value-map*) (nth (card-suit object) *suit-map*)))
