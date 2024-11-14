@@ -34,6 +34,16 @@
     (format t "~4a" (to-string card)))
     (terpri))
 
+; =============== Testing functions ===============
+(defun print-file(path)
+  (format t "*** USING TEST DECK ***~%~%")
+
+  (format t "*** File: ~a~%" path)
+  (with-open-file (stream path :direction :input)
+    (loop for line = (read-line stream nil)
+          while line
+          do (format t "~a~%" line))))
+
 ; =============== Common functions ===============
 (defun print-hands (hands)
   (format t "*** Here are the six hands...~%")
@@ -46,9 +56,15 @@
 (format t "*** P O K E R   H A N D   A N A L Y Z E R ***~%~%~%")
 (defvar hands (list (make-instance 'hand) (make-instance 'hand) (make-instance 'hand) (make-instance 'hand) (make-instance 'hand) (make-instance 'hand)))
 
-(let ((deck (create-deck)))
-  (shuffle-deck deck)
-  (print-deck deck)
-  (setf deck (deal-from-deck hands deck))
-  (print-hands hands)
-  (print-remaining-deck deck))
+(cond 
+  ((= (length sb-ext:*posix-argv*) 1)
+    (let ((deck (create-deck)))
+      (shuffle-deck deck)
+      (print-deck deck)
+      (setf deck (deal-from-deck hands deck))
+      (print-hands hands)
+      (print-remaining-deck deck)))
+  ((= (length sb-ext:*posix-argv*) 2)
+   (let ((filepath (second sb-ext:*posix-argv*)))
+     (print-file filepath))))
+
