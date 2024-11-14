@@ -14,6 +14,9 @@
 (defun is-four-of-a-kind (cards)
   (member 4 (get-frequency-set cards)))
 
+(defun is-full-house (cards)
+  (and (member 3 (get-frequency-set cards)) (member 2 (get-frequency-set cards))))
+
 (defun is-flush (cards)
   (let ((prev-suit (card-suit (first cards))))
     (dolist (card cards)
@@ -33,14 +36,19 @@
 
   (return-from is-straight T))
 
+(defun is-three-of-a-kind (cards)
+  (member 3 (get-frequency-set cards)))
+
 (defun assign-type (hand)
   (let ((cards (get-sorted-cards hand)))
     (cond 
       ((is-royal-straight-flush cards) (setf (hand-type hand) 9))
       ((is-straight-flush cards) (setf (hand-type hand) 8))
       ((is-four-of-a-kind cards) (setf (hand-type hand) 7))
+      ((is-full-house cards) (setf (hand-type hand) 6))
       ((is-flush cards) (setf (hand-type hand) 5))
       ((is-straight cards) (setf (hand-type hand) 4))
+      ((is-three-of-a-kind cards) (setf (hand-type hand) 3))
       ((setf (hand-type hand) 0)))))
 
 ; =============== Helpers ===============
