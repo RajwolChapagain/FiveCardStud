@@ -19,11 +19,36 @@
     (dotimes (index (length deck))
       (format t "~4a" (to-string (nth index deck)))
       (if (= (mod (+ index 1) 13) 0)
-        (terpri))))
+        (terpri)))
+    (terpri))
+
+(defun deal-from-deck(hands deck)
+  (dotimes (i *hand-size*)
+    (dolist (hand hands)
+      (add-card hand (pop deck))))
+  deck)
+
+(defun print-remaining-deck(deck)
+  (format t "*** Here is what remains in the deck...~%")
+  (dolist (card deck)
+    (format t "~4a" (to-string card)))
+    (terpri))
+
+; =============== Common functions ===============
+(defun print-hands (hands)
+  (format t "*** Here are the six hands...~%")
+  (dolist (hand hands)
+    (format t "~a~%" (to-string hand)))
+  (terpri))
+
 
 ; =============== Logic ===============
 (format t "*** P O K E R   H A N D   A N A L Y Z E R ***~%~%~%")
+(defvar hands (list (make-instance 'hand) (make-instance 'hand) (make-instance 'hand) (make-instance 'hand) (make-instance 'hand) (make-instance 'hand)))
 
 (let ((deck (create-deck)))
   (shuffle-deck deck)
-  (print-deck deck))
+  (print-deck deck)
+  (setf deck (deal-from-deck hands deck))
+  (print-hands hands)
+  (print-remaining-deck deck))
