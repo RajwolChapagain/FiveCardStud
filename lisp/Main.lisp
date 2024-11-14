@@ -1,3 +1,7 @@
+(load "Card.lisp")
+(load "Hand.lisp")
+(load "HandIdentifier.lisp")
+
 ; =============== Non-testing functions ===============
 (defun create-deck ()
   (loop for i from 0 to 51
