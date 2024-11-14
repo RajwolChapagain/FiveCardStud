@@ -1,3 +1,4 @@
+(defparameter *hand-size* 5)
 (defparameter *hand-map* (list "High Card" "Pair" "Two Pair" "Three of a Kind" "Straight" "Flush" "Full House" "Four of a Kind" "Straight Flush" "Royal Straight Flush"))
 
 (defgeneric add-card(hand card))
