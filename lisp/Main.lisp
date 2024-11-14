@@ -32,6 +32,7 @@
   (format t "*** Here is what remains in the deck...~%")
   (dolist (card deck)
     (format t "~4a" (to-string card)))
+    (terpri)
     (terpri))
 
 ; =============== Testing functions ===============
@@ -73,6 +74,15 @@
     (format t "~a~%" (to-string hand)))
   (terpri))
 
+(defun assign-types (hands)
+  (dolist (hand hands)
+    (assign-type hand)))
+
+(defun print-ranked-hands (hands)
+  (format t "--- WINNING HAND ORDER ---~%")
+
+  (dolist (hand hands)
+    (format t "~a - ~a~%" (to-string hand) (nth (hand-type hand) *hand-map*))))
 
 ; =============== Logic ===============
 (format t "*** P O K E R   H A N D   A N A L Y Z E R ***~%~%~%")
@@ -85,11 +95,14 @@
       (print-deck deck)
       (setf deck (deal-from-deck hands deck))
       (print-hands hands)
-      (print-remaining-deck deck)))
+      (print-remaining-deck deck))
+    (assign-types hands)
+    (print-ranked-hands hands))
   ((= (length sb-ext:*posix-argv*) 2)
    (let ((filepath (second sb-ext:*posix-argv*)))
      (print-file filepath)
      (deal-from-file hands filepath))
    (check-duplicate hands)
-   (print-hands hands)))
-
+   (print-hands hands)
+   (assign-types hands)
+   (print-ranked-hands hands)))
