@@ -54,6 +54,18 @@
                  (setf (nth i hands) (hand-from-string line))
                  (incf i))))))
 
+(defun check-duplicate (hands)
+  (let ((hashes (list)))
+    (dolist (hand hands)
+      (dolist (card (get-sorted-cards hand))
+        (let ((card-hash (+ (* (card-value card) 10) (card-suit card))))
+          (if (member card-hash hashes)
+            (progn
+              (format t "*** ERROR - DUPLICATED CARD FOUND IN DECK ***~%~%")
+              (format t "*** Duplicate: ~a ***~%" (to-string card))
+              (quit))
+            (push card-hash hashes)))))))
+
 ; =============== Common functions ===============
 (defun print-hands (hands)
   (format t "*** Here are the six hands...~%")
@@ -78,5 +90,6 @@
    (let ((filepath (second sb-ext:*posix-argv*)))
      (print-file filepath)
      (deal-from-file hands filepath))
+   (check-duplicate hands)
    (print-hands hands)))
 
