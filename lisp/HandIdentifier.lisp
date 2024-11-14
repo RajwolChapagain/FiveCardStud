@@ -8,6 +8,9 @@
        (= (card-value (fourth cards)) 11)
        (= (card-value (fifth cards)) 12)))
 
+(defun is-straight-flush (cards)
+  (and (is-straight cards) (is-flush cards)))
+
 (defun is-flush (cards)
   (let ((prev-suit (card-suit (first cards))))
     (dolist (card cards)
@@ -15,11 +18,25 @@
         (return-from is-flush nil))))
   T)
 
+(defun is-straight (cards)
+  (if (is-royal-straight cards)
+    (return-from is-straight T))
+
+  (let ((prev-value (- (card-value (first cards)) 1)))
+    (dolist (card cards)
+      (if (not (= (card-value card) (+ prev-value 1)))
+        (return-from is-straight nil)
+        (setq prev-value (card-value card)))))
+
+  (return-from is-straight T))
+
 (defun assign-type (hand)
   (let ((cards (get-sorted-cards hand)))
     (cond 
       ((is-royal-straight-flush cards) (setf (hand-type hand) 9))
+      ((is-straight-flush cards) (setf (hand-type hand) 8))
       ((is-flush cards) (setf (hand-type hand) 5))
+      ((is-straight cards) (setf (hand-type hand) 4))
       ((setf (hand-type hand) 0)))))
 
 ; =============== Helpers ===============
