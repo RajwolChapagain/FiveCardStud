@@ -2,6 +2,7 @@
 (defparameter *suit-map* (list "D" "C" "H" "S"))
 
 (defgeneric to-string(object))
+(defgeneric card<(card1 card2))
 
 (defclass card()
   ((value :accessor card-value
@@ -21,6 +22,12 @@
       (format t "ERROR: Invalid string passed for value or suit while initializing card")
       (quit))
     (make-instance 'card :value value :suit suit))))
+
+(defmethod card<((card1 card) (card2 card))
+  (< (card-value card1) (card-value card2)))
+
+(defmethod card=((card1 card) (card2 card))
+  (= (card-value card1) (card-value card2)))
 
 (defmethod to-string((object card))
   (format nil "~a~a" (nth (card-value object) *value-map*) (nth (card-suit object) *suit-map*)))
