@@ -1,41 +1,3 @@
-; =============== Comparators ===============
-; All return:
-; T if h1 > h2
-; NIL if h1 < h2
-
-(defun compare-royal-flush (h1 h2)
-  (> (card-suit (first (get-sorted-cards h1))) (card-suit (first (get-sorted-cards h2)))))
-
-
-; =============== Main ===============
-
-(defparameter comparators (list #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush))
-
-(defun sort-hands (hands)
-  (setf hands (sort-by-type hands))
-  (setf hands (sort-ties hands)))
-
-(defun sort-by-type (hands)
-  (sort hands #'hand>))
-
-(defun sort-ties (hands)
-  (let ((start-index 0)
-        (last-type (hand-type (first hands))))
-
-    (loop for i from 0 to (- (length hands) 1) do
-      (cond
-        ((/= (hand-type (nth i hands)) last-type) 
-         (progn
-           (setf (subseq hands start-index i) (sort-subarray (subseq hands start-index i)))
-           (setq start-index i)
-           (setf last-type (hand-type (nth i hands)))))
-        ((= i (- (length hands) 1))
-           (setf (subseq hands start-index) (sort-subarray (subseq hands start-index))))))))
-
-(defun sort-subarray (hands)
-  (let ((hand-type (hand-type (first hands))))
-    (sort hands (nth hand-type comparators))))
-
 ; =============== Helpers ===============
 
 ; Returns:
@@ -85,3 +47,52 @@
           (push card result))))
 
     (sort result #'card<)))
+
+; =============== Comparators ===============
+; All return:
+; T if h1 > h2
+; NIL if h1 < h2
+
+(defun compare-royal-flush (h1 h2)
+  (> (card-suit (first (get-sorted-cards h1))) (card-suit (first (get-sorted-cards h2)))))
+
+(defun compare-straight-flush (h1 h2)
+  (let* ((l1 (get-sorted-cards h1))
+        (l2 (get-sorted-cards h2))
+        (highest-card-comparison (compare-highest-card l1 l2)))
+
+    (if (= highest-card-comparison 1)
+      (return-from compare-straight-flush NIL))
+    (if (= highest-card-comparison -1)
+      (return-from compare-straight-flush T))
+
+    (> (card-suit (first l1)) (card-suit (first l2)))))
+
+; =============== Main ===============
+
+(defparameter comparators (list #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-straight-flush #'compare-royal-flush))
+
+(defun sort-hands (hands)
+  (setf hands (sort-by-type hands))
+  (setf hands (sort-ties hands)))
+
+(defun sort-by-type (hands)
+  (sort hands #'hand>))
+
+(defun sort-ties (hands)
+  (let ((start-index 0)
+        (last-type (hand-type (first hands))))
+
+    (loop for i from 0 to (- (length hands) 1) do
+      (cond
+        ((/= (hand-type (nth i hands)) last-type) 
+         (progn
+           (setf (subseq hands start-index i) (sort-subarray (subseq hands start-index i)))
+           (setq start-index i)
+           (setf last-type (hand-type (nth i hands)))))
+        ((= i (- (length hands) 1))
+           (setf (subseq hands start-index) (sort-subarray (subseq hands start-index))))))))
+
+(defun sort-subarray (hands)
+  (let ((hand-type (hand-type (first hands))))
+    (sort hands (nth hand-type comparators))))
