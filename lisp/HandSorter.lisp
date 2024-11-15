@@ -28,8 +28,8 @@
                     (if (and (is-straight l2) (not (is-royal-straight l2)))
                       (setf (nth i value-list2) 0))))))))
 
-    (setf value-list1 (sort value-list1 #'<))
-    (setf value-list2 (sort value-list2 #'<))
+    (setf value-list1 (sort value-list1 #'>))
+    (setf value-list2 (sort value-list2 #'>))
 
     (loop for i from 0 to (- (length value-list1) 1) do
           (cond
@@ -139,9 +139,34 @@
 
     (> value1 value2)))
 
+(defun compare-two-pair (h1 h2)
+  (let* ((l1 (get-sorted-cards h1))
+         (l2 (get-sorted-cards h2))
+         (pairs1 (get-cards-occuring-n-times l1 2))
+         (pairs2 (get-cards-occuring-n-times l2 2))
+         (highest-card-comparison (compare-highest-card pairs1 pairs2)))
+
+    (if (= highest-card-comparison 1)
+      (return-from compare-two-pair NIL))
+    (if (= highest-card-comparison -1)
+      (return-from compare-two-pair T))
+
+    (let* ((kicker1 (get-cards-occuring-n-times l1 1))
+           (kicker2 (get-cards-occuring-n-times l2 1))
+           (kicker-card-comparison (compare-highest-card kicker1 kicker2)))
+      (if (= kicker-card-comparison 1)
+        (return-from compare-two-pair NIL))
+      (if (= kicker-card-comparison -1)
+        (return-from compare-two-pair T))
+
+      (let ((kicker-card1 (first kicker1))
+            (kicker-card2 (first kicker2)))
+
+        (return-from compare-two-pair (> (card-suit kicker-card1) (card-suit kicker-card2)))))))
+
 ; =============== Main ===============
 
-(defparameter comparators (list #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-three-of-a-kind #'compare-straight #'compare-flush #'compare-full-house #'compare-four-of-a-kind #'compare-straight-flush #'compare-royal-flush))
+(defparameter comparators (list #'compare-royal-flush #'compare-royal-flush #'compare-two-pair #'compare-three-of-a-kind #'compare-straight #'compare-flush #'compare-full-house #'compare-four-of-a-kind #'compare-straight-flush #'compare-royal-flush))
 
 (defun sort-hands (hands)
   (setf hands (sort-by-type hands))
