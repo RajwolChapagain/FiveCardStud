@@ -194,9 +194,29 @@
 
         (return-from compare-pair (> highest-single-suit1 highest-single-suit2))))))
 
+(defun compare-high-card (h1 h2)
+  (let* ((l1 (get-sorted-cards h1))
+        (l2 (get-sorted-cards h2))
+        (highest-card-comparison (compare-highest-card l1 l2)))
+
+    (if (= highest-card-comparison 1)
+      (return-from compare-high-card NIL))
+    (if (= highest-card-comparison -1)
+      (return-from compare-high-card T))
+
+    (let ((highest-card-suit1 (card-suit (nth (- (length l1) 1) l1)))
+          (highest-card-suit2 (card-suit (nth (- (length l2) 1) l2))))
+
+      (if (= (card-value (first l1)) 0)
+        (setq highest-card-suit1 (card-suit (first l1))))
+      (if (= (card-value (first l2)) 0)
+        (setq highest-card-suit2 (card-suit (first l2))))
+
+      (return-from compare-high-card (> highest-card-suit1 highest-card-suit2)))))
+
 ; =============== Main ===============
 
-(defparameter comparators (list #'compare-royal-flush #'compare-pair #'compare-two-pair #'compare-three-of-a-kind #'compare-straight #'compare-flush #'compare-full-house #'compare-four-of-a-kind #'compare-straight-flush #'compare-royal-flush))
+(defparameter comparators (list #'compare-high-card #'compare-pair #'compare-two-pair #'compare-three-of-a-kind #'compare-straight #'compare-flush #'compare-full-house #'compare-four-of-a-kind #'compare-straight-flush #'compare-royal-flush))
 
 (defun sort-hands (hands)
   (setf hands (sort-by-type hands))
