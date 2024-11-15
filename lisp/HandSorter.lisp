@@ -132,10 +132,11 @@
 
 (defun sort-hands (hands)
   (setf hands (sort-by-type hands))
-  (setf hands (sort-ties hands)))
+  (sort-ties hands)
+  hands)
 
 (defun sort-by-type (hands)
-  (sort hands #'hand>))
+  (sort (copy-list hands) #'hand>))
 
 (defun sort-ties (hands)
   (let ((start-index 0)
