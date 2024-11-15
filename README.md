@@ -134,3 +134,17 @@ To use a test set of hands, pass the relative path of the appropriately formatte
 ```
 perl Main.pl ../handsets/test_sort
 ```
+
+### Lisp
+1. Navigate to the lisp directory:
+```
+cd fivecardstud/lisp
+```
+2. Run the code:
+```
+sbcl --script Main.lisp
+```
+To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
+```
+sbcl --script Main.lisp ../handsets/test_sort
+```
