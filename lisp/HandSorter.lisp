@@ -126,9 +126,22 @@
 
           (> highest-card-suit1 highest-card-suit2))))
 
+(defun compare-three-of-a-kind (h1 h2)
+  (let* ((l1 (get-sorted-cards h1))
+        (l2 (get-sorted-cards h2))
+        (c1 (first (get-cards-occuring-n-times l1 3)))
+        (c2 (first (get-cards-occuring-n-times l2 3)))
+        (value1 (card-value c1))
+        (value2 (card-value c2)))
+
+    (if (= value1 0) (setq value1 13))
+    (if (= value2 0) (setq value2 13))
+
+    (> value1 value2)))
+
 ; =============== Main ===============
 
-(defparameter comparators (list #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-straight #'compare-flush #'compare-full-house #'compare-four-of-a-kind #'compare-straight-flush #'compare-royal-flush))
+(defparameter comparators (list #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-three-of-a-kind #'compare-straight #'compare-flush #'compare-full-house #'compare-four-of-a-kind #'compare-straight-flush #'compare-royal-flush))
 
 (defun sort-hands (hands)
   (setf hands (sort-by-type hands))
