@@ -75,3 +75,13 @@
             ((> (nth i value-list1) (nth i value-list2)) (return-from compare-highest-card -1))))
 
     (return-from compare-highest-card 0)))
+
+(defun get-cards-occuring-n-times (card-list n )
+  (let ((result (list)))
+
+    (dolist (card card-list)
+      (if (not (member card result :test #'card=))
+        (if (= (count card card-list :test #'card=) n)
+          (push card result))))
+
+    (sort result #'card<)))
