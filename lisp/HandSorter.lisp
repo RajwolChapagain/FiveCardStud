@@ -94,9 +94,21 @@
 
     (> value1 value2)))
 
+(defun compare-flush (h1 h2)
+  (let* ((l1 (get-sorted-cards h1))
+        (l2 (get-sorted-cards h2))
+        (highest-card-comparison (compare-highest-card l1 l2)))
+
+    (if (= highest-card-comparison 1)
+      (return-from compare-flush NIL))
+    (if (= highest-card-comparison -1)
+      (return-from compare-flush T))
+
+    (> (card-suit (first l1)) (card-suit (first l2)))))
+
 ; =============== Main ===============
 
-(defparameter comparators (list #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-full-house #'compare-four-of-a-kind #'compare-straight-flush #'compare-royal-flush))
+(defparameter comparators (list #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-royal-flush #'compare-flush #'compare-full-house #'compare-four-of-a-kind #'compare-straight-flush #'compare-royal-flush))
 
 (defun sort-hands (hands)
   (setf hands (sort-by-type hands))
