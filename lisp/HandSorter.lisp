@@ -164,9 +164,39 @@
 
         (return-from compare-two-pair (> (card-suit kicker-card1) (card-suit kicker-card2)))))))
 
+(defun compare-pair (h1 h2)
+  (let* ((l1 (get-sorted-cards h1))
+         (l2 (get-sorted-cards h2))
+         (pair1 (get-cards-occuring-n-times l1 2))
+         (pair2 (get-cards-occuring-n-times l2 2))
+         (highest-card-comparison (compare-highest-card pair1 pair2)))
+
+    (if (= highest-card-comparison 1)
+      (return-from compare-pair NIL))
+    (if (= highest-card-comparison -1)
+      (return-from compare-pair T))
+
+    (let* ((singles1 (get-cards-occuring-n-times l1 1))
+           (singles2 (get-cards-occuring-n-times l2 1))
+           (highest-single-comparison (compare-highest-card singles1 singles2)))
+      (if (= highest-single-comparison 1)
+        (return-from compare-pair NIL))
+      (if (= highest-single-comparison -1)
+        (return-from compare-pair T))
+
+      (let* ((highest-single-suit1 (card-suit (nth (- (length singles1) 1) singles1)))
+             (highest-single-suit2 (card-suit (nth (- (length singles2) 1) singles2))))
+
+        (if (= (card-value (first singles1)) 0)
+          (setq highest-single-suit1 (card-suit (first singles1))))
+        (if (= (card-value (first singles2)) 0)
+          (setq highest-single-suit2 (card-suit (first singles2))))
+
+        (return-from compare-pair (> highest-single-suit1 highest-single-suit2))))))
+
 ; =============== Main ===============
 
-(defparameter comparators (list #'compare-royal-flush #'compare-royal-flush #'compare-two-pair #'compare-three-of-a-kind #'compare-straight #'compare-flush #'compare-full-house #'compare-four-of-a-kind #'compare-straight-flush #'compare-royal-flush))
+(defparameter comparators (list #'compare-royal-flush #'compare-pair #'compare-two-pair #'compare-three-of-a-kind #'compare-straight #'compare-flush #'compare-full-house #'compare-four-of-a-kind #'compare-straight-flush #'compare-royal-flush))
 
 (defun sort-hands (hands)
   (setf hands (sort-by-type hands))
