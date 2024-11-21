@@ -10,6 +10,9 @@ pub fn assign_type(hand: &mut Hand) {
     else if is_straight_flush(&cards) {
         hand.set_hand_type(8);
     }
+    else if is_four_of_a_kind(&cards) {
+        hand.set_hand_type(7);
+    }
     else if is_flush(&cards) {
         hand.set_hand_type(5);
     }
@@ -33,6 +36,16 @@ fn is_royal_straight(cards: &Vec<Card>) -> bool {
     if cards[0].get_value() == 0 && cards[1].get_value() == 9 && cards[2].get_value() == 10 &&
         cards[3].get_value() == 11 && cards[4].get_value() == 12 {
             return true;
+    }
+
+    false
+}
+
+fn is_four_of_a_kind(cards: &Vec<Card>) -> bool {
+    let set = get_frequency_set(&cards);
+
+    if set.contains(&4) {
+        return true;
     }
 
     false
