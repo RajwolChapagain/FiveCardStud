@@ -24,6 +24,11 @@ fn main() {
         let file_path = &args[1];
         let _ = print_file(&file_path);
         let _ = deal_from_file(&mut hands, &file_path);
+
+        if has_duplicate(&hands) {
+            return
+        }
+
         print_hands(&hands);
         print_ranked_hands(&hands);
     }
@@ -120,6 +125,28 @@ fn deal_from_file(hands: &mut Vec<Hand>, path: &String) -> io::Result<()> {
     }
 
     Ok(())
+}
+
+fn has_duplicate(hands: &Vec<Hand>) -> bool {
+    let mut card_hashes: Vec<usize> = Vec::new();
+
+    for hand in hands {
+        for card in hand.get_sorted_cards() {
+            let card_hash = card.get_value() * 10 + card.get_suit();
+
+            if let Some(index) = card_hashes.iter().position(|&x| x == card_hash) {
+                println!("*** ERROR - DUPLICATED CARD FOUND IN DECK ***\n");
+
+                println!("*** Duplicate: {} ***", card.to_string());
+                return true;
+            }
+            else {
+                card_hashes.push(card_hash);
+            }
+        }
+    }
+
+    false
 }
 
 // =============== Common Functions ===============
