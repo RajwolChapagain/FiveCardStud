@@ -13,6 +13,9 @@ pub fn assign_type(hand: &mut Hand) {
     else if is_four_of_a_kind(&cards) {
         hand.set_hand_type(7);
     }
+    else if is_full_house(&cards) {
+        hand.set_hand_type(6);
+    }
     else if is_flush(&cards) {
         hand.set_hand_type(5);
     }
@@ -45,6 +48,16 @@ fn is_four_of_a_kind(cards: &Vec<Card>) -> bool {
     let set = get_frequency_set(&cards);
 
     if set.contains(&4) {
+        return true;
+    }
+
+    false
+}
+
+fn is_full_house(cards: &Vec<Card>) -> bool {
+    let set = get_frequency_set(&cards);
+
+    if set.contains(&3) && set.contains(&2) {
         return true;
     }
 
