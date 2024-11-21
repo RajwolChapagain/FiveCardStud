@@ -6,9 +6,11 @@
 
 mod card;
 mod hand;
+mod hand_identifier;
 
 use crate::card::Card;
 use crate::hand::Hand;
+
 use rand::Rng;
 use std::fs::File;
 use std::io::{self, Read, BufRead};
@@ -30,6 +32,7 @@ fn main() {
         }
 
         print_hands(&hands);
+        assign_types(&mut hands);
         print_ranked_hands(&hands);
     }
     else {
@@ -38,6 +41,7 @@ fn main() {
         deal_from_deck(&mut hands, &mut deck);
         print_hands(&hands);
         print_remaining_deck(&deck);
+        assign_types(&mut hands);
         print_ranked_hands(&hands);
     }
 }
@@ -158,6 +162,12 @@ fn print_hands(hands: &Vec<Hand>) {
         println!("{}", hand.to_string());
     }
     println!();
+}
+
+fn assign_types(hands: &mut Vec<Hand>) {
+    for hand in hands {
+        hand_identifier::assign_type(hand)
+    }
 }
 
 fn print_ranked_hands(hands: &Vec<Hand>) {
