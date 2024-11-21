@@ -3,6 +3,7 @@ use std::cmp::Ordering;
 pub const VALUE_MAP: [&str; 13] = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
 pub const SUIT_MAP: [&str; 4] = ["D", "C", "H", "S"];
 
+#[derive(Clone)]
 pub struct Card {
     value: usize,
     suit: usize,
@@ -62,8 +63,16 @@ impl PartialEq for Card {
     }
 }
 
+impl Eq for Card {}
+
 impl PartialOrd for Card {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         Some(self.get_value().cmp(&other.get_value()))
+    }
+}
+
+impl Ord for Card {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.get_value().cmp(&other.get_value())
     }
 }
