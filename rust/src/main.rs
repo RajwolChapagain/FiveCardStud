@@ -7,6 +7,7 @@
 mod card;
 mod hand;
 mod hand_identifier;
+mod hand_sorter;
 
 use crate::card::Card;
 use crate::hand::Hand;
@@ -33,6 +34,7 @@ fn main() {
 
         print_hands(&hands);
         assign_types(&mut hands);
+        hand_sorter::sort_hands(&mut hands);
         print_ranked_hands(&hands);
     }
     else {
@@ -42,6 +44,7 @@ fn main() {
         print_hands(&hands);
         print_remaining_deck(&deck);
         assign_types(&mut hands);
+        hand_sorter::sort_hands(&mut hands);
         print_ranked_hands(&hands);
     }
 }
@@ -176,6 +179,4 @@ fn print_ranked_hands(hands: &Vec<Hand>) {
     for hand in hands {
         println!("{} - {}", hand.to_string(), hand::HAND_MAP[hand.get_hand_type()])
     }
-    
-    println!();
 }
