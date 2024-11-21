@@ -22,6 +22,9 @@ pub fn assign_type(hand: &mut Hand) {
     else if is_straight(&cards) {
         hand.set_hand_type(4);
     }
+    else if is_three_of_a_kind(&cards) {
+        hand.set_hand_type(3);
+    }
     else {
         hand.set_hand_type(0);
     }
@@ -44,6 +47,15 @@ fn is_royal_straight(cards: &Vec<Card>) -> bool {
     false
 }
 
+fn is_straight_flush(cards: &Vec<Card>) -> bool {
+    if is_straight(&cards) && is_flush(&cards) {
+        return true;
+    }
+
+    false
+}
+
+
 fn is_four_of_a_kind(cards: &Vec<Card>) -> bool {
     let set = get_frequency_set(&cards);
 
@@ -58,14 +70,6 @@ fn is_full_house(cards: &Vec<Card>) -> bool {
     let set = get_frequency_set(&cards);
 
     if set.contains(&3) && set.contains(&2) {
-        return true;
-    }
-
-    false
-}
-
-fn is_straight_flush(cards: &Vec<Card>) -> bool {
-    if is_straight(&cards) && is_flush(&cards) {
         return true;
     }
 
@@ -102,6 +106,16 @@ fn is_straight(cards: &Vec<Card>) -> bool {
     }
 
     true
+}
+
+fn is_three_of_a_kind(cards: &Vec<Card>) -> bool {
+    let set = get_frequency_set(&cards);
+
+    if set.contains(&3) {
+        return true;
+    }
+
+    false
 }
 
 // ===============  Helpers ===============
