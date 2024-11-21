@@ -44,7 +44,7 @@ fn is_royal_straight_flush(cards: &Vec<Card>) -> bool {
     false
 }
 
-fn is_royal_straight(cards: &Vec<Card>) -> bool {
+pub fn is_royal_straight(cards: &Vec<Card>) -> bool {
     if cards[0].get_value() == 0 && cards[1].get_value() == 9 && cards[2].get_value() == 10 &&
         cards[3].get_value() == 11 && cards[4].get_value() == 12 {
             return true;
@@ -94,7 +94,7 @@ fn is_flush(cards: &Vec<Card>) -> bool {
     true
 }
 
-fn is_straight(cards: &Vec<Card>) -> bool {
+pub fn is_straight(cards: &Vec<Card>) -> bool {
     if is_royal_straight(&cards) {
         return true;
     }
