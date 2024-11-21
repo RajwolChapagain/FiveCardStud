@@ -12,11 +12,16 @@ use crate::hand::Hand;
 use rand::Rng;
 
 fn main() {
-    let hands: Vec<Hand> = Vec::new();
+    let mut hands: Vec<Hand> = vec!(Hand::new(), Hand::new(), Hand::new(), Hand::new(), Hand::new(), Hand::new());
+    
     println!("*** P O K E R   H A N D   A N A L Y Z E R ***\n\n");
 
     let mut deck = create_deck();
     print_deck(&deck);
+    deal_from_deck(&mut hands, &mut deck);
+    print_hands(&hands);
+    print_remaining_deck(&deck);
+    print_ranked_hands(&hands);
 }
 
 // =============== Non-testing functions ===============
@@ -50,4 +55,44 @@ fn print_deck(deck: &Vec<Card>) {
 
         i += 1;
     }
+    println!();
+}
+
+fn print_remaining_deck(deck: &Vec<Card>) {
+    println!("*** Here is what remains in the deck...");
+    
+    for card in deck {
+        print!("{:<4}", card.to_string());
+    }
+
+    println!("\n");
+}
+
+fn deal_from_deck(hands: &mut Vec<Hand>, deck: &mut Vec<Card>) {
+    for i in 0..hand::HAND_SIZE {
+        for hand in &mut *hands {
+            hand.add_card(deck.remove(0));
+        }
+    }
+}
+
+// =============== Common Functions ===============
+
+fn print_hands(hands: &Vec<Hand>) {
+    println!("*** Here are the six hands...");
+
+    for hand in hands {
+        println!("{}", hand.to_string());
+    }
+    println!();
+}
+
+fn print_ranked_hands(hands: &Vec<Hand>) {
+    println!("--- WINNING HAND ORDER ---");
+
+    for hand in hands {
+        println!("{} - {}", hand.to_string(), hand::HAND_MAP[hand.get_hand_type()])
+    }
+    
+    println!();
 }
