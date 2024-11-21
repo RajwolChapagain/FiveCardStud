@@ -1,3 +1,4 @@
+use std::cmp::Ordering;
 use itertools::Itertools;
 use crate::card::Card;
 
@@ -34,6 +35,10 @@ impl Hand {
         self.cards.iter().sorted().cloned().collect()
     }
 
+    pub fn get_hand_type(&self) -> usize {
+        self.hand_type
+    }
+    
     pub fn to_string(&self) -> String {
         let mut result = String::new();
 
@@ -42,5 +47,25 @@ impl Hand {
         }
 
         result
+    }
+}
+
+impl PartialEq for Hand {
+    fn eq(&self, other: &Self) -> bool {
+        self.get_hand_type() == other.get_hand_type()
+    }
+}
+
+impl Eq for Hand {}
+
+impl PartialOrd for Hand {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.get_hand_type().cmp(&other.get_hand_type()))
+    }
+}
+
+impl Ord for Hand {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.get_hand_type().cmp(&other.get_hand_type())
     }
 }
