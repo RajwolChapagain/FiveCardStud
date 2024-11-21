@@ -1,5 +1,7 @@
-use crate::hand::Hand;
 use crate::card::Card;
+use crate::hand;
+use crate::hand::Hand;
+use crate::hand_identifier;
 
 const COMPARATORS: [fn(&Hand, &Hand) -> bool; 10] = [compare_royal_flush,compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush];
 
@@ -52,12 +54,69 @@ fn sort_subarray(hands: &mut [Hand]) {
 
 // =============== Comparators ===============
 // All return:
-// true if l1 is weaker
-// false if l1 is stronger
+// true if l1 < l2
+// false if l1 > l2
 
 fn compare_royal_flush(h1: &Hand, h2: &Hand) -> bool {
     let l1 = h1.get_sorted_cards();
     let l2 = h2.get_sorted_cards();
 
+    compare_highest_card(&l1, &l2);
+
     l1[0].get_suit() < l2[0].get_suit()
+}
+
+// =============== Helpers ===============
+
+// Returns:
+//  1 if l1 < l2
+// -1 if l1 > l2
+//  0 if l1 == l2
+fn compare_highest_card(l1: &Vec<Card>, l2:&Vec<Card>) -> i32 {
+    let mut value_list1: Vec<usize> = Vec::new();
+    let mut value_list2: Vec<usize> = Vec::new();
+
+
+    for i in 0..l1.len() {
+        value_list1.push(l1[i].get_value());
+
+        if l1[i].get_value() == 0 {
+            value_list1[i] = 13;
+
+            if l1.len() == hand::HAND_SIZE {
+                if hand_identifier::is_straight(l1) && !hand_identifier::is_royal_straight(l1) {
+                    value_list1[i] = 0;
+                }
+            }
+        }
+
+        value_list2.push(l2[i].get_value());
+
+        if l2[i].get_value() == 0 {
+            value_list2[i] = 13;
+
+            if l2.len() == hand::HAND_SIZE {
+                if hand_identifier::is_straight(l2) && !hand_identifier::is_royal_straight(l2) {
+                    value_list2[i] = 0;
+                }
+            }
+        }
+    }
+
+    value_list1.sort();
+    value_list2.sort();
+
+    value_list1.reverse();
+    value_list2.reverse();
+
+    for (value1, value2) in value_list1.iter().zip(value_list2.iter()) {
+        if value1 < value2 {
+            return 1;
+        }
+        else if value1 > value2 {
+            return -1;
+        }
+    }
+
+    0
 }
