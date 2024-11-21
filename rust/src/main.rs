@@ -10,18 +10,28 @@ mod hand;
 use crate::card::Card;
 use crate::hand::Hand;
 use rand::Rng;
+use std::fs::File;
+use std::io::{self, Read};
 
 fn main() {
     let mut hands: Vec<Hand> = vec!(Hand::new(), Hand::new(), Hand::new(), Hand::new(), Hand::new(), Hand::new());
     
     println!("*** P O K E R   H A N D   A N A L Y Z E R ***\n\n");
 
-    let mut deck = create_deck();
-    print_deck(&deck);
-    deal_from_deck(&mut hands, &mut deck);
-    print_hands(&hands);
-    print_remaining_deck(&deck);
-    print_ranked_hands(&hands);
+    let args: Vec<String> = std::env::args().collect();
+
+    if args.len() == 2 {
+        let file_path = &args[1];
+        let _ = print_file(&file_path);
+    }
+    else {
+        let mut deck = create_deck();
+        print_deck(&deck);
+        deal_from_deck(&mut hands, &mut deck);
+        print_hands(&hands);
+        print_remaining_deck(&deck);
+        print_ranked_hands(&hands);
+    }
 }
 
 // =============== Non-testing functions ===============
@@ -74,6 +84,24 @@ fn deal_from_deck(hands: &mut Vec<Hand>, deck: &mut Vec<Card>) {
             hand.add_card(deck.remove(0));
         }
     }
+}
+
+// =============== Testing functions ===============
+
+fn print_file(path: &String) -> io::Result<()> {
+    println!("*** USING TEST DECK ***\n");
+
+    println!("*** File: {}", path);
+
+    let mut file = File::open(path)?;
+
+    let mut contents = String::new();
+
+    file.read_to_string(&mut contents)?;
+
+    println!("{}", contents);
+
+    Ok(())
 }
 
 // =============== Common Functions ===============
