@@ -39,6 +39,10 @@ impl Hand {
         self.hand_type
     }
     
+    pub fn set_hand_type(&mut self, hand_type: usize) {
+        self.hand_type = hand_type;
+    }
+
     pub fn to_string(&self) -> String {
         let mut result = String::new();
 
