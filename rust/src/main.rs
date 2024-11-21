@@ -11,7 +11,7 @@ use crate::card::Card;
 use crate::hand::Hand;
 use rand::Rng;
 use std::fs::File;
-use std::io::{self, Read};
+use std::io::{self, Read, BufRead};
 
 fn main() {
     let mut hands: Vec<Hand> = vec!(Hand::new(), Hand::new(), Hand::new(), Hand::new(), Hand::new(), Hand::new());
@@ -23,6 +23,9 @@ fn main() {
     if args.len() == 2 {
         let file_path = &args[1];
         let _ = print_file(&file_path);
+        let _ = deal_from_file(&mut hands, &file_path);
+        print_hands(&hands);
+        print_ranked_hands(&hands);
     }
     else {
         let mut deck = create_deck();
@@ -100,6 +103,21 @@ fn print_file(path: &String) -> io::Result<()> {
     file.read_to_string(&mut contents)?;
 
     println!("{}", contents);
+
+    Ok(())
+}
+
+fn deal_from_file(hands: &mut Vec<Hand>, path: &String) -> io::Result<()> {
+    let mut file = File::open(path)?;
+
+    let reader = io::BufReader::new(file);
+
+    for (index, line) in reader.lines().enumerate() {
+        match line {
+            Ok(content) => hands[index] = Hand::new_from_str(&content), 
+            Err(e) => println!("Error reading line: {}", e),
+        }
+    }
 
     Ok(())
 }
