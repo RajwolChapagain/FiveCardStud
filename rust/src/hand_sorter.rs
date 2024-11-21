@@ -120,3 +120,17 @@ fn compare_highest_card(l1: &Vec<Card>, l2:&Vec<Card>) -> i32 {
 
     0
 }
+
+pub fn get_cards_occuring_n_times(card_list: &Vec<Card>, n: usize) -> Vec<Card> {    
+    let mut result: Vec<Card> = Vec::new();
+
+    for card in card_list {
+        if !result.contains(card) {
+            if card_list.iter().filter(|&x| x == card).count() == n {
+                result.push(card.clone())
+            }
+        }
+    }
+
+    result
+}
