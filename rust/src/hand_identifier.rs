@@ -28,6 +28,9 @@ pub fn assign_type(hand: &mut Hand) {
     else if is_two_pair(&cards) {
         hand.set_hand_type(2);
     }
+    else if is_pair(&cards) {
+        hand.set_hand_type(1);
+    }
     else {
         hand.set_hand_type(0);
     }
@@ -132,6 +135,17 @@ fn is_two_pair(cards: &Vec<Card>) -> bool {
 
     false
 }
+
+fn is_pair(cards: &Vec<Card>) -> bool {
+    let set = get_frequency_set(&cards);
+
+    if set.contains(&2) {
+        return true;
+    }
+
+    false
+}
+
 // ===============  Helpers ===============
 
 fn get_frequency_set(cards: &Vec<Card>) -> Vec<usize> {
