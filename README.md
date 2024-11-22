@@ -148,3 +148,17 @@ To use a test set of hands, pass the relative path of the appropriately formatte
 ```
 sbcl --script Main.lisp ../handsets/test_sort
 ```
+
+### Rust
+1. Navigate to the rust directory:
+```
+cd fivecardstud/rust
+```
+2. Run the code:
+```
+cargo run --quiet
+```
+To use a test set of hands, pass the relative path of the appropriately formatted test file as the first command-line argument to the program like so:
+```
+cargo run --quiet ../handsets/test_sort
+```
