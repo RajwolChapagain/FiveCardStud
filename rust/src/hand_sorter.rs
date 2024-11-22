@@ -3,7 +3,7 @@ use crate::hand;
 use crate::hand::Hand;
 use crate::hand_identifier;
 
-const COMPARATORS: [fn(&Hand, &Hand) -> bool; 10] = [compare_royal_flush,compare_royal_flush, compare_two_pair, compare_three_of_a_kind, compare_straight, compare_flush, compare_full_house, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush];
+const COMPARATORS: [fn(&Hand, &Hand) -> bool; 10] = [compare_royal_flush,compare_pair, compare_two_pair, compare_three_of_a_kind, compare_straight, compare_flush, compare_full_house, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush];
 
 pub fn sort_hands(hands: &mut Vec<Hand>) {
     sort_by_type(hands);
@@ -218,6 +218,49 @@ fn compare_two_pair(h1: &Hand, h2: &Hand) -> bool {
     let kicker_card2 = &kicker2[0];
 
     kicker_card1.get_suit() < kicker_card2.get_suit()
+}
+
+
+fn compare_pair(h1: &Hand, h2: &Hand) -> bool {
+    let l1 = h1.get_sorted_cards();
+    let l2 = h2.get_sorted_cards();
+
+    let pair1 = get_cards_occuring_n_times(&l1, 2);
+    let pair2 = get_cards_occuring_n_times(&l2, 2);
+
+    let highest_card_comparison = compare_highest_card(&pair1, &pair2);
+
+    if highest_card_comparison == 1 {
+        return true;
+    }
+    else if highest_card_comparison == -1 {
+        return false;
+    }
+
+    let singles1 = get_cards_occuring_n_times(&l1, 1);
+    let singles2 = get_cards_occuring_n_times(&l2, 1);
+
+    let highest_single_comparison = compare_highest_card(&singles1, &singles2);
+
+    if highest_single_comparison == 1 {
+        return true;
+    }
+    else if highest_single_comparison == -1 {
+        return false;
+    }
+
+    let mut highest_single_suit1 = singles1[singles1.len() - 1].get_suit();
+    let mut highest_single_suit2 = singles2[singles2.len() - 1].get_suit();
+
+    if singles1[0].get_value() == 0 {
+        highest_single_suit1 = singles1[0].get_suit();
+    }
+
+    if singles2[0].get_value() == 0 {
+        highest_single_suit2 = singles2[0].get_suit();
+    }
+
+    highest_single_suit1 < highest_single_suit2
 }
 
 // =============== Helpers ===============
