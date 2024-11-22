@@ -3,7 +3,7 @@ use crate::hand;
 use crate::hand::Hand;
 use crate::hand_identifier;
 
-const COMPARATORS: [fn(&Hand, &Hand) -> bool; 10] = [compare_royal_flush,compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush];
+const COMPARATORS: [fn(&Hand, &Hand) -> bool; 10] = [compare_royal_flush,compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_royal_flush, compare_full_house, compare_four_of_a_kind, compare_straight_flush, compare_royal_flush];
 
 pub fn sort_hands(hands: &mut Vec<Hand>) {
     sort_by_type(hands);
@@ -102,6 +102,26 @@ fn compare_four_of_a_kind(h1: &Hand, h2: &Hand) -> bool {
     value1 < value2
 }
 
+fn compare_full_house(h1: &Hand, h2: &Hand) -> bool {
+    let l1 = h1.get_sorted_cards();
+    let l2 = h2.get_sorted_cards();
+
+    let c1 = &get_cards_occuring_n_times(&l1, 3)[0];
+    let c2 = &get_cards_occuring_n_times(&l2, 3)[0];
+
+    let mut value1 = c1.get_value();
+    let mut value2 = c2.get_value();
+
+    if value1 == 0 {
+        value1 = 13;
+    }
+
+    if value2 == 0 {
+        value2 = 13;
+    }
+
+    value1 < value2
+}
 // =============== Helpers ===============
 
 // Returns:
