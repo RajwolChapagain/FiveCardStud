@@ -4,13 +4,13 @@ This repository contains a program written for Dr. Pound's CSC 330 class in vari
 
 To run this program, first clone the repository using the following command:
 ```
-git clone https://anvil.cs.mercer.edu/chapagain_r/fivecardstud.git
+git clone https://github.com/RajwolChapagain/FiveCardStud.git
 ```
 
 ### Java
 1. Navigate to the java directory:
 ```
-cd fivecardstud/java
+cd FiveCardStud/java
 ```
 2. Compile the code:
 ```
@@ -28,7 +28,7 @@ java Main ../handsets/test_sort
 ### C#
 1. Navigate to the c# directory:
 ```
-cd fivecardstud/c#
+cd FiveCardStud/c#
 ```
 2. Compile the code:
 ```
@@ -46,7 +46,7 @@ mono Poker.exe ../handsets/test_sort
 ### C++
 1. Navigate to the c++ directory:
 ```
-cd fivecardstud/c++
+cd FiveCardStud/c++
 ```
 2. Compile the code:
 ```
@@ -64,7 +64,7 @@ To use a test set of hands, pass the relative path of the appropriately formatte
 ### Python
 1. Navigate to the python directory:
 ```
-cd fivecardstud/python
+cd FiveCardStud/python
 ```
 2. Run the code:
 ```
@@ -78,7 +78,7 @@ python3 main.py ../handsets/test_sort
 ### Fortran
 1. Navigate to the fortran directory:
 ```
-cd fivecardstud/fortran
+cd FiveCardStud/fortran
 ```
 2. Compile the code:
 ```
@@ -96,7 +96,7 @@ To use a test set of hands, pass the relative path of the appropriately formatte
 ### Julia
 1. Navigate to the julia directory:
 ```
-cd fivecardstud/julia
+cd FiveCardStud/julia
 ```
 2. Run the code:
 ```
@@ -110,7 +110,7 @@ julia main.jl ../handsets/test_sort
 ### Go
 1. Navigate to the go directory:
 ```
-cd fivecardstud/go
+cd FiveCardStud/go
 ```
 2. Run the code:
 ```
@@ -124,7 +124,7 @@ go run main.go card.go hand.go hand_identifier.go hand_sorter.go ../handsets/tes
 ### Perl
 1. Navigate to the perl directory:
 ```
-cd fivecardstud/perl
+cd FiveCardStud/perl
 ```
 2. Run the code:
 ```
@@ -138,7 +138,7 @@ perl Main.pl ../handsets/test_sort
 ### Lisp
 1. Navigate to the lisp directory:
 ```
-cd fivecardstud/lisp
+cd FiveCardStud/lisp
 ```
 2. Run the code:
 ```
@@ -152,7 +152,7 @@ sbcl --script Main.lisp ../handsets/test_sort
 ### Rust
 1. Navigate to the rust directory:
 ```
-cd fivecardstud/rust
+cd FiveCardStud/rust
 ```
 2. Run the code:
 ```
